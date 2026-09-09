@@ -1,0 +1,82 @@
+[
+  {
+    "id": 1,
+    "name": "Espresso",
+    "category": "Coffee",
+    "description": "Rich, concentrated coffee brewed by forcing hot water through finely-ground beans.",
+    "price": 25000,
+    "image": "https://images.unsplash.com/photo-1610889556528-9a770e32642f?q=80&w=600&auto=format&fit=crop",
+    "available": true,
+    "tags": ["Hot", "Signature"]
+  },
+  {
+    "id": 2,
+    "name": "Cappuccino",
+    "category": "Coffee",
+    "description": "Espresso with frothed milk and a velvety layer of foam, finished with cocoa powder.",
+    "price": 32000,
+    "image": "https://images.unsplash.com/photo-1507133284879-749f7b7a1ac8?q=80&w=600&auto=format&fit=crop",
+    "available": true,
+    "tags": ["Hot", "Milk-based"]
+  },
+  {
+    "id": 3,
+    "name": "Iced Latte",
+    "category": "Coffee",
+    "description": "Double espresso over cold milk and ice, smooth and refreshing.",
+    "price": 30000,
+    "image": "https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?q=80&w=600&auto=format&fit=crop",
+    "available": true,
+    "tags": ["Cold", "Milk-based"]
+  },
+  {
+    "id": 4,
+    "name": "Matcha Latte",
+    "category": "Non-Coffee",
+    "description": "Stone-ground Japanese matcha whisked with steamed milk.",
+    "price": 35000,
+    "image": "https://images.unsplash.com/photo-1536256263959-770b48d82b0a?q=80&w=600&auto=format&fit=crop",
+    "available": true,
+    "tags": ["Hot", "Milk-based"]
+  },
+  {
+    "id": 5,
+    "name": "Chocolate Croissant",
+    "category": "Pastry",
+    "description": "Buttery, flaky croissant filled with rich dark chocolate.",
+    "price": 28000,
+    "image": "https://images.unsplash.com/photo-1555507036-ab1f4038808a?q=80&w=600&auto=format&fit=crop",
+    "available": true,
+    "tags": ["Bakery"]
+  },
+  {
+    "id": 6,
+    "name": "Cheesecake",
+    "category": "Dessert",
+    "description": "Creamy baked cheesecake on a buttery graham crust, served chilled.",
+    "price": 40000,
+    "image": "https://images.unsplash.com/photo-1567327613482-21c624b039ba?q=80&w=600&auto=format&fit=crop",
+    "available": false,
+    "tags": ["Sweet"]
+  },
+  {
+    "id": 7,
+    "name": "Avocado Toast",
+    "category": "Food",
+    "description": "Toasted sourdough topped with smashed avocado, chili flakes, and poached egg.",
+    "price": 45000,
+    "image": "https://images.unsplash.com/photo-1525351484163-7529414344d8?q=80&w=600&auto=format&fit=crop",
+    "available": true,
+    "tags": ["Savory", "Breakfast"]
+  },
+  {
+    "id": 8,
+    "name": "Lemonade",
+    "category": "Beverage",
+    "description": "Freshly squeezed lemonade sweetened with honey and a hint of mint.",
+    "price": 22000,
+    "image": "https://images.unsplash.com/photo-1523677011781-91d1b3c3ad1f?q=80&w=600&auto=format&fit=crop",
+    "available": true,
+    "tags": ["Cold", "Refreshing"]
+  }
+]
