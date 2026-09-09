@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server"
 import type { MenuItem } from "@/lib/menu-types"
 
-const FALLBACK_IMAGE = "/images/logo.jpg"
+const FALLBACK_IMAGE = "/images/logo_black.jpg"
 
 interface ExternalMenuItem {
   id: number

@@ -58,7 +58,7 @@ export default function MenuPage() {
 
   // Kosongkan semua filter.
   const clearFilters = () => {
-    setActiveCategory("All")
+    setActiveCategory("Semua Menu")
     setSearchQuery("")
   }
 
