@@ -46,10 +46,9 @@ export function PublicFooter() {
               Visit Us
             </h3>
             <ul className="space-y-2 text-sm text-stone-400">
-              <li>Jl. Kopi Nusantara No. 12</li>
-              <li>Jakarta Selatan, Indonesia</li>
-              <li className="pt-1">Mon–Fri: 07:00 – 22:00</li>
-              <li>Sat–Sun: 08:00 – 23:00</li>
+              <li>Jl. Mawar Luar No.20, RT.9/RW.12, Lagoa, Kec. Koja</li>
+              <li>Jakarta Utara, Indonesia</li>
+              <li className="pt-1">Everyday: 12:00 – 00:00</li>
             </ul>
           </div>
         </div>

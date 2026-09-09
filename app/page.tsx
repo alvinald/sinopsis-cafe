@@ -104,12 +104,12 @@ export default function HomePage() {
             <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-amber-100 sm:justify-between">
               <div className="flex items-center gap-2">
                 <MapPin size={15} />
-                <span>Jl. Kopi Nusantara No. 12, Jakarta Selatan</span>
+                <span>Jl. Mawar Luar No.20, RT.9/RW.12, Lagoa, Kec. Koja, Jakarta Utara</span>
               </div>
               <div className="flex items-center gap-2">
                 <Clock size={15} />
                 <span>
-                  Mon–Fri 07:00–22:00 &nbsp;|&nbsp; Sat–Sun 08:00–23:00
+                  Everyday: 12:00 – 00:00
                 </span>
               </div>
             </div>
@@ -168,10 +168,7 @@ export default function HomePage() {
                     className="h-full w-full object-cover"
                   />
                 </div>
-                <div className="absolute -bottom-4 -left-4 hidden rounded-2xl bg-amber-700 p-5 shadow-xl sm:block">
-                  <p className="text-3xl font-bold text-white">5+</p>
-                  <p className="text-xs text-amber-200">Years of Excellence</p>
-                </div>
+   
               </div>
             </div>
           </div>
