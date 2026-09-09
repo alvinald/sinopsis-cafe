@@ -6,6 +6,10 @@ export const auth = betterAuth({
     database: prismaAdapter(prisma, {
         provider: "postgresql", // or "mysql", "sqlite", ...etc
     }),
+    trustedOrigins:[
+        'http://localhost:3000',
+        'https://sinopsis-cafe.vercel.app/',
+    ],
     emailAndPassword: { 
         enabled: true, 
     }, 
