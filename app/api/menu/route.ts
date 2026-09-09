@@ -1,8 +1,7 @@
 import { NextResponse } from "next/server"
-import type { MenuItem } from "@/lib/types/menu"
+import type { MenuItem } from "@/lib/menu-types"
 
-const FALLBACK_IMAGE =
-  "https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=600&auto=format&fit=crop"
+const FALLBACK_IMAGE = "/images/logo.jpg"
 
 interface ExternalMenuItem {
   id: number
@@ -52,16 +51,21 @@ export async function GET() {
   const json = (await res.json()) as ExternalMenuEnvelope
   const rawItems = json?.data?.items ?? []
 
-  const items: MenuItem[] = rawItems.map((raw) => ({
-    id: raw.id,
-    name: raw.name,
-    category: (raw.category?.name ?? "Coffee") as MenuItem["category"],
-    description: raw.description ?? "Nikmati hidangan spesial dari Sinopsis Cafe.",
-    price: raw.item_variants?.[0]?.price ?? 0,
-    image: raw.image?.url ?? FALLBACK_IMAGE,
-    available: !raw.is_deleted,
-    tags: [],
-  }))
+  const items: MenuItem[] = rawItems.map((raw) => {
+    // Harga tertinggi dari semua varian (mis. Regular 20K, Large 30K → 30K).
+    const prices = (raw.item_variants ?? []).map((v) => v.price ?? 0)
+    const price = prices.length > 0 ? Math.max(...prices) : 0
+
+    return {
+      id: raw.id,
+      name: raw.name,
+      category: raw.category?.name ?? "Coffee",
+      description: raw.description ?? "Nikmati hidangan spesial dari Sinopsis Cafe.",
+      price,
+      image: raw.image?.url ?? FALLBACK_IMAGE,
+      available: !raw.is_deleted,
+    }
+  })
 
   return NextResponse.json(items)
 }
