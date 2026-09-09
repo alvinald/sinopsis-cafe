@@ -194,7 +194,7 @@ export default function HomePage() {
               </Link>
             </div>
 
-            <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="mt-10 grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-3">
               {featured.map((item) => (
                 <MenuCard key={item.id} menu={item} />
               ))}
