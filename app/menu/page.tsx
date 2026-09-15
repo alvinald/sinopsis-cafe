@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import { Search } from "lucide-react"
 
 import { PublicNavbar } from "@/components/public-navbar"
 import { PublicFooter } from "@/components/public-footer"
@@ -24,10 +23,18 @@ function isHidden(text: string): boolean {
   return HIDDEN_WORDS.some((word) => text.toLowerCase().includes(word))
 }
 
+// Ubah teks kategori menjadi id yang aman untuk HTML.
+// Contoh: "American Coffee" → "american-coffee".
+function slugify(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "")
+}
+
 export default function MenuPage() {
-  // State filter: kategori terpilih + kata kunci pencarian.
-  const [activeCategory, setActiveCategory] = useState("All")
-  const [searchQuery, setSearchQuery] = useState("")
+  // Kategori yang sedang dipilih di dropdown navigasi.
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
 
   // Ambil daftar menu dari /api/menu.
   const { items, loading, error } = useMenuItems()
@@ -37,32 +44,28 @@ export default function MenuPage() {
     (item) => item.available && !isHidden(item.name) && !isHidden(item.category)
   )
 
-  // Kategori untuk tombol filter, diambil dari semua menu aktif.
-  const categories = [
-    "All",
-    ...Array.from(new Set(visibleItems.map((item) => item.category))),
-  ]
+  // Daftar kategori (urutan kemunculan pertama).
+  const categories = Array.from(
+    new Set(visibleItems.map((item) => item.category))
+  )
 
-  // Menu yang cocok dengan kategori terpilih + kata kunci pencarian.
-  const filtered = visibleItems.filter((item) => {
-    const matchCategory =
-      activeCategory === "All" || item.category === activeCategory
+  // Default dropdown = kategori pertama, tanpa perlu state terpisah.
+  const activeCategory = selectedCategory ?? categories[0]
 
-    const q = searchQuery.toLowerCase()
-    const matchSearch =
-      item.name.toLowerCase().includes(q) ||
-      item.description.toLowerCase().includes(q)
+  // Kelompokkan menu per kategori, untuk tampil berurutan.
+  const groups = categories.map((category) => ({
+    category,
+    items: visibleItems.filter((item) => item.category === category),
+  }))
 
-    return matchCategory && matchSearch
-  })
-
-  // Kosongkan semua filter.
-  const clearFilters = () => {
-    setActiveCategory("Semua Menu")
-    setSearchQuery("")
+  // Gulir halus ke bagian kategori terpilih (bukan menyembunyikan menu).
+  const scrollToCategory = (category: string) => {
+    document
+      .getElementById(`category-${slugify(category)}`)
+      ?.scrollIntoView({ behavior: "smooth", block: "start" })
   }
 
-  // Isi area grid, tergantung status (memuat / error / kosong / ada data).
+  // Isi daftar menu, tergantung status (memuat / error / data siap).
   let content
   if (loading) {
     content = <p className="py-24 text-center text-sm text-stone-400">Memuat menu…</p>
@@ -72,49 +75,31 @@ export default function MenuPage() {
         Gagal memuat menu. Coba muat ulang halaman.
       </p>
     )
-  } else if (filtered.length === 0) {
-    content = (
-      <div className="flex flex-col items-center justify-center py-24 text-center">
-        <span className="text-5xl">☕</span>
-        <h3 className="mt-4 text-lg font-semibold text-stone-700">
-          No items found
-        </h3>
-        <p className="mt-1 text-sm text-stone-400">
-          Try a different search or category.
-        </p>
-        <button
-          onClick={clearFilters}
-          className="mt-4 rounded-full bg-amber-700 px-5 py-2 text-sm font-semibold text-white hover:bg-amber-800"
-        >
-          Clear Filters
-        </button>
-      </div>
-    )
   } else {
     content = (
-      <>
-        <p className="mb-6 text-sm text-stone-400">
-          Showing{" "}
-          <span className="font-semibold text-stone-700">
-            {filtered.length}
-          </span>{" "}
-          items
-          {activeCategory !== "All" && (
-            <>
-              {" "}
-              in{" "}
-              <span className="font-semibold text-stone-700">
-                {activeCategory}
+      <div className="space-y-14">
+        {groups.map((group) => (
+          <section
+            key={group.category}
+            id={`category-${slugify(group.category)}`}
+            className="scroll-mt-36 sm:scroll-mt-32"
+          >
+            {/* Judul kategori + jumlah menu */}
+            <h2 className="mb-6 flex items-center gap-3 text-xl font-bold text-stone-900">
+              {group.category}
+              <span className="rounded-full bg-stone-200 px-2.5 py-0.5 text-xs font-semibold text-stone-600">
+                {group.items.length}
               </span>
-            </>
-          )}
-        </p>
-        <div className="grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {filtered.map((item) => (
-            <MenuCard key={item.id} menu={item} />
-          ))}
-        </div>
-      </>
+            </h2>
+
+            <div className="grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+              {group.items.map((item) => (
+                <MenuCard key={item.id} menu={item} />
+              ))}
+            </div>
+          </section>
+        ))}
+      </div>
     )
   }
 
@@ -139,49 +124,35 @@ export default function MenuPage() {
           </div>
         </section>
 
-        {/* Filter: kolom pencarian + dropdown kategori */}
+        {/* Navigasi kategori: memilih kategori langsung gulir ke bagiannya */}
         <section className="sticky top-16 z-10 border-b border-stone-200 bg-white/95 py-4 shadow-sm backdrop-blur-md">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-              {/* Pencarian */}
-              <div className="relative max-w-sm flex-1">
-                <Search
-                  size={16}
-                  className="absolute left-3 top-1/2 -translate-y-1/2 text-stone-400"
-                />
-                <input
-                  type="text"
-                  placeholder="Search menu..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full rounded-full border border-stone-200 bg-stone-50 py-2 pl-9 pr-4 text-sm text-stone-700 placeholder:text-stone-400 focus:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-400/20"
-                />
-              </div>
-
-              {/* Combobox kategori (lebar 40% di layar besar) */}
-              <Combobox
-                value={activeCategory}
-                onValueChange={(value) => setActiveCategory(value ?? "All")}
-              >
-                <ComboboxInput
-                  placeholder="Pilih kategori…"
-                  className="w-full lg:w-2/5"
-                />
-                <ComboboxContent>
-                  <ComboboxList>
-                    {categories.map((category) => (
-                      <ComboboxItem key={category} value={category}>
-                        {category}
-                      </ComboboxItem>
-                    ))}
-                  </ComboboxList>
-                </ComboboxContent>
-              </Combobox>
-            </div>
+            <Combobox
+              value={activeCategory ?? ""}
+              onValueChange={(value) => {
+                if (!value) return
+                setSelectedCategory(value)
+                scrollToCategory(value)
+              }}
+            >
+              <ComboboxInput
+                placeholder="Lompat ke kategori…"
+                className="w-full lg:w-2/5"
+              />
+              <ComboboxContent>
+                <ComboboxList>
+                  {categories.map((category) => (
+                    <ComboboxItem key={category} value={category}>
+                      {category}
+                    </ComboboxItem>
+                  ))}
+                </ComboboxList>
+              </ComboboxContent>
+            </Combobox>
           </div>
         </section>
 
-        {/* Daftar menu */}
+        {/* Daftar menu berkelompok per kategori */}
         <section className="py-12">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">{content}</div>
         </section>
