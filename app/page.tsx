@@ -18,7 +18,8 @@ export default function HomePage() {
     return (
       name.includes("AMERICANO") ||
       name.includes("SINOPSIS COFFEE") ||
-      name.includes("BERRYCANO CITRUS")
+      name.includes("BERRYCANO CITRUS") || 
+      name.includes("CAKE STRAWBERRY CHEESE") 
     )
   })
 
