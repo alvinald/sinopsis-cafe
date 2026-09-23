@@ -46,7 +46,7 @@ export function LoginForm({
     if (res.error) {
       setError(res.error.message || "Something went wrong.");
     } else {
-      router.push("/dashboard");
+      router.push("/admin/dashboard");
     }
   }
 
@@ -96,12 +96,6 @@ export function LoginForm({
                 <Button type="submit" className="w-full" disabled={loading}>
                   {loading ? "Signing in..." : "Login"}
                 </Button>
-                <Button variant="outline" type="button" className="w-full">
-                  Login with Google
-                </Button>
-                <FieldDescription className="text-center">
-                  Don&apos;t have an account? <a href="/sign-up">Sign up</a>
-                </FieldDescription>
               </Field>
             </FieldGroup>
           </form>
