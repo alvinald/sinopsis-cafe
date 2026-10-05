@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Sinopsis Coffee",
+  title: "Test",
   description:
     "Sinopsis Coffee — cozy cafe offering handcrafted specialty coffees, artisan pastries, and wholesome meals. Visit us today.",
 };

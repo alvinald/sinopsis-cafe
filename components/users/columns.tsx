@@ -5,7 +5,7 @@ import { createColumnHelper } from "@tanstack/react-table"
 import { roles, User } from "@/lib/user-types"
 import { DataTableColumnHeader } from "@/components/data-table/column-header"
 import { type DataTableFeatures } from "@/components/data-table/features"
-import { DeleteButton, EditButton } from "../data-table/action-button"
+import { DeleteButton, EditButton } from "../action-button"
 import { Badge } from "../ui/badge"
 
 

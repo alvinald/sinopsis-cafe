@@ -85,7 +85,7 @@ const handleDelete = useCallback(
   if (loading) {
     return (
       <div className="py-24 text-center text-sm text-muted-foreground">
-        Memuat data user…
+        Memuat data...
       </div>
     )
   }

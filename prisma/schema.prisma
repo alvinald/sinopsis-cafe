@@ -77,3 +77,16 @@ model Verification {
   @@index([identifier])
   @@map("verification")
 }
+
+model PurchaseOrder {
+  id            String   @id
+  invoiceNumber String   @unique
+  date          DateTime
+  description   String?
+  userId        User
+  items         POItem[]
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@map("purchase_order")
+}
