@@ -13,16 +13,18 @@ datasource db {
 }
 
 model User {
-  id            String    @id
-  name          String
-  email         String
-  emailVerified Boolean   @default(false)
-  image         String?
-  role          String    @default("user")
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  sessions      Session[]
-  accounts      Account[]
+  id             String          @id
+  name           String
+  email          String
+  emailVerified  Boolean         @default(false)
+  image          String?
+  role           String          @default("user")
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  sessions       Session[]
+  accounts       Account[]
+  purchaseOrders PurchaseOrder[]
+  poitems        POItem[]
 
   @@unique([email])
   @@map("user")
@@ -83,10 +85,29 @@ model PurchaseOrder {
   invoiceNumber String   @unique
   date          DateTime
   description   String?
-  userId        User
+  user          User     @relation(fields: [userId], references: [id])
+  userId        String
   items         POItem[]
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 
+  @@index([id])
   @@map("purchase_order")
+}
+
+model POItem {
+  id              String         @id
+  name            String         @unique
+  qty             Int
+  unit            Int
+  harga           Int
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+  purchaseOrder   PurchaseOrder? @relation(fields: [purchaseOrderId], references: [id])
+  purchaseOrderId String?
+  user            User?          @relation(fields: [userId], references: [id])
+  userId          String?
+
+  @@index([id])
+  @@map("po_item")
 }

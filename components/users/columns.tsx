@@ -22,22 +22,7 @@ type ColumnActionsProps = {
 
 export const getColumns = ({ onDelete }: ColumnActionsProps = {}) =>
   columnHelper.columns([
-    columnHelper.display({ 
-      id: "actions", 
-      header: "Action",
-      cell: ({ row }) => {
-        return (
-          <div className="flex items-center gap-1">
-            <EditButton href={`/admin/users/${row.original.id}`} />
-            <DeleteButton 
-              onDelete={async () => {
-                await onDelete?.( row.original.id );
-              }} 
-            />
-          </div>
-        )
-      },
-    }),
+
     columnHelper.display({
       id: 'rowNumber',
       header: 'No',
@@ -85,6 +70,22 @@ export const getColumns = ({ onDelete }: ColumnActionsProps = {}) =>
         <DataTableColumnHeader column={column} title="Diperbarui" />
       ),
       cell: ({ row }) => formatDate(row.original.updatedAt),
+    }),
+        columnHelper.display({ 
+      id: "actions", 
+      header: "Action",
+      cell: ({ row }) => {
+        return (
+          <div className="flex items-center gap-1">
+            <EditButton href={`/admin/users/${row.original.id}`} />
+            <DeleteButton 
+              onDelete={async () => {
+                await onDelete?.( row.original.id );
+              }} 
+            />
+          </div>
+        )
+      },
     }),
   ]
 )

@@ -139,7 +139,7 @@ export function PurchaseOrderCards({
 
   return (
     <div>
-      <div className="flex flex-wrap items-center justify-between gap-3 py-4">
+      <div className="flex items-center justify-between gap-3 py-4">
         <Input
           placeholder="Cari purchase order..."
           value={search}
