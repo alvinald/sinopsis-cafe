@@ -61,3 +61,13 @@ export type Account = Prisma.AccountModel
  * 
  */
 export type Verification = Prisma.VerificationModel
+/**
+ * Model ShiftSchedule
+ * 
+ */
+export type ShiftSchedule = Prisma.ShiftScheduleModel
+/**
+ * Model ShiftType
+ * 
+ */
+export type ShiftType = Prisma.ShiftTypeModel

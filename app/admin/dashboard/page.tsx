@@ -1,9 +1,9 @@
-import { ChartAreaInteractive } from "@/components/chart-area-interactive"
-import { DataTable } from "@/components/data-table"
-import { SectionCards } from "@/components/section-cards"
-import { columns } from "@/components/dashboard/columns"
+import { ChartAreaInteractive } from "@/components/chart-area-interactive";
+import { DataTable } from "@/components/data-table/datatable";
+import { SectionCards } from "@/components/section-cards";
+import { columns } from "@/components/page/dashboard/columns";
 
-import data from "./data.json"
+import data from "./data.json";
 
 export default function Page() {
   return (
@@ -18,5 +18,5 @@ export default function Page() {
         </div>
       </div>
     </div>
-  )
+  );
 }

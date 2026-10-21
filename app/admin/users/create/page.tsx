@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import UsersForm from "@/components/users/users-form";
+import UsersForm from "@/components/page/users/users-form";
 
 export default function CreateUserPage() {
   const router = useRouter();
@@ -22,6 +22,7 @@ export default function CreateUserPage() {
       body: JSON.stringify({
         name: formData.get("name"),
         email: formData.get("email"),
+        role: formData.get("role"),
         password: "password",
       }),
     });
@@ -44,6 +45,12 @@ export default function CreateUserPage() {
   }
 
   return (
-    <UsersForm handleSubmit={handleSubmit} error={error} loading={loading} title="Tambah User" description="Isi data di bawah untuk membuat user baru" />
+    <UsersForm
+      handleSubmit={handleSubmit}
+      error={error}
+      loading={loading}
+      title="Tambah User"
+      description="Isi data di bawah untuk membuat user baru"
+    />
   );
 }

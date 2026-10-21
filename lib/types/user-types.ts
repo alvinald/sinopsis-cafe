@@ -6,7 +6,8 @@ export type RoleOption = {
 };
 
 export const roles: RoleOption[] = [
-  { value: "admin", label: "Admin" },
+  { value: "administrator", label: "Admin" },
+  { value: "manager", label: "Manager" },
   { value: "user", label: "User" },
 ]
 
@@ -19,6 +20,13 @@ export const userSchema = z.object({
   image: z.string().nullable(),
   createdAt: z.string(),
   updatedAt: z.string(),
+  department: z.string(),
+  jobTitle: z.string(),
+
+  // Status Keaktifan & Resign
+  status: z.enum(["ACTIVE", "INACTIVE"]),
+  resignedDate: z.string().nullable(),
+  resignReason: z.string().nullable()
 })
 
 export const createUserSchema = z.object({

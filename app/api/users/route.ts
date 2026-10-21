@@ -1,7 +1,7 @@
-import type { Prisma } from "@/lib/generated/prisma/client";
+import { Role } from "@/lib/generated/prisma/client";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { createUserSchema } from "@/lib/user-types";
+import { createUserSchema } from "@/lib/types/user-types";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
@@ -41,14 +41,24 @@ export async function POST(request: Request) {
     )
   }
 
-  const { name, email, password } = parsed.data
+  const { name, email, password, role } = parsed.data
 
   try {
     const created = await auth.api.signUpEmail({
       body: { name, email, password },
       headers: request.headers,
     })
-    return NextResponse.json({ data: created.user }, { status: 201 })
+
+    // role tidak bisa diset lewat signUpEmail (input: false), jadi set setelah dibuat
+    let user = created.user
+    if (role && role !== created.user.role) {
+      user = await prisma.user.update({
+        where: { id: created.user.id },
+        data: { role: role as Role },
+      })
+    }
+
+    return NextResponse.json({ data: user }, { status: 201 })
   } catch {
     return NextResponse.json(
       { error: "Gagal membuat user (email mungkin sudah terdaftar)" },

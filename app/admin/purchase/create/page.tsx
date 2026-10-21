@@ -1,5 +1,5 @@
-import { PurchaseOrderForm } from "@/components/purchase-order/po-form"
+import { PurchaseOrderForm } from "@/components/page/purchase-order/po-form";
 
 export default function CreatePurchasePage() {
-  return <PurchaseOrderForm />
+  return <PurchaseOrderForm />;
 }

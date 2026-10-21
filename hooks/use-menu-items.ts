@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import type { MenuItem } from "@/lib/menu-types"
+import type { MenuItem } from "@/lib/types/menu-types"
 
 // Hook untuk mengambil daftar menu dari route /api/menu.
 // Dipakai bareng di halaman Home dan Menu.

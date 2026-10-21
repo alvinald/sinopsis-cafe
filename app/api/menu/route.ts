@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server"
-import type { MenuItem } from "@/lib/menu-types"
+import type { MenuItem } from "@/lib/types/menu-types"
 
 const FALLBACK_IMAGE = "/images/logo_black.jpg"
 

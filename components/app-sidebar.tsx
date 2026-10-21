@@ -1,10 +1,10 @@
-"use client"
+"use client";
 
-import * as React from "react"
+import * as React from "react";
 
-import { NavTransaction } from "@/components/nav-transaction"
-import { NavMain } from "@/components/nav-main"
-import { NavUser } from "@/components/nav-user"
+import { NavTransaction } from "@/components/nav-transaction";
+import { NavMain } from "@/components/nav-main";
+import { NavUser } from "@/components/nav-user";
 import {
   Sidebar,
   SidebarContent,
@@ -13,43 +13,46 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/components/ui/sidebar"
-import { LayoutDashboardIcon, UsersIcon, DatabaseIcon, CommandIcon } from "lucide-react"
-import { NavSettting } from "./nav-setting"
+} from "@/components/ui/sidebar";
+import {
+  LayoutDashboardIcon,
+  UsersIcon,
+  DatabaseIcon,
+  CommandIcon,
+} from "lucide-react";
+import { NavSettting } from "./nav-setting";
+import { NavKaryawan } from "./nav-karyawan";
 
 const data = {
   navMain: [
     {
       title: "Dashboard",
       url: "/admin/dashboard",
-      icon: (
-        <LayoutDashboardIcon
-        />
-      ),
+      icon: <LayoutDashboardIcon />,
     },
-    
   ],
   NavTransaction: [
     {
       name: "Purchase",
       url: "/admin/purchase",
-      icon: (
-        <DatabaseIcon
-        />
-      ),
+      icon: <DatabaseIcon />,
+    },
+  ],
+  NavKaryawan: [
+    {
+      name: "Schedule",
+      url: "/admin/schedule",
+      icon: <UsersIcon />,
     },
   ],
   NavSettting: [
     {
       name: "Users",
       url: "/admin/users",
-      icon: (
-        <UsersIcon
-        />
-      ),
+      icon: <UsersIcon />,
     },
   ],
-}
+};
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="offcanvas" {...props}>
@@ -68,12 +71,13 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
-        <NavTransaction items={data.NavTransaction} />
+        {/* <NavTransaction items={data.NavTransaction} /> */}
+        <NavKaryawan items={data.NavKaryawan} />
         <NavSettting items={data.NavSettting} />
       </SidebarContent>
       <SidebarFooter>
         <NavUser />
       </SidebarFooter>
     </Sidebar>
-  )
+  );
 }

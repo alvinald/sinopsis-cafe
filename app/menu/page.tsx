@@ -1,11 +1,11 @@
-"use client"
+"use client";
 
-import { useState } from "react"
+import { useState } from "react";
 
-import { PublicNavbar } from "@/components/public-navbar"
-import { PublicFooter } from "@/components/public-footer"
-import { MenuCard } from "@/components/menu-card"
-import { useMenuItems } from "@/hooks/use-menu-items"
+import { PublicNavbar } from "@/components/public-navbar";
+import { PublicFooter } from "@/components/public-footer";
+import { MenuCard } from "@/components/menu-card";
+import { useMenuItems } from "@/hooks/use-menu-items";
 
 import {
   Combobox,
@@ -13,14 +13,23 @@ import {
   ComboboxInput,
   ComboboxItem,
   ComboboxList,
-} from "@/components/ui/combobox"
+} from "@/components/ui/combobox";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 // Kata yang menandakan menu/kategori tidak perlu ditampilkan.
-const HIDDEN_WORDS = ["new", "additional", "uncategorized"]
+const HIDDEN_WORDS = ["new", "additional", "uncategorized"];
 
 // True jika teks mengandung salah satu kata tersembunyi.
 function isHidden(text: string): boolean {
-  return HIDDEN_WORDS.some((word) => text.toLowerCase().includes(word))
+  return HIDDEN_WORDS.some((word) => text.toLowerCase().includes(word));
 }
 
 // Ubah teks kategori menjadi id yang aman untuk HTML.
@@ -29,52 +38,55 @@ function slugify(text: string): string {
   return text
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, "-")
-    .replace(/(^-|-$)/g, "")
+    .replace(/(^-|-$)/g, "");
 }
 
 export default function MenuPage() {
   // Kategori yang sedang dipilih di dropdown navigasi.
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   // Ambil daftar menu dari /api/menu.
-  const { items, loading, error } = useMenuItems()
+  const { items, loading, error } = useMenuItems();
 
   // Menu aktif: tidak dihapus dan tidak tersembunyi.
   const visibleItems = items.filter(
-    (item) => item.available && !isHidden(item.name) && !isHidden(item.category)
-  )
+    (item) =>
+      item.available && !isHidden(item.name) && !isHidden(item.category),
+  );
 
   // Daftar kategori (urutan kemunculan pertama).
   const categories = Array.from(
-    new Set(visibleItems.map((item) => item.category))
-  )
+    new Set(visibleItems.map((item) => item.category)),
+  );
 
   // Default dropdown = kategori pertama, tanpa perlu state terpisah.
-  const activeCategory = selectedCategory ?? categories[0]
+  const activeCategory = selectedCategory ?? categories[0];
 
   // Kelompokkan menu per kategori, untuk tampil berurutan.
   const groups = categories.map((category) => ({
     category,
     items: visibleItems.filter((item) => item.category === category),
-  }))
+  }));
 
   // Gulir halus ke bagian kategori terpilih (bukan menyembunyikan menu).
   const scrollToCategory = (category: string) => {
     document
       .getElementById(`category-${slugify(category)}`)
-      ?.scrollIntoView({ behavior: "smooth", block: "start" })
-  }
+      ?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
 
   // Isi daftar menu, tergantung status (memuat / error / data siap).
-  let content
+  let content;
   if (loading) {
-    content = <p className="py-24 text-center text-sm text-stone-400">Memuat menu…</p>
+    content = (
+      <p className="py-24 text-center text-sm text-stone-400">Memuat menu…</p>
+    );
   } else if (error) {
     content = (
       <p className="py-24 text-center text-sm text-stone-400">
         Gagal memuat menu. Coba muat ulang halaman.
       </p>
-    )
+    );
   } else {
     content = (
       <div className="space-y-14">
@@ -100,7 +112,7 @@ export default function MenuPage() {
           </section>
         ))}
       </div>
-    )
+    );
   }
 
   return (
@@ -126,39 +138,45 @@ export default function MenuPage() {
 
         {/* Navigasi kategori: memilih kategori langsung gulir ke bagiannya */}
         <section className="sticky top-16 z-10 border-b border-stone-200 bg-white/95 py-4 shadow-sm backdrop-blur-md">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <Combobox
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 ">
+            <Select
+              items={categories.map((category) => ({
+                value: category,
+                label: category,
+              }))}
               value={activeCategory ?? ""}
               onValueChange={(value) => {
-                if (!value) return
-                setSelectedCategory(value)
-                scrollToCategory(value)
+                if (!value) return;
+                setSelectedCategory(value);
+                scrollToCategory(value);
               }}
             >
-              <ComboboxInput
-                placeholder="Lompat ke kategori…"
-                className="w-full lg:w-2/5"
-              />
-              <ComboboxContent>
-                <ComboboxList>
+              <SelectTrigger className="w-full sm:max-w-80">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>Kategori</SelectLabel>
                   {categories.map((category) => (
-                    <ComboboxItem key={category} value={category}>
+                    <SelectItem key={category} value={category}>
                       {category}
-                    </ComboboxItem>
+                    </SelectItem>
                   ))}
-                </ComboboxList>
-              </ComboboxContent>
-            </Combobox>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
           </div>
         </section>
 
         {/* Daftar menu berkelompok per kategori */}
         <section className="py-12">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">{content}</div>
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            {content}
+          </div>
         </section>
       </main>
 
       <PublicFooter />
     </div>
-  )
+  );
 }

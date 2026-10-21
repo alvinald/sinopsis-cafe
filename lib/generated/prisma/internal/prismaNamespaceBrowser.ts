@@ -54,7 +54,9 @@ export const ModelName = {
   User: 'User',
   Session: 'Session',
   Account: 'Account',
-  Verification: 'Verification'
+  Verification: 'Verification',
+  ShiftSchedule: 'ShiftSchedule',
+  ShiftType: 'ShiftType'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -80,6 +82,12 @@ export const UserScalarFieldEnum = {
   emailVerified: 'emailVerified',
   image: 'image',
   role: 'role',
+  department: 'department',
+  jobTitle: 'jobTitle',
+  status: 'status',
+  isScheduled: 'isScheduled',
+  resignedDate: 'resignedDate',
+  resignReason: 'resignReason',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -131,6 +139,27 @@ export const VerificationScalarFieldEnum = {
 } as const
 
 export type VerificationScalarFieldEnum = (typeof VerificationScalarFieldEnum)[keyof typeof VerificationScalarFieldEnum]
+
+
+export const ShiftScheduleScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  shiftTypeId: 'shiftTypeId',
+  date: 'date'
+} as const
+
+export type ShiftScheduleScalarFieldEnum = (typeof ShiftScheduleScalarFieldEnum)[keyof typeof ShiftScheduleScalarFieldEnum]
+
+
+export const ShiftTypeScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  startTime: 'startTime',
+  endTime: 'endTime',
+  color: 'color'
+} as const
+
+export type ShiftTypeScalarFieldEnum = (typeof ShiftTypeScalarFieldEnum)[keyof typeof ShiftTypeScalarFieldEnum]
 
 
 export const SortOrder = {

@@ -1,30 +1,33 @@
-import "dotenv/config"
-import { PrismaPg } from "@prisma/adapter-pg"
-import { faker } from "@faker-js/faker"
-import { PrismaClient } from "@/lib/generated/prisma/client"
+import "dotenv/config";
+import { PrismaPg } from "@prisma/adapter-pg";
+import { PrismaClient } from "@/lib/generated/prisma/client";
+import { seedUsers } from "./seeders/seedUsers";
+import { seedShiftTypes } from "./seeders/seedShiftTypes";
+import { seedSchedules } from "./seeders/seedSchedule";
 
-const databaseUrl = process.env.DATABASE_URL
-if (!databaseUrl) throw new Error("DATABASE_URL is not set")
+const databaseUrl = process.env.DATABASE_URL;
+if (!databaseUrl) throw new Error("DATABASE_URL is not set");
 
-const prisma = new PrismaClient({ adapter: new PrismaPg({ connectionString: databaseUrl }) })
+const prisma = new PrismaClient({
+  adapter: new PrismaPg({ connectionString: databaseUrl }),
+});
 
 async function main() {
-  const users = Array.from({ length: 50 }, (_, i) => {
-    const firstName = faker.person.firstName()
-    const lastName = faker.person.lastName()
-    return {
-      id: crypto.randomUUID(),
-      name: faker.person.fullName({ firstName, lastName }),
-      // dijamin unik: sisipkan index sebelum '@' (faker bisa menghasilkan email duplikat)
-      email: faker.internet.email({ firstName, lastName }).replace("@", `${i}@`),
-      createdAt: faker.date.past({ years: 1 }), // tersebar dalam 1 tahun → sorting createdAt realistis
-    }
-  })
+  console.log("🚀 Memulai proses database seeding...\n");
 
-  const result = await prisma.user.createMany({ data: users, skipDuplicates: true })
-  console.log(`Seeded: ${result.count} users`)
+  // Jalankan seeder secara modular
+  await seedUsers(prisma);
+  await seedShiftTypes(prisma);
+  await seedSchedules(prisma);
+
+  console.log("\n✨ Semua seeder berhasil dijalankan!");
 }
 
 main()
-  .catch((e) => { console.error(e); process.exit(1) })
-  .finally(() => prisma.$disconnect())
+  .catch((e) => {
+    console.error("❌ Error saat seeding:", e);
+    process.exit(1);
+  })
+  .finally(async () => {
+    await prisma.$disconnect();
+  });

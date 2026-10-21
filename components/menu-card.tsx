@@ -1,4 +1,4 @@
-import type { MenuItem } from "@/lib/menu-types"
+import type { MenuItem } from "@/lib/types/menu-types";
 
 // Format angka 10000 → "Rp 10.000"
 function formatPrice(price: number): string {
@@ -6,7 +6,7 @@ function formatPrice(price: number): string {
     style: "currency",
     currency: "IDR",
     minimumFractionDigits: 0,
-  }).format(price)
+  }).format(price);
 }
 
 // Kartu menu: foto, nama, deskripsi, dan harga.
@@ -46,5 +46,5 @@ export function MenuCard({ menu }: { menu: MenuItem }) {
         </div>
       </div>
     </div>
-  )
+  );
 }

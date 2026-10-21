@@ -12,19 +12,35 @@ datasource db {
   provider = "postgresql"
 }
 
+enum Role {
+  admin
+  manager
+  user
+}
+
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+}
+
 model User {
   id             String          @id
   name           String
   email          String
   emailVerified  Boolean         @default(false)
   image          String?
-  role           String          @default("user")
+  role           Role            @default(user)
+  department     String?
+  jobTitle       String?         @map("job_title")
+  status         UserStatus      @default(ACTIVE)
+  isScheduled    Boolean         @default(false)
+  resignedDate   DateTime?       @map("resigned_date") @db.Date
+  resignReason   String?         @map("resign_reason")
   createdAt      DateTime        @default(now())
   updatedAt      DateTime        @updatedAt
   sessions       Session[]
   accounts       Account[]
-  purchaseOrders PurchaseOrder[]
-  poitems        POItem[]
+  shiftSchedules ShiftSchedule[]
 
   @@unique([email])
   @@map("user")
@@ -80,34 +96,26 @@ model Verification {
   @@map("verification")
 }
 
-model PurchaseOrder {
-  id            String   @id
-  invoiceNumber String   @unique
-  date          DateTime
-  description   String?
-  user          User     @relation(fields: [userId], references: [id])
-  userId        String
-  items         POItem[]
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+model ShiftSchedule {
+  id          String   @id @default(uuid())
+  userId      String   @map("user_id") // Foreign Key merujuk ke User
+  shiftTypeId Int      @map("shift_type_id")
+  date        DateTime @db.Date
 
-  @@index([id])
-  @@map("purchase_order")
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  shiftType ShiftType @relation(fields: [shiftTypeId], references: [id])
+
+  @@unique([userId, date])
+  @@map("shift_schedules")
 }
 
-model POItem {
-  id              String         @id
-  name            String         @unique
-  qty             Int
-  unit            Int
-  harga           Int
-  createdAt       DateTime       @default(now())
-  updatedAt       DateTime       @updatedAt
-  purchaseOrder   PurchaseOrder? @relation(fields: [purchaseOrderId], references: [id])
-  purchaseOrderId String?
-  user            User?          @relation(fields: [userId], references: [id])
-  userId          String?
+model ShiftType {
+  id        Int             @id @default(autoincrement())
+  name      String
+  startTime String?         @map("start_time")
+  endTime   String?         @map("end_time")
+  color     String?
+  schedules ShiftSchedule[]
 
-  @@index([id])
-  @@map("po_item")
+  @@map("shift_types")
 }

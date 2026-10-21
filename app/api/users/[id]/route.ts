@@ -1,6 +1,7 @@
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { updateUserSchema } from "@/lib/user-types";
+import { Role } from "@/lib/generated/prisma/client";
+import { updateUserSchema } from "@/lib/types/user-types";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request, { params }: { params: Promise<{ id: string }> }) {
@@ -35,10 +36,10 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
   }
 
   // 2. Verifikasi Role Admin (RBAC)
-  if (session.user.role !== "admin") {
+  if (session.user.role !== "administrator") {
     console.log("masuk sini")
     return NextResponse.json(
-      { message: "Anda tidak diperbolehkan delete user" },
+      { message: "Anda tidak diperbolehkan update user" },
       { status: 403 }
     )
   }
@@ -63,20 +64,15 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
   const { name, email, role } = parsed.data
 
   try {
-    const data = await auth.api.adminUpdateUser({
-        body: {
-            userId: id, // required, The user id which you want to update.
-            data: { 
-              name,
-              email,
-              role,
-            }, // required, The data to update.
-        },
-        // This endpoint requires session cookies.
-        headers: request.headers,
+    const data = await prisma.user.update({
+      where: { id },
+      data: {
+        name,
+        email,
+        role: role as Role,
+      },
     });
 
-    
     return NextResponse.json({ message: "User berhasil diupdate", data: data }, { status: 200 })
 
   } catch (error: any) {
@@ -119,7 +115,7 @@ export async function DELETE(
   }
 
   // 2. Verifikasi Role Admin (RBAC)
-  if (session.user.role !== "admin") {
+  if (session.user.role !== "administrator") {
     console.log("masuk sini")
     return NextResponse.json(
       { message: "Anda tidak diperbolehkan delete user" },
@@ -143,12 +139,9 @@ export async function DELETE(
   }
 
   try {
-    // 4. Eksekusi Hapus User via Better Auth API
-    const res = await auth.api.removeUser({
-      body: {
-        userId: id,
-      },
-      headers: request.headers,
+    // 4. Eksekusi Hapus User via Prisma
+    const res = await prisma.user.delete({
+      where: { id },
     })
 
     return NextResponse.json(
