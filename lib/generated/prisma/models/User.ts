@@ -257,6 +257,7 @@ export type UserWhereInput = {
   sessions?: Prisma.SessionListRelationFilter
   accounts?: Prisma.AccountListRelationFilter
   shiftSchedules?: Prisma.ShiftScheduleListRelationFilter
+  movings?: Prisma.MovingListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -277,6 +278,7 @@ export type UserOrderByWithRelationInput = {
   sessions?: Prisma.SessionOrderByRelationAggregateInput
   accounts?: Prisma.AccountOrderByRelationAggregateInput
   shiftSchedules?: Prisma.ShiftScheduleOrderByRelationAggregateInput
+  movings?: Prisma.MovingOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -300,6 +302,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   sessions?: Prisma.SessionListRelationFilter
   accounts?: Prisma.AccountListRelationFilter
   shiftSchedules?: Prisma.ShiftScheduleListRelationFilter
+  movings?: Prisma.MovingListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -360,6 +363,7 @@ export type UserCreateInput = {
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   shiftSchedules?: Prisma.ShiftScheduleCreateNestedManyWithoutUserInput
+  movings?: Prisma.MovingCreateNestedManyWithoutCreatedByInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -380,6 +384,7 @@ export type UserUncheckedCreateInput = {
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   shiftSchedules?: Prisma.ShiftScheduleUncheckedCreateNestedManyWithoutUserInput
+  movings?: Prisma.MovingUncheckedCreateNestedManyWithoutCreatedByInput
 }
 
 export type UserUpdateInput = {
@@ -400,6 +405,7 @@ export type UserUpdateInput = {
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   shiftSchedules?: Prisma.ShiftScheduleUpdateManyWithoutUserNestedInput
+  movings?: Prisma.MovingUpdateManyWithoutCreatedByNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -420,6 +426,7 @@ export type UserUncheckedUpdateInput = {
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   shiftSchedules?: Prisma.ShiftScheduleUncheckedUpdateManyWithoutUserNestedInput
+  movings?: Prisma.MovingUncheckedUpdateManyWithoutCreatedByNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -599,6 +606,20 @@ export type UserUpdateOneRequiredWithoutShiftSchedulesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutShiftSchedulesInput, Prisma.UserUpdateWithoutShiftSchedulesInput>, Prisma.UserUncheckedUpdateWithoutShiftSchedulesInput>
 }
 
+export type UserCreateNestedOneWithoutMovingsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutMovingsInput, Prisma.UserUncheckedCreateWithoutMovingsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutMovingsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutMovingsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutMovingsInput, Prisma.UserUncheckedCreateWithoutMovingsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutMovingsInput
+  upsert?: Prisma.UserUpsertWithoutMovingsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutMovingsInput, Prisma.UserUpdateWithoutMovingsInput>, Prisma.UserUncheckedUpdateWithoutMovingsInput>
+}
+
 export type UserCreateWithoutSessionsInput = {
   id: string
   name: string
@@ -616,6 +637,7 @@ export type UserCreateWithoutSessionsInput = {
   updatedAt?: Date | string
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   shiftSchedules?: Prisma.ShiftScheduleCreateNestedManyWithoutUserInput
+  movings?: Prisma.MovingCreateNestedManyWithoutCreatedByInput
 }
 
 export type UserUncheckedCreateWithoutSessionsInput = {
@@ -635,6 +657,7 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   updatedAt?: Date | string
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   shiftSchedules?: Prisma.ShiftScheduleUncheckedCreateNestedManyWithoutUserInput
+  movings?: Prisma.MovingUncheckedCreateNestedManyWithoutCreatedByInput
 }
 
 export type UserCreateOrConnectWithoutSessionsInput = {
@@ -670,6 +693,7 @@ export type UserUpdateWithoutSessionsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   shiftSchedules?: Prisma.ShiftScheduleUpdateManyWithoutUserNestedInput
+  movings?: Prisma.MovingUpdateManyWithoutCreatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -689,6 +713,7 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   shiftSchedules?: Prisma.ShiftScheduleUncheckedUpdateManyWithoutUserNestedInput
+  movings?: Prisma.MovingUncheckedUpdateManyWithoutCreatedByNestedInput
 }
 
 export type UserCreateWithoutAccountsInput = {
@@ -708,6 +733,7 @@ export type UserCreateWithoutAccountsInput = {
   updatedAt?: Date | string
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   shiftSchedules?: Prisma.ShiftScheduleCreateNestedManyWithoutUserInput
+  movings?: Prisma.MovingCreateNestedManyWithoutCreatedByInput
 }
 
 export type UserUncheckedCreateWithoutAccountsInput = {
@@ -727,6 +753,7 @@ export type UserUncheckedCreateWithoutAccountsInput = {
   updatedAt?: Date | string
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   shiftSchedules?: Prisma.ShiftScheduleUncheckedCreateNestedManyWithoutUserInput
+  movings?: Prisma.MovingUncheckedCreateNestedManyWithoutCreatedByInput
 }
 
 export type UserCreateOrConnectWithoutAccountsInput = {
@@ -762,6 +789,7 @@ export type UserUpdateWithoutAccountsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   shiftSchedules?: Prisma.ShiftScheduleUpdateManyWithoutUserNestedInput
+  movings?: Prisma.MovingUpdateManyWithoutCreatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAccountsInput = {
@@ -781,6 +809,7 @@ export type UserUncheckedUpdateWithoutAccountsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   shiftSchedules?: Prisma.ShiftScheduleUncheckedUpdateManyWithoutUserNestedInput
+  movings?: Prisma.MovingUncheckedUpdateManyWithoutCreatedByNestedInput
 }
 
 export type UserCreateWithoutShiftSchedulesInput = {
@@ -800,6 +829,7 @@ export type UserCreateWithoutShiftSchedulesInput = {
   updatedAt?: Date | string
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  movings?: Prisma.MovingCreateNestedManyWithoutCreatedByInput
 }
 
 export type UserUncheckedCreateWithoutShiftSchedulesInput = {
@@ -819,6 +849,7 @@ export type UserUncheckedCreateWithoutShiftSchedulesInput = {
   updatedAt?: Date | string
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  movings?: Prisma.MovingUncheckedCreateNestedManyWithoutCreatedByInput
 }
 
 export type UserCreateOrConnectWithoutShiftSchedulesInput = {
@@ -854,6 +885,7 @@ export type UserUpdateWithoutShiftSchedulesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  movings?: Prisma.MovingUpdateManyWithoutCreatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutShiftSchedulesInput = {
@@ -873,6 +905,103 @@ export type UserUncheckedUpdateWithoutShiftSchedulesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  movings?: Prisma.MovingUncheckedUpdateManyWithoutCreatedByNestedInput
+}
+
+export type UserCreateWithoutMovingsInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  role?: $Enums.Role
+  department?: string | null
+  jobTitle?: string | null
+  status?: $Enums.UserStatus
+  isScheduled?: boolean
+  resignedDate?: Date | string | null
+  resignReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  shiftSchedules?: Prisma.ShiftScheduleCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutMovingsInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  role?: $Enums.Role
+  department?: string | null
+  jobTitle?: string | null
+  status?: $Enums.UserStatus
+  isScheduled?: boolean
+  resignedDate?: Date | string | null
+  resignReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  shiftSchedules?: Prisma.ShiftScheduleUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutMovingsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutMovingsInput, Prisma.UserUncheckedCreateWithoutMovingsInput>
+}
+
+export type UserUpsertWithoutMovingsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutMovingsInput, Prisma.UserUncheckedUpdateWithoutMovingsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutMovingsInput, Prisma.UserUncheckedCreateWithoutMovingsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutMovingsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutMovingsInput, Prisma.UserUncheckedUpdateWithoutMovingsInput>
+}
+
+export type UserUpdateWithoutMovingsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  department?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  jobTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  isScheduled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  resignedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  resignReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  shiftSchedules?: Prisma.ShiftScheduleUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutMovingsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  department?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  jobTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  isScheduled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  resignedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  resignReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  shiftSchedules?: Prisma.ShiftScheduleUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -884,12 +1013,14 @@ export type UserCountOutputType = {
   sessions: number
   accounts: number
   shiftSchedules: number
+  movings: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   sessions?: boolean | UserCountOutputTypeCountSessionsArgs
   accounts?: boolean | UserCountOutputTypeCountAccountsArgs
   shiftSchedules?: boolean | UserCountOutputTypeCountShiftSchedulesArgs
+  movings?: boolean | UserCountOutputTypeCountMovingsArgs
 }
 
 /**
@@ -923,6 +1054,13 @@ export type UserCountOutputTypeCountShiftSchedulesArgs<ExtArgs extends runtime.T
   where?: Prisma.ShiftScheduleWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountMovingsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MovingWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -942,6 +1080,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
   accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
   shiftSchedules?: boolean | Prisma.User$shiftSchedulesArgs<ExtArgs>
+  movings?: boolean | Prisma.User$movingsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -1001,6 +1140,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
   accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
   shiftSchedules?: boolean | Prisma.User$shiftSchedulesArgs<ExtArgs>
+  movings?: boolean | Prisma.User$movingsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1012,6 +1152,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     sessions: Prisma.$SessionPayload<ExtArgs>[]
     accounts: Prisma.$AccountPayload<ExtArgs>[]
     shiftSchedules: Prisma.$ShiftSchedulePayload<ExtArgs>[]
+    movings: Prisma.$MovingPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1425,6 +1566,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   sessions<T extends Prisma.User$sessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   accounts<T extends Prisma.User$accountsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$accountsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   shiftSchedules<T extends Prisma.User$shiftSchedulesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$shiftSchedulesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ShiftSchedulePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  movings<T extends Prisma.User$movingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$movingsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MovingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1930,6 +2072,30 @@ export type User$shiftSchedulesArgs<ExtArgs extends runtime.Types.Extensions.Int
   take?: number
   skip?: number
   distinct?: Prisma.ShiftScheduleScalarFieldEnum | Prisma.ShiftScheduleScalarFieldEnum[]
+}
+
+/**
+ * User.movings
+ */
+export type User$movingsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Moving
+   */
+  select?: Prisma.MovingSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Moving
+   */
+  omit?: Prisma.MovingOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MovingInclude<ExtArgs> | null
+  where?: Prisma.MovingWhereInput
+  orderBy?: Prisma.MovingOrderByWithRelationInput | Prisma.MovingOrderByWithRelationInput[]
+  cursor?: Prisma.MovingWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MovingScalarFieldEnum | Prisma.MovingScalarFieldEnum[]
 }
 
 /**

@@ -4,6 +4,8 @@ import { PrismaClient } from "@/lib/generated/prisma/client";
 import { seedUsers } from "./seeders/seedUsers";
 import { seedShiftTypes } from "./seeders/seedShiftTypes";
 import { seedSchedules } from "./seeders/seedSchedule";
+import { seedMoving } from "./seeders/seedMovingRequest";
+import { seedItems } from "./seeders/seedItems";
 
 const databaseUrl = process.env.DATABASE_URL;
 if (!databaseUrl) throw new Error("DATABASE_URL is not set");
@@ -16,9 +18,11 @@ async function main() {
   console.log("🚀 Memulai proses database seeding...\n");
 
   // Jalankan seeder secara modular
-  await seedUsers(prisma);
-  await seedShiftTypes(prisma);
-  await seedSchedules(prisma);
+  // await seedUsers(prisma);
+  // await seedShiftTypes(prisma);
+  // await seedSchedules(prisma);
+  await seedItems(prisma);
+  await seedMoving(prisma);
 
   console.log("\n✨ Semua seeder berhasil dijalankan!");
 }

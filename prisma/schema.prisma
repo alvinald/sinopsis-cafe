@@ -24,23 +24,25 @@ enum UserStatus {
 }
 
 model User {
-  id             String          @id
-  name           String
-  email          String
-  emailVerified  Boolean         @default(false)
-  image          String?
-  role           Role            @default(user)
-  department     String?
-  jobTitle       String?         @map("job_title")
-  status         UserStatus      @default(ACTIVE)
-  isScheduled    Boolean         @default(false)
-  resignedDate   DateTime?       @map("resigned_date") @db.Date
-  resignReason   String?         @map("resign_reason")
-  createdAt      DateTime        @default(now())
-  updatedAt      DateTime        @updatedAt
+  id            String     @id
+  name          String
+  email         String
+  emailVerified Boolean    @default(false)
+  image         String?
+  role          Role       @default(user)
+  department    String?
+  jobTitle      String?    @map("job_title")
+  status        UserStatus @default(ACTIVE)
+  isScheduled   Boolean    @default(false)
+  resignedDate  DateTime?  @map("resigned_date") @db.Date
+  resignReason  String?    @map("resign_reason")
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+
   sessions       Session[]
   accounts       Account[]
   shiftSchedules ShiftSchedule[]
+  movings        Moving[]
 
   @@unique([email])
   @@map("user")
@@ -118,4 +120,54 @@ model ShiftType {
   schedules ShiftSchedule[]
 
   @@map("shift_types")
+}
+
+enum MovingStatus {
+  PENDING // dibuat, barang belum dikirim
+  SENT // dikirim (stok gudang asal berkurang)
+  RECEIVED // diterima (stok gudang tujuan bertambah)
+  CANCELLED // dibatalkan
+}
+
+model Item {
+  id       String  @id @default(uuid())
+  sku      String  @unique
+  name     String
+  unit     String // pcs, box, kg, dst
+  stock    Int     @default(0)
+  isActive Boolean @default(true) @map("is_active")
+
+  movingItems MovingItem[]
+
+  @@map("items")
+}
+
+model Moving {
+  id         String       @id @default(uuid())
+  number     String       @unique
+  status     MovingStatus @default(PENDING)
+  note       String?
+  createdAt  DateTime     @default(now()) @map("created_at")
+  sentAt     DateTime?    @map("sent_at")
+  receivedAt DateTime?    @map("received_at")
+
+  createdBy   User   @relation(fields: [createdById], references: [id])
+  createdById String @map("created_by_id")
+
+  items MovingItem[]
+
+  @@map("movings")
+}
+
+model MovingItem {
+  id       String @id @default(uuid())
+  movingId String @map("moving_id")
+  itemId   String @map("item_id")
+  qty      Int
+
+  moving Moving @relation(fields: [movingId], references: [id], onDelete: Cascade)
+  item   Item   @relation(fields: [itemId], references: [id])
+
+  @@unique([movingId, itemId])
+  @@map("moving_items")
 }

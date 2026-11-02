@@ -47,3 +47,18 @@ export type ShiftSchedule = Prisma.ShiftScheduleModel
  * 
  */
 export type ShiftType = Prisma.ShiftTypeModel
+/**
+ * Model Item
+ * 
+ */
+export type Item = Prisma.ItemModel
+/**
+ * Model Moving
+ * 
+ */
+export type Moving = Prisma.MovingModel
+/**
+ * Model MovingItem
+ * 
+ */
+export type MovingItem = Prisma.MovingItemModel

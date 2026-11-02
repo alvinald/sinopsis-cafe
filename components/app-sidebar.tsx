@@ -2,82 +2,121 @@
 
 import * as React from "react";
 
-import { NavTransaction } from "@/components/nav-transaction";
 import { NavMain } from "@/components/nav-main";
 import { NavUser } from "@/components/nav-user";
+import { TeamSwitcher } from "@/components/team-switcher";
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
+  SidebarRail,
 } from "@/components/ui/sidebar";
 import {
-  LayoutDashboardIcon,
+  GalleryVerticalEndIcon,
+  TerminalSquareIcon,
+  BotIcon,
+  BookOpenIcon,
+  Settings2Icon,
+  FrameIcon,
+  PieChartIcon,
+  MapIcon,
+  Users2Icon,
   UsersIcon,
-  DatabaseIcon,
-  CommandIcon,
+  HomeIcon,
+  Package,
+  IdCard,
+  ShieldCheck,
 } from "lucide-react";
-import { NavSettting } from "./nav-setting";
-import { NavKaryawan } from "./nav-karyawan";
+import { NavSettings } from "./nav-setting";
+import { NavDashboard } from "./nav-dashboard";
 
+// This is sample data.
 const data = {
-  navMain: [
+  user: {
+    name: "shadcn",
+    email: "m@example.com",
+    avatar: "/avatars/shadcn.jpg",
+  },
+  teams: [
     {
-      title: "Dashboard",
-      url: "/admin/dashboard",
-      icon: <LayoutDashboardIcon />,
+      name: "Acme Inc",
+      logo: <GalleryVerticalEndIcon />,
+      plan: "Enterprise",
     },
   ],
-  NavTransaction: [
+  dashboard: [
     {
-      name: "Purchase",
-      url: "/admin/purchase",
-      icon: <DatabaseIcon />,
+      name: "Dashboard",
+      url: "#",
+      icon: <HomeIcon />,
     },
   ],
-  NavKaryawan: [
+  main: [
     {
-      name: "Schedule",
-      url: "/admin/schedule",
+      title: "Inventory",
+      url: "#",
+      icon: <Package />,
+      isActive: true,
+      items: [
+        {
+          title: "Purchase Order",
+          url: "#",
+        },
+        {
+          title: "Moving Item",
+          url: "#",
+        },
+      ],
+    },
+    {
+      title: "Karyawan",
+      url: "#",
       icon: <UsersIcon />,
+      items: [
+        {
+          title: "List Karyawan",
+          url: "#",
+        },
+        {
+          title: "Schedule",
+          url: "admin/schedule",
+        },
+        {
+          title: "Attendance",
+          url: "#",
+        },
+        {
+          title: "Overtime",
+          url: "#",
+        },
+      ],
     },
   ],
-  NavSettting: [
+  settings: [
     {
       name: "Users",
-      url: "/admin/users",
-      icon: <UsersIcon />,
+      url: "#",
+      icon: <ShieldCheck />,
     },
   ],
 };
+
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
-    <Sidebar collapsible="offcanvas" {...props}>
+    <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton
-              className="data-[slot=sidebar-menu-button]:p-1.5!"
-              render={<a href="#" />}
-            >
-              <CommandIcon className="size-5!" />
-              <span className="text-base font-semibold">Test</span>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        </SidebarMenu>
+        <TeamSwitcher teams={data.teams} />
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
-        {/* <NavTransaction items={data.NavTransaction} /> */}
-        <NavKaryawan items={data.NavKaryawan} />
-        <NavSettting items={data.NavSettting} />
+        <NavDashboard items={data.dashboard} />
+        <NavMain items={data.main} />
+        <NavSettings items={data.settings} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser />
+        <NavUser user={data.user} />
       </SidebarFooter>
+      <SidebarRail />
     </Sidebar>
   );
 }

@@ -24,3 +24,13 @@ export const UserStatus = {
 } as const
 
 export type UserStatus = (typeof UserStatus)[keyof typeof UserStatus]
+
+
+export const MovingStatus = {
+  PENDING: 'PENDING',
+  SENT: 'SENT',
+  RECEIVED: 'RECEIVED',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type MovingStatus = (typeof MovingStatus)[keyof typeof MovingStatus]
