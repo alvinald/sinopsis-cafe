@@ -22,7 +22,7 @@ interface ShiftSelectDialogProps {
   onSelectShift: (newShift: number) => void;
 }
 
-export default function ShiftSelectDialog({
+export default function FormSchedule({
   isOpen,
   name,
   date,

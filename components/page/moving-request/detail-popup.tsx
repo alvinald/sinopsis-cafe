@@ -23,7 +23,7 @@ export function DetailPopup({
   const [confirmCancel, setConfirmCancel] = useState(false);
 
   if (!moving) return null;
-
+  console.log("Detail moving:", moving);
   return (
     <div
       role="dialog"
@@ -59,7 +59,10 @@ export function DetailPopup({
               variant="ghost"
               size="icon-sm"
               aria-label="Tutup"
-              onClick={onClose}
+              onClick={() => {
+                setConfirmCancel(false);
+                onClose();
+              }}
             >
               <X className="size-4" />
             </Button>
@@ -74,28 +77,34 @@ export function DetailPopup({
 
         <dl className="mt-3 grid grid-cols-2 gap-x-4 gap-y-2 text-xs">
           <div>
-            <dt className="text-muted-foreground">Dibuat oleh</dt>
-            <dd className="font-medium">{moving.createdBy.name}</dd>
-          </div>
-          <div>
             <dt className="text-muted-foreground">Dibuat</dt>
             <dd className="font-medium tabular-nums">
-              {formatDate(moving.createdAt, "dd MMM yyyy HH:mm")}
+              {moving.createdAt && moving.createdBy?.name
+                ? `${moving.createdBy.name} - ${formatDate(moving.createdAt, "dd MMM yyyy HH:mm")}`
+                : "—"}
             </dd>
           </div>
           <div>
             <dt className="text-muted-foreground">Dikirim</dt>
             <dd className="font-medium tabular-nums">
-              {moving.sentAt
-                ? formatDate(moving.sentAt, "dd MMM yyyy HH:mm")
+              {moving.sentAt && moving.sentBy?.name
+                ? `${moving.sentBy.name} - ${formatDate(moving.sentAt, "dd MMM yyyy HH:mm")}`
                 : "—"}
             </dd>
           </div>
           <div>
             <dt className="text-muted-foreground">Diterima</dt>
             <dd className="font-medium tabular-nums">
-              {moving.receivedAt
-                ? formatDate(moving.receivedAt, "dd MMM yyyy HH:mm")
+              {moving.receivedAt && moving.receivedBy?.name
+                ? `${moving.receivedBy.name} - ${formatDate(moving.receivedAt, "dd MMM yyyy HH:mm")}`
+                : "—"}
+            </dd>
+          </div>
+          <div>
+            <dt className="text-muted-foreground">Dibatalkan</dt>
+            <dd className="font-medium tabular-nums">
+              {moving.cancelledAt && moving.cancelledBy?.name
+                ? `${moving.cancelledBy.name} - ${formatDate(moving.cancelledAt, "dd MMM yyyy HH:mm")}`
                 : "—"}
             </dd>
           </div>

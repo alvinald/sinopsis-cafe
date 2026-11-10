@@ -100,9 +100,9 @@ export async function POST(request: NextRequest) {
     console.log(parsed.data);
     return NextResponse.json(updatedSchedule);
   } catch (error) {
-    console.error("Error fetching shift schedules:", error);
+    console.error("Error fetching moving request:", error);
     return NextResponse.json(
-      { error: "Gagal mengambil data schedules" },
+      { error: "Gagal mengambil data moving request" },
       { status: 500 },
     );
   }

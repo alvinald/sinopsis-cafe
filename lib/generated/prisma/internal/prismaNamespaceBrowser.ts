@@ -51,6 +51,9 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
+  Role: 'Role',
+  Permission: 'Permission',
+  RolePermission: 'RolePermission',
   User: 'User',
   Session: 'Session',
   Account: 'Account',
@@ -78,13 +81,39 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
+export const RoleScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  isDeleted: 'isDeleted'
+} as const
+
+export type RoleScalarFieldEnum = (typeof RoleScalarFieldEnum)[keyof typeof RoleScalarFieldEnum]
+
+
+export const PermissionScalarFieldEnum = {
+  id: 'id',
+  resource: 'resource',
+  action: 'action'
+} as const
+
+export type PermissionScalarFieldEnum = (typeof PermissionScalarFieldEnum)[keyof typeof PermissionScalarFieldEnum]
+
+
+export const RolePermissionScalarFieldEnum = {
+  roleId: 'roleId',
+  permissionId: 'permissionId'
+} as const
+
+export type RolePermissionScalarFieldEnum = (typeof RolePermissionScalarFieldEnum)[keyof typeof RolePermissionScalarFieldEnum]
+
+
 export const UserScalarFieldEnum = {
   id: 'id',
   name: 'name',
   email: 'email',
   emailVerified: 'emailVerified',
   image: 'image',
-  role: 'role',
   department: 'department',
   jobTitle: 'jobTitle',
   status: 'status',
@@ -92,7 +121,9 @@ export const UserScalarFieldEnum = {
   resignedDate: 'resignedDate',
   resignReason: 'resignReason',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  roleId: 'roleId',
+  isDeleted: 'isDeleted'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -185,7 +216,10 @@ export const MovingScalarFieldEnum = {
   createdAt: 'createdAt',
   sentAt: 'sentAt',
   receivedAt: 'receivedAt',
-  createdById: 'createdById'
+  createdById: 'createdById',
+  sentById: 'sentById',
+  receivedById: 'receivedById',
+  cancelledById: 'cancelledById'
 } as const
 
 export type MovingScalarFieldEnum = (typeof MovingScalarFieldEnum)[keyof typeof MovingScalarFieldEnum]

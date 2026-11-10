@@ -13,9 +13,8 @@ import {
 import { id } from "date-fns/locale";
 import { ChevronLeft, ChevronRight, Plus, Search } from "lucide-react";
 import { UserSchedule } from "@/lib/types/schedule-types";
-import ShiftSelectDialog from "@/components/page/shift/shift-select-dialog";
 import { useRouter } from "next/navigation";
-import { Header } from "@/components/header";
+import FormSchedule from "@/components/page/schedule/form-schedule";
 
 type selectedSchedule = {
   userId: string;
@@ -309,7 +308,7 @@ export default function ShiftSchedulePage() {
           </table>
         </div>
         {/* MODAL DIALOG SHADCN UI */}
-        <ShiftSelectDialog
+        <FormSchedule
           isOpen={!!selectedSchedule}
           name={selectedSchedule?.name}
           date={selectedSchedule?.date}

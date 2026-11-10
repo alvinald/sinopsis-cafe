@@ -16,13 +16,13 @@ export async function seedUsers(prisma: PrismaClient) {
       UserStatus.INACTIVE,
     ]);
 
-    const role = faker.helpers.arrayElement([
-      Role.user,
-      Role.user,
-      Role.user,
-      Role.user,
-      Role.admin,
-    ]);
+    // const role = faker.helpers.arrayElement([
+    //   Role.user,
+    //   Role.user,
+    //   Role.user,
+    //   Role.user,
+    //   Role.admin,
+    // ]);
 
     const isResigned = status === UserStatus.INACTIVE;
 
@@ -33,7 +33,7 @@ export async function seedUsers(prisma: PrismaClient) {
         .email({ firstName, lastName })
         .replace("@", `${i}@`),
       image: faker.image.avatar(),
-      role,
+      // role,
       department: faker.commerce.department(),
       jobTitle: faker.person.jobTitle(),
       status,

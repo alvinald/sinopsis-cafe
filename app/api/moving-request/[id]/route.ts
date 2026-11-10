@@ -28,6 +28,9 @@ export async function PUT(
   }
 
   const { status } = parsed.data;
+
+  const now = new Date();
+
   try {
     const updateStatus = await prisma.moving.update({
       where: {
@@ -35,6 +38,21 @@ export async function PUT(
       },
       data: {
         status: status,
+
+        ...(status === "SENT" && {
+          sentById: session.user.id,
+          sentAt: now,
+        }),
+
+        ...(status === "RECEIVED" && {
+          receivedById: session.user.id,
+          receivedAt: now,
+        }),
+
+        ...(status === "CANCELLED" && {
+          receivedById: session.user.id,
+          receivedAt: now,
+        }),
       },
     });
 

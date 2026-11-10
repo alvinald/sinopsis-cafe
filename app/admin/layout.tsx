@@ -1,12 +1,25 @@
-import type { ReactNode } from "react"
+import type { ReactNode } from "react";
 
-import { AppSidebar } from "@/components/app-sidebar"
-import { SiteHeader } from "@/components/site-header"
-import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
-import { Toaster } from "sonner"
+import { AppSidebar } from "@/components/app-sidebar";
+import { SiteHeader } from "@/components/site-header";
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+import { Toaster } from "sonner";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 
 // Shell admin: dipakai oleh semua halaman di bawah /admin.
-export default function AdminLayout({ children }: { children: ReactNode }) {
+export default async function AdminLayout({
+  children,
+}: {
+  children: ReactNode;
+}) {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+  if (!session) {
+    redirect("/login");
+  }
   return (
     <SidebarProvider
       style={
@@ -16,7 +29,6 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
         } as React.CSSProperties
       }
     >
-      
       <AppSidebar variant="inset" />
       <SidebarInset>
         <SiteHeader />
@@ -26,5 +38,5 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
         </div>
       </SidebarInset>
     </SidebarProvider>
-  )
+  );
 }

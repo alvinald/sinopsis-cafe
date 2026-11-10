@@ -12,37 +12,73 @@ datasource db {
   provider = "postgresql"
 }
 
-enum Role {
-  admin
-  manager
-  user
-}
-
 enum UserStatus {
   ACTIVE
   INACTIVE
 }
 
+// Model Master Role
+model Role {
+  id          String  @id @default(cuid())
+  name        String  @unique // Contoh: "master", "admin", "editor"
+  description String?
+  isDeleted   Boolean @default(false)
+
+  users       User[]
+  permissions RolePermission[]
+
+  @@map("role")
+}
+
+// Model Master Permission (Resource & Action)
+model Permission {
+  id       String           @id @default(cuid())
+  resource String // Contoh: "user", "post", "system"
+  action   String // Contoh: "create", "read", "update", "delete"
+  roles    RolePermission[]
+
+  @@unique([resource, action])
+  @@map("permission")
+}
+
+// Model Pivot (Tabel Penghubung Role <-> Permission)
+model RolePermission {
+  roleId       String
+  permissionId String
+
+  role       Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  permission Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+
+  @@id([roleId, permissionId])
+  @@map("role_permission")
+}
+
 model User {
-  id            String     @id
+  id            String  @id
   name          String
   email         String
-  emailVerified Boolean    @default(false)
+  emailVerified Boolean @default(false)
   image         String?
-  role          Role       @default(user)
-  department    String?
-  jobTitle      String?    @map("job_title")
-  status        UserStatus @default(ACTIVE)
-  isScheduled   Boolean    @default(false)
-  resignedDate  DateTime?  @map("resigned_date") @db.Date
-  resignReason  String?    @map("resign_reason")
-  createdAt     DateTime   @default(now())
-  updatedAt     DateTime   @updatedAt
 
-  sessions       Session[]
-  accounts       Account[]
-  shiftSchedules ShiftSchedule[]
-  movings        Moving[]
+  department   String?
+  jobTitle     String?    @map("job_title")
+  status       UserStatus @default(ACTIVE)
+  isScheduled  Boolean    @default(false)
+  resignedDate DateTime?  @map("resigned_date") @db.Date
+  resignReason String?    @map("resign_reason")
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  role         Role?      @relation(fields: [roleId], references: [id])
+  roleId       String?
+  isDeleted    Boolean    @default(false)
+
+  sessions         Session[]
+  accounts         Account[]
+  shiftSchedules   ShiftSchedule[]
+  createdMovings   Moving[]
+  sentMovings      Moving[]        @relation("SentMovings")
+  receivedMovings  Moving[]        @relation("ReceivedMovings")
+  cancelledMovings Moving[]        @relation("CancelledMovings")
 
   @@unique([email])
   @@map("user")
@@ -153,6 +189,18 @@ model Moving {
 
   createdBy   User   @relation(fields: [createdById], references: [id])
   createdById String @map("created_by_id")
+
+  // 2. Pengirim (Sent By) - Opsional / Nullable
+  sentBy   User?   @relation("SentMovings", fields: [sentById], references: [id])
+  sentById String? @map("sent_by_id")
+
+  // 3. Penerima (Received By) - Opsional / Nullable
+  receivedBy   User?   @relation("ReceivedMovings", fields: [receivedById], references: [id])
+  receivedById String? @map("received_by_id")
+
+  // 4. Pembatal (Cancelled By) - Opsional / Nullable
+  cancelledBy   User?   @relation("CancelledMovings", fields: [cancelledById], references: [id])
+  cancelledById String? @map("cancelled_by_id")
 
   items MovingItem[]
 

@@ -33,6 +33,9 @@ export type MovingMinAggregateOutputType = {
   sentAt: Date | null
   receivedAt: Date | null
   createdById: string | null
+  sentById: string | null
+  receivedById: string | null
+  cancelledById: string | null
 }
 
 export type MovingMaxAggregateOutputType = {
@@ -44,6 +47,9 @@ export type MovingMaxAggregateOutputType = {
   sentAt: Date | null
   receivedAt: Date | null
   createdById: string | null
+  sentById: string | null
+  receivedById: string | null
+  cancelledById: string | null
 }
 
 export type MovingCountAggregateOutputType = {
@@ -55,6 +61,9 @@ export type MovingCountAggregateOutputType = {
   sentAt: number
   receivedAt: number
   createdById: number
+  sentById: number
+  receivedById: number
+  cancelledById: number
   _all: number
 }
 
@@ -68,6 +77,9 @@ export type MovingMinAggregateInputType = {
   sentAt?: true
   receivedAt?: true
   createdById?: true
+  sentById?: true
+  receivedById?: true
+  cancelledById?: true
 }
 
 export type MovingMaxAggregateInputType = {
@@ -79,6 +91,9 @@ export type MovingMaxAggregateInputType = {
   sentAt?: true
   receivedAt?: true
   createdById?: true
+  sentById?: true
+  receivedById?: true
+  cancelledById?: true
 }
 
 export type MovingCountAggregateInputType = {
@@ -90,6 +105,9 @@ export type MovingCountAggregateInputType = {
   sentAt?: true
   receivedAt?: true
   createdById?: true
+  sentById?: true
+  receivedById?: true
+  cancelledById?: true
   _all?: true
 }
 
@@ -174,6 +192,9 @@ export type MovingGroupByOutputType = {
   sentAt: Date | null
   receivedAt: Date | null
   createdById: string
+  sentById: string | null
+  receivedById: string | null
+  cancelledById: string | null
   _count: MovingCountAggregateOutputType | null
   _min: MovingMinAggregateOutputType | null
   _max: MovingMaxAggregateOutputType | null
@@ -206,7 +227,13 @@ export type MovingWhereInput = {
   sentAt?: Prisma.DateTimeNullableFilter<"Moving"> | Date | string | null
   receivedAt?: Prisma.DateTimeNullableFilter<"Moving"> | Date | string | null
   createdById?: Prisma.StringFilter<"Moving"> | string
+  sentById?: Prisma.StringNullableFilter<"Moving"> | string | null
+  receivedById?: Prisma.StringNullableFilter<"Moving"> | string | null
+  cancelledById?: Prisma.StringNullableFilter<"Moving"> | string | null
   createdBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  sentBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  receivedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  cancelledBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   items?: Prisma.MovingItemListRelationFilter
 }
 
@@ -219,7 +246,13 @@ export type MovingOrderByWithRelationInput = {
   sentAt?: Prisma.SortOrderInput | Prisma.SortOrder
   receivedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdById?: Prisma.SortOrder
+  sentById?: Prisma.SortOrderInput | Prisma.SortOrder
+  receivedById?: Prisma.SortOrderInput | Prisma.SortOrder
+  cancelledById?: Prisma.SortOrderInput | Prisma.SortOrder
   createdBy?: Prisma.UserOrderByWithRelationInput
+  sentBy?: Prisma.UserOrderByWithRelationInput
+  receivedBy?: Prisma.UserOrderByWithRelationInput
+  cancelledBy?: Prisma.UserOrderByWithRelationInput
   items?: Prisma.MovingItemOrderByRelationAggregateInput
 }
 
@@ -235,7 +268,13 @@ export type MovingWhereUniqueInput = Prisma.AtLeast<{
   sentAt?: Prisma.DateTimeNullableFilter<"Moving"> | Date | string | null
   receivedAt?: Prisma.DateTimeNullableFilter<"Moving"> | Date | string | null
   createdById?: Prisma.StringFilter<"Moving"> | string
+  sentById?: Prisma.StringNullableFilter<"Moving"> | string | null
+  receivedById?: Prisma.StringNullableFilter<"Moving"> | string | null
+  cancelledById?: Prisma.StringNullableFilter<"Moving"> | string | null
   createdBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  sentBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  receivedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  cancelledBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   items?: Prisma.MovingItemListRelationFilter
 }, "id" | "number">
 
@@ -248,6 +287,9 @@ export type MovingOrderByWithAggregationInput = {
   sentAt?: Prisma.SortOrderInput | Prisma.SortOrder
   receivedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdById?: Prisma.SortOrder
+  sentById?: Prisma.SortOrderInput | Prisma.SortOrder
+  receivedById?: Prisma.SortOrderInput | Prisma.SortOrder
+  cancelledById?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.MovingCountOrderByAggregateInput
   _max?: Prisma.MovingMaxOrderByAggregateInput
   _min?: Prisma.MovingMinOrderByAggregateInput
@@ -265,6 +307,9 @@ export type MovingScalarWhereWithAggregatesInput = {
   sentAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Moving"> | Date | string | null
   receivedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Moving"> | Date | string | null
   createdById?: Prisma.StringWithAggregatesFilter<"Moving"> | string
+  sentById?: Prisma.StringNullableWithAggregatesFilter<"Moving"> | string | null
+  receivedById?: Prisma.StringNullableWithAggregatesFilter<"Moving"> | string | null
+  cancelledById?: Prisma.StringNullableWithAggregatesFilter<"Moving"> | string | null
 }
 
 export type MovingCreateInput = {
@@ -275,7 +320,10 @@ export type MovingCreateInput = {
   createdAt?: Date | string
   sentAt?: Date | string | null
   receivedAt?: Date | string | null
-  createdBy: Prisma.UserCreateNestedOneWithoutMovingsInput
+  createdBy: Prisma.UserCreateNestedOneWithoutCreatedMovingsInput
+  sentBy?: Prisma.UserCreateNestedOneWithoutSentMovingsInput
+  receivedBy?: Prisma.UserCreateNestedOneWithoutReceivedMovingsInput
+  cancelledBy?: Prisma.UserCreateNestedOneWithoutCancelledMovingsInput
   items?: Prisma.MovingItemCreateNestedManyWithoutMovingInput
 }
 
@@ -288,6 +336,9 @@ export type MovingUncheckedCreateInput = {
   sentAt?: Date | string | null
   receivedAt?: Date | string | null
   createdById: string
+  sentById?: string | null
+  receivedById?: string | null
+  cancelledById?: string | null
   items?: Prisma.MovingItemUncheckedCreateNestedManyWithoutMovingInput
 }
 
@@ -299,7 +350,10 @@ export type MovingUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdBy?: Prisma.UserUpdateOneRequiredWithoutMovingsNestedInput
+  createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedMovingsNestedInput
+  sentBy?: Prisma.UserUpdateOneWithoutSentMovingsNestedInput
+  receivedBy?: Prisma.UserUpdateOneWithoutReceivedMovingsNestedInput
+  cancelledBy?: Prisma.UserUpdateOneWithoutCancelledMovingsNestedInput
   items?: Prisma.MovingItemUpdateManyWithoutMovingNestedInput
 }
 
@@ -312,6 +366,9 @@ export type MovingUncheckedUpdateInput = {
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
+  sentById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receivedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   items?: Prisma.MovingItemUncheckedUpdateManyWithoutMovingNestedInput
 }
 
@@ -324,6 +381,9 @@ export type MovingCreateManyInput = {
   sentAt?: Date | string | null
   receivedAt?: Date | string | null
   createdById: string
+  sentById?: string | null
+  receivedById?: string | null
+  cancelledById?: string | null
 }
 
 export type MovingUpdateManyMutationInput = {
@@ -345,6 +405,9 @@ export type MovingUncheckedUpdateManyInput = {
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
+  sentById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receivedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type MovingListRelationFilter = {
@@ -366,6 +429,9 @@ export type MovingCountOrderByAggregateInput = {
   sentAt?: Prisma.SortOrder
   receivedAt?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
+  sentById?: Prisma.SortOrder
+  receivedById?: Prisma.SortOrder
+  cancelledById?: Prisma.SortOrder
 }
 
 export type MovingMaxOrderByAggregateInput = {
@@ -377,6 +443,9 @@ export type MovingMaxOrderByAggregateInput = {
   sentAt?: Prisma.SortOrder
   receivedAt?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
+  sentById?: Prisma.SortOrder
+  receivedById?: Prisma.SortOrder
+  cancelledById?: Prisma.SortOrder
 }
 
 export type MovingMinOrderByAggregateInput = {
@@ -388,6 +457,9 @@ export type MovingMinOrderByAggregateInput = {
   sentAt?: Prisma.SortOrder
   receivedAt?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
+  sentById?: Prisma.SortOrder
+  receivedById?: Prisma.SortOrder
+  cancelledById?: Prisma.SortOrder
 }
 
 export type MovingScalarRelationFilter = {
@@ -402,10 +474,52 @@ export type MovingCreateNestedManyWithoutCreatedByInput = {
   connect?: Prisma.MovingWhereUniqueInput | Prisma.MovingWhereUniqueInput[]
 }
 
+export type MovingCreateNestedManyWithoutSentByInput = {
+  create?: Prisma.XOR<Prisma.MovingCreateWithoutSentByInput, Prisma.MovingUncheckedCreateWithoutSentByInput> | Prisma.MovingCreateWithoutSentByInput[] | Prisma.MovingUncheckedCreateWithoutSentByInput[]
+  connectOrCreate?: Prisma.MovingCreateOrConnectWithoutSentByInput | Prisma.MovingCreateOrConnectWithoutSentByInput[]
+  createMany?: Prisma.MovingCreateManySentByInputEnvelope
+  connect?: Prisma.MovingWhereUniqueInput | Prisma.MovingWhereUniqueInput[]
+}
+
+export type MovingCreateNestedManyWithoutReceivedByInput = {
+  create?: Prisma.XOR<Prisma.MovingCreateWithoutReceivedByInput, Prisma.MovingUncheckedCreateWithoutReceivedByInput> | Prisma.MovingCreateWithoutReceivedByInput[] | Prisma.MovingUncheckedCreateWithoutReceivedByInput[]
+  connectOrCreate?: Prisma.MovingCreateOrConnectWithoutReceivedByInput | Prisma.MovingCreateOrConnectWithoutReceivedByInput[]
+  createMany?: Prisma.MovingCreateManyReceivedByInputEnvelope
+  connect?: Prisma.MovingWhereUniqueInput | Prisma.MovingWhereUniqueInput[]
+}
+
+export type MovingCreateNestedManyWithoutCancelledByInput = {
+  create?: Prisma.XOR<Prisma.MovingCreateWithoutCancelledByInput, Prisma.MovingUncheckedCreateWithoutCancelledByInput> | Prisma.MovingCreateWithoutCancelledByInput[] | Prisma.MovingUncheckedCreateWithoutCancelledByInput[]
+  connectOrCreate?: Prisma.MovingCreateOrConnectWithoutCancelledByInput | Prisma.MovingCreateOrConnectWithoutCancelledByInput[]
+  createMany?: Prisma.MovingCreateManyCancelledByInputEnvelope
+  connect?: Prisma.MovingWhereUniqueInput | Prisma.MovingWhereUniqueInput[]
+}
+
 export type MovingUncheckedCreateNestedManyWithoutCreatedByInput = {
   create?: Prisma.XOR<Prisma.MovingCreateWithoutCreatedByInput, Prisma.MovingUncheckedCreateWithoutCreatedByInput> | Prisma.MovingCreateWithoutCreatedByInput[] | Prisma.MovingUncheckedCreateWithoutCreatedByInput[]
   connectOrCreate?: Prisma.MovingCreateOrConnectWithoutCreatedByInput | Prisma.MovingCreateOrConnectWithoutCreatedByInput[]
   createMany?: Prisma.MovingCreateManyCreatedByInputEnvelope
+  connect?: Prisma.MovingWhereUniqueInput | Prisma.MovingWhereUniqueInput[]
+}
+
+export type MovingUncheckedCreateNestedManyWithoutSentByInput = {
+  create?: Prisma.XOR<Prisma.MovingCreateWithoutSentByInput, Prisma.MovingUncheckedCreateWithoutSentByInput> | Prisma.MovingCreateWithoutSentByInput[] | Prisma.MovingUncheckedCreateWithoutSentByInput[]
+  connectOrCreate?: Prisma.MovingCreateOrConnectWithoutSentByInput | Prisma.MovingCreateOrConnectWithoutSentByInput[]
+  createMany?: Prisma.MovingCreateManySentByInputEnvelope
+  connect?: Prisma.MovingWhereUniqueInput | Prisma.MovingWhereUniqueInput[]
+}
+
+export type MovingUncheckedCreateNestedManyWithoutReceivedByInput = {
+  create?: Prisma.XOR<Prisma.MovingCreateWithoutReceivedByInput, Prisma.MovingUncheckedCreateWithoutReceivedByInput> | Prisma.MovingCreateWithoutReceivedByInput[] | Prisma.MovingUncheckedCreateWithoutReceivedByInput[]
+  connectOrCreate?: Prisma.MovingCreateOrConnectWithoutReceivedByInput | Prisma.MovingCreateOrConnectWithoutReceivedByInput[]
+  createMany?: Prisma.MovingCreateManyReceivedByInputEnvelope
+  connect?: Prisma.MovingWhereUniqueInput | Prisma.MovingWhereUniqueInput[]
+}
+
+export type MovingUncheckedCreateNestedManyWithoutCancelledByInput = {
+  create?: Prisma.XOR<Prisma.MovingCreateWithoutCancelledByInput, Prisma.MovingUncheckedCreateWithoutCancelledByInput> | Prisma.MovingCreateWithoutCancelledByInput[] | Prisma.MovingUncheckedCreateWithoutCancelledByInput[]
+  connectOrCreate?: Prisma.MovingCreateOrConnectWithoutCancelledByInput | Prisma.MovingCreateOrConnectWithoutCancelledByInput[]
+  createMany?: Prisma.MovingCreateManyCancelledByInputEnvelope
   connect?: Prisma.MovingWhereUniqueInput | Prisma.MovingWhereUniqueInput[]
 }
 
@@ -423,6 +537,48 @@ export type MovingUpdateManyWithoutCreatedByNestedInput = {
   deleteMany?: Prisma.MovingScalarWhereInput | Prisma.MovingScalarWhereInput[]
 }
 
+export type MovingUpdateManyWithoutSentByNestedInput = {
+  create?: Prisma.XOR<Prisma.MovingCreateWithoutSentByInput, Prisma.MovingUncheckedCreateWithoutSentByInput> | Prisma.MovingCreateWithoutSentByInput[] | Prisma.MovingUncheckedCreateWithoutSentByInput[]
+  connectOrCreate?: Prisma.MovingCreateOrConnectWithoutSentByInput | Prisma.MovingCreateOrConnectWithoutSentByInput[]
+  upsert?: Prisma.MovingUpsertWithWhereUniqueWithoutSentByInput | Prisma.MovingUpsertWithWhereUniqueWithoutSentByInput[]
+  createMany?: Prisma.MovingCreateManySentByInputEnvelope
+  set?: Prisma.MovingWhereUniqueInput | Prisma.MovingWhereUniqueInput[]
+  disconnect?: Prisma.MovingWhereUniqueInput | Prisma.MovingWhereUniqueInput[]
+  delete?: Prisma.MovingWhereUniqueInput | Prisma.MovingWhereUniqueInput[]
+  connect?: Prisma.MovingWhereUniqueInput | Prisma.MovingWhereUniqueInput[]
+  update?: Prisma.MovingUpdateWithWhereUniqueWithoutSentByInput | Prisma.MovingUpdateWithWhereUniqueWithoutSentByInput[]
+  updateMany?: Prisma.MovingUpdateManyWithWhereWithoutSentByInput | Prisma.MovingUpdateManyWithWhereWithoutSentByInput[]
+  deleteMany?: Prisma.MovingScalarWhereInput | Prisma.MovingScalarWhereInput[]
+}
+
+export type MovingUpdateManyWithoutReceivedByNestedInput = {
+  create?: Prisma.XOR<Prisma.MovingCreateWithoutReceivedByInput, Prisma.MovingUncheckedCreateWithoutReceivedByInput> | Prisma.MovingCreateWithoutReceivedByInput[] | Prisma.MovingUncheckedCreateWithoutReceivedByInput[]
+  connectOrCreate?: Prisma.MovingCreateOrConnectWithoutReceivedByInput | Prisma.MovingCreateOrConnectWithoutReceivedByInput[]
+  upsert?: Prisma.MovingUpsertWithWhereUniqueWithoutReceivedByInput | Prisma.MovingUpsertWithWhereUniqueWithoutReceivedByInput[]
+  createMany?: Prisma.MovingCreateManyReceivedByInputEnvelope
+  set?: Prisma.MovingWhereUniqueInput | Prisma.MovingWhereUniqueInput[]
+  disconnect?: Prisma.MovingWhereUniqueInput | Prisma.MovingWhereUniqueInput[]
+  delete?: Prisma.MovingWhereUniqueInput | Prisma.MovingWhereUniqueInput[]
+  connect?: Prisma.MovingWhereUniqueInput | Prisma.MovingWhereUniqueInput[]
+  update?: Prisma.MovingUpdateWithWhereUniqueWithoutReceivedByInput | Prisma.MovingUpdateWithWhereUniqueWithoutReceivedByInput[]
+  updateMany?: Prisma.MovingUpdateManyWithWhereWithoutReceivedByInput | Prisma.MovingUpdateManyWithWhereWithoutReceivedByInput[]
+  deleteMany?: Prisma.MovingScalarWhereInput | Prisma.MovingScalarWhereInput[]
+}
+
+export type MovingUpdateManyWithoutCancelledByNestedInput = {
+  create?: Prisma.XOR<Prisma.MovingCreateWithoutCancelledByInput, Prisma.MovingUncheckedCreateWithoutCancelledByInput> | Prisma.MovingCreateWithoutCancelledByInput[] | Prisma.MovingUncheckedCreateWithoutCancelledByInput[]
+  connectOrCreate?: Prisma.MovingCreateOrConnectWithoutCancelledByInput | Prisma.MovingCreateOrConnectWithoutCancelledByInput[]
+  upsert?: Prisma.MovingUpsertWithWhereUniqueWithoutCancelledByInput | Prisma.MovingUpsertWithWhereUniqueWithoutCancelledByInput[]
+  createMany?: Prisma.MovingCreateManyCancelledByInputEnvelope
+  set?: Prisma.MovingWhereUniqueInput | Prisma.MovingWhereUniqueInput[]
+  disconnect?: Prisma.MovingWhereUniqueInput | Prisma.MovingWhereUniqueInput[]
+  delete?: Prisma.MovingWhereUniqueInput | Prisma.MovingWhereUniqueInput[]
+  connect?: Prisma.MovingWhereUniqueInput | Prisma.MovingWhereUniqueInput[]
+  update?: Prisma.MovingUpdateWithWhereUniqueWithoutCancelledByInput | Prisma.MovingUpdateWithWhereUniqueWithoutCancelledByInput[]
+  updateMany?: Prisma.MovingUpdateManyWithWhereWithoutCancelledByInput | Prisma.MovingUpdateManyWithWhereWithoutCancelledByInput[]
+  deleteMany?: Prisma.MovingScalarWhereInput | Prisma.MovingScalarWhereInput[]
+}
+
 export type MovingUncheckedUpdateManyWithoutCreatedByNestedInput = {
   create?: Prisma.XOR<Prisma.MovingCreateWithoutCreatedByInput, Prisma.MovingUncheckedCreateWithoutCreatedByInput> | Prisma.MovingCreateWithoutCreatedByInput[] | Prisma.MovingUncheckedCreateWithoutCreatedByInput[]
   connectOrCreate?: Prisma.MovingCreateOrConnectWithoutCreatedByInput | Prisma.MovingCreateOrConnectWithoutCreatedByInput[]
@@ -434,6 +590,48 @@ export type MovingUncheckedUpdateManyWithoutCreatedByNestedInput = {
   connect?: Prisma.MovingWhereUniqueInput | Prisma.MovingWhereUniqueInput[]
   update?: Prisma.MovingUpdateWithWhereUniqueWithoutCreatedByInput | Prisma.MovingUpdateWithWhereUniqueWithoutCreatedByInput[]
   updateMany?: Prisma.MovingUpdateManyWithWhereWithoutCreatedByInput | Prisma.MovingUpdateManyWithWhereWithoutCreatedByInput[]
+  deleteMany?: Prisma.MovingScalarWhereInput | Prisma.MovingScalarWhereInput[]
+}
+
+export type MovingUncheckedUpdateManyWithoutSentByNestedInput = {
+  create?: Prisma.XOR<Prisma.MovingCreateWithoutSentByInput, Prisma.MovingUncheckedCreateWithoutSentByInput> | Prisma.MovingCreateWithoutSentByInput[] | Prisma.MovingUncheckedCreateWithoutSentByInput[]
+  connectOrCreate?: Prisma.MovingCreateOrConnectWithoutSentByInput | Prisma.MovingCreateOrConnectWithoutSentByInput[]
+  upsert?: Prisma.MovingUpsertWithWhereUniqueWithoutSentByInput | Prisma.MovingUpsertWithWhereUniqueWithoutSentByInput[]
+  createMany?: Prisma.MovingCreateManySentByInputEnvelope
+  set?: Prisma.MovingWhereUniqueInput | Prisma.MovingWhereUniqueInput[]
+  disconnect?: Prisma.MovingWhereUniqueInput | Prisma.MovingWhereUniqueInput[]
+  delete?: Prisma.MovingWhereUniqueInput | Prisma.MovingWhereUniqueInput[]
+  connect?: Prisma.MovingWhereUniqueInput | Prisma.MovingWhereUniqueInput[]
+  update?: Prisma.MovingUpdateWithWhereUniqueWithoutSentByInput | Prisma.MovingUpdateWithWhereUniqueWithoutSentByInput[]
+  updateMany?: Prisma.MovingUpdateManyWithWhereWithoutSentByInput | Prisma.MovingUpdateManyWithWhereWithoutSentByInput[]
+  deleteMany?: Prisma.MovingScalarWhereInput | Prisma.MovingScalarWhereInput[]
+}
+
+export type MovingUncheckedUpdateManyWithoutReceivedByNestedInput = {
+  create?: Prisma.XOR<Prisma.MovingCreateWithoutReceivedByInput, Prisma.MovingUncheckedCreateWithoutReceivedByInput> | Prisma.MovingCreateWithoutReceivedByInput[] | Prisma.MovingUncheckedCreateWithoutReceivedByInput[]
+  connectOrCreate?: Prisma.MovingCreateOrConnectWithoutReceivedByInput | Prisma.MovingCreateOrConnectWithoutReceivedByInput[]
+  upsert?: Prisma.MovingUpsertWithWhereUniqueWithoutReceivedByInput | Prisma.MovingUpsertWithWhereUniqueWithoutReceivedByInput[]
+  createMany?: Prisma.MovingCreateManyReceivedByInputEnvelope
+  set?: Prisma.MovingWhereUniqueInput | Prisma.MovingWhereUniqueInput[]
+  disconnect?: Prisma.MovingWhereUniqueInput | Prisma.MovingWhereUniqueInput[]
+  delete?: Prisma.MovingWhereUniqueInput | Prisma.MovingWhereUniqueInput[]
+  connect?: Prisma.MovingWhereUniqueInput | Prisma.MovingWhereUniqueInput[]
+  update?: Prisma.MovingUpdateWithWhereUniqueWithoutReceivedByInput | Prisma.MovingUpdateWithWhereUniqueWithoutReceivedByInput[]
+  updateMany?: Prisma.MovingUpdateManyWithWhereWithoutReceivedByInput | Prisma.MovingUpdateManyWithWhereWithoutReceivedByInput[]
+  deleteMany?: Prisma.MovingScalarWhereInput | Prisma.MovingScalarWhereInput[]
+}
+
+export type MovingUncheckedUpdateManyWithoutCancelledByNestedInput = {
+  create?: Prisma.XOR<Prisma.MovingCreateWithoutCancelledByInput, Prisma.MovingUncheckedCreateWithoutCancelledByInput> | Prisma.MovingCreateWithoutCancelledByInput[] | Prisma.MovingUncheckedCreateWithoutCancelledByInput[]
+  connectOrCreate?: Prisma.MovingCreateOrConnectWithoutCancelledByInput | Prisma.MovingCreateOrConnectWithoutCancelledByInput[]
+  upsert?: Prisma.MovingUpsertWithWhereUniqueWithoutCancelledByInput | Prisma.MovingUpsertWithWhereUniqueWithoutCancelledByInput[]
+  createMany?: Prisma.MovingCreateManyCancelledByInputEnvelope
+  set?: Prisma.MovingWhereUniqueInput | Prisma.MovingWhereUniqueInput[]
+  disconnect?: Prisma.MovingWhereUniqueInput | Prisma.MovingWhereUniqueInput[]
+  delete?: Prisma.MovingWhereUniqueInput | Prisma.MovingWhereUniqueInput[]
+  connect?: Prisma.MovingWhereUniqueInput | Prisma.MovingWhereUniqueInput[]
+  update?: Prisma.MovingUpdateWithWhereUniqueWithoutCancelledByInput | Prisma.MovingUpdateWithWhereUniqueWithoutCancelledByInput[]
+  updateMany?: Prisma.MovingUpdateManyWithWhereWithoutCancelledByInput | Prisma.MovingUpdateManyWithWhereWithoutCancelledByInput[]
   deleteMany?: Prisma.MovingScalarWhereInput | Prisma.MovingScalarWhereInput[]
 }
 
@@ -463,6 +661,9 @@ export type MovingCreateWithoutCreatedByInput = {
   createdAt?: Date | string
   sentAt?: Date | string | null
   receivedAt?: Date | string | null
+  sentBy?: Prisma.UserCreateNestedOneWithoutSentMovingsInput
+  receivedBy?: Prisma.UserCreateNestedOneWithoutReceivedMovingsInput
+  cancelledBy?: Prisma.UserCreateNestedOneWithoutCancelledMovingsInput
   items?: Prisma.MovingItemCreateNestedManyWithoutMovingInput
 }
 
@@ -474,6 +675,9 @@ export type MovingUncheckedCreateWithoutCreatedByInput = {
   createdAt?: Date | string
   sentAt?: Date | string | null
   receivedAt?: Date | string | null
+  sentById?: string | null
+  receivedById?: string | null
+  cancelledById?: string | null
   items?: Prisma.MovingItemUncheckedCreateNestedManyWithoutMovingInput
 }
 
@@ -484,6 +688,120 @@ export type MovingCreateOrConnectWithoutCreatedByInput = {
 
 export type MovingCreateManyCreatedByInputEnvelope = {
   data: Prisma.MovingCreateManyCreatedByInput | Prisma.MovingCreateManyCreatedByInput[]
+  skipDuplicates?: boolean
+}
+
+export type MovingCreateWithoutSentByInput = {
+  id?: string
+  number: string
+  status?: $Enums.MovingStatus
+  note?: string | null
+  createdAt?: Date | string
+  sentAt?: Date | string | null
+  receivedAt?: Date | string | null
+  createdBy: Prisma.UserCreateNestedOneWithoutCreatedMovingsInput
+  receivedBy?: Prisma.UserCreateNestedOneWithoutReceivedMovingsInput
+  cancelledBy?: Prisma.UserCreateNestedOneWithoutCancelledMovingsInput
+  items?: Prisma.MovingItemCreateNestedManyWithoutMovingInput
+}
+
+export type MovingUncheckedCreateWithoutSentByInput = {
+  id?: string
+  number: string
+  status?: $Enums.MovingStatus
+  note?: string | null
+  createdAt?: Date | string
+  sentAt?: Date | string | null
+  receivedAt?: Date | string | null
+  createdById: string
+  receivedById?: string | null
+  cancelledById?: string | null
+  items?: Prisma.MovingItemUncheckedCreateNestedManyWithoutMovingInput
+}
+
+export type MovingCreateOrConnectWithoutSentByInput = {
+  where: Prisma.MovingWhereUniqueInput
+  create: Prisma.XOR<Prisma.MovingCreateWithoutSentByInput, Prisma.MovingUncheckedCreateWithoutSentByInput>
+}
+
+export type MovingCreateManySentByInputEnvelope = {
+  data: Prisma.MovingCreateManySentByInput | Prisma.MovingCreateManySentByInput[]
+  skipDuplicates?: boolean
+}
+
+export type MovingCreateWithoutReceivedByInput = {
+  id?: string
+  number: string
+  status?: $Enums.MovingStatus
+  note?: string | null
+  createdAt?: Date | string
+  sentAt?: Date | string | null
+  receivedAt?: Date | string | null
+  createdBy: Prisma.UserCreateNestedOneWithoutCreatedMovingsInput
+  sentBy?: Prisma.UserCreateNestedOneWithoutSentMovingsInput
+  cancelledBy?: Prisma.UserCreateNestedOneWithoutCancelledMovingsInput
+  items?: Prisma.MovingItemCreateNestedManyWithoutMovingInput
+}
+
+export type MovingUncheckedCreateWithoutReceivedByInput = {
+  id?: string
+  number: string
+  status?: $Enums.MovingStatus
+  note?: string | null
+  createdAt?: Date | string
+  sentAt?: Date | string | null
+  receivedAt?: Date | string | null
+  createdById: string
+  sentById?: string | null
+  cancelledById?: string | null
+  items?: Prisma.MovingItemUncheckedCreateNestedManyWithoutMovingInput
+}
+
+export type MovingCreateOrConnectWithoutReceivedByInput = {
+  where: Prisma.MovingWhereUniqueInput
+  create: Prisma.XOR<Prisma.MovingCreateWithoutReceivedByInput, Prisma.MovingUncheckedCreateWithoutReceivedByInput>
+}
+
+export type MovingCreateManyReceivedByInputEnvelope = {
+  data: Prisma.MovingCreateManyReceivedByInput | Prisma.MovingCreateManyReceivedByInput[]
+  skipDuplicates?: boolean
+}
+
+export type MovingCreateWithoutCancelledByInput = {
+  id?: string
+  number: string
+  status?: $Enums.MovingStatus
+  note?: string | null
+  createdAt?: Date | string
+  sentAt?: Date | string | null
+  receivedAt?: Date | string | null
+  createdBy: Prisma.UserCreateNestedOneWithoutCreatedMovingsInput
+  sentBy?: Prisma.UserCreateNestedOneWithoutSentMovingsInput
+  receivedBy?: Prisma.UserCreateNestedOneWithoutReceivedMovingsInput
+  items?: Prisma.MovingItemCreateNestedManyWithoutMovingInput
+}
+
+export type MovingUncheckedCreateWithoutCancelledByInput = {
+  id?: string
+  number: string
+  status?: $Enums.MovingStatus
+  note?: string | null
+  createdAt?: Date | string
+  sentAt?: Date | string | null
+  receivedAt?: Date | string | null
+  createdById: string
+  sentById?: string | null
+  receivedById?: string | null
+  items?: Prisma.MovingItemUncheckedCreateNestedManyWithoutMovingInput
+}
+
+export type MovingCreateOrConnectWithoutCancelledByInput = {
+  where: Prisma.MovingWhereUniqueInput
+  create: Prisma.XOR<Prisma.MovingCreateWithoutCancelledByInput, Prisma.MovingUncheckedCreateWithoutCancelledByInput>
+}
+
+export type MovingCreateManyCancelledByInputEnvelope = {
+  data: Prisma.MovingCreateManyCancelledByInput | Prisma.MovingCreateManyCancelledByInput[]
   skipDuplicates?: boolean
 }
 
@@ -515,6 +833,57 @@ export type MovingScalarWhereInput = {
   sentAt?: Prisma.DateTimeNullableFilter<"Moving"> | Date | string | null
   receivedAt?: Prisma.DateTimeNullableFilter<"Moving"> | Date | string | null
   createdById?: Prisma.StringFilter<"Moving"> | string
+  sentById?: Prisma.StringNullableFilter<"Moving"> | string | null
+  receivedById?: Prisma.StringNullableFilter<"Moving"> | string | null
+  cancelledById?: Prisma.StringNullableFilter<"Moving"> | string | null
+}
+
+export type MovingUpsertWithWhereUniqueWithoutSentByInput = {
+  where: Prisma.MovingWhereUniqueInput
+  update: Prisma.XOR<Prisma.MovingUpdateWithoutSentByInput, Prisma.MovingUncheckedUpdateWithoutSentByInput>
+  create: Prisma.XOR<Prisma.MovingCreateWithoutSentByInput, Prisma.MovingUncheckedCreateWithoutSentByInput>
+}
+
+export type MovingUpdateWithWhereUniqueWithoutSentByInput = {
+  where: Prisma.MovingWhereUniqueInput
+  data: Prisma.XOR<Prisma.MovingUpdateWithoutSentByInput, Prisma.MovingUncheckedUpdateWithoutSentByInput>
+}
+
+export type MovingUpdateManyWithWhereWithoutSentByInput = {
+  where: Prisma.MovingScalarWhereInput
+  data: Prisma.XOR<Prisma.MovingUpdateManyMutationInput, Prisma.MovingUncheckedUpdateManyWithoutSentByInput>
+}
+
+export type MovingUpsertWithWhereUniqueWithoutReceivedByInput = {
+  where: Prisma.MovingWhereUniqueInput
+  update: Prisma.XOR<Prisma.MovingUpdateWithoutReceivedByInput, Prisma.MovingUncheckedUpdateWithoutReceivedByInput>
+  create: Prisma.XOR<Prisma.MovingCreateWithoutReceivedByInput, Prisma.MovingUncheckedCreateWithoutReceivedByInput>
+}
+
+export type MovingUpdateWithWhereUniqueWithoutReceivedByInput = {
+  where: Prisma.MovingWhereUniqueInput
+  data: Prisma.XOR<Prisma.MovingUpdateWithoutReceivedByInput, Prisma.MovingUncheckedUpdateWithoutReceivedByInput>
+}
+
+export type MovingUpdateManyWithWhereWithoutReceivedByInput = {
+  where: Prisma.MovingScalarWhereInput
+  data: Prisma.XOR<Prisma.MovingUpdateManyMutationInput, Prisma.MovingUncheckedUpdateManyWithoutReceivedByInput>
+}
+
+export type MovingUpsertWithWhereUniqueWithoutCancelledByInput = {
+  where: Prisma.MovingWhereUniqueInput
+  update: Prisma.XOR<Prisma.MovingUpdateWithoutCancelledByInput, Prisma.MovingUncheckedUpdateWithoutCancelledByInput>
+  create: Prisma.XOR<Prisma.MovingCreateWithoutCancelledByInput, Prisma.MovingUncheckedCreateWithoutCancelledByInput>
+}
+
+export type MovingUpdateWithWhereUniqueWithoutCancelledByInput = {
+  where: Prisma.MovingWhereUniqueInput
+  data: Prisma.XOR<Prisma.MovingUpdateWithoutCancelledByInput, Prisma.MovingUncheckedUpdateWithoutCancelledByInput>
+}
+
+export type MovingUpdateManyWithWhereWithoutCancelledByInput = {
+  where: Prisma.MovingScalarWhereInput
+  data: Prisma.XOR<Prisma.MovingUpdateManyMutationInput, Prisma.MovingUncheckedUpdateManyWithoutCancelledByInput>
 }
 
 export type MovingCreateWithoutItemsInput = {
@@ -525,7 +894,10 @@ export type MovingCreateWithoutItemsInput = {
   createdAt?: Date | string
   sentAt?: Date | string | null
   receivedAt?: Date | string | null
-  createdBy: Prisma.UserCreateNestedOneWithoutMovingsInput
+  createdBy: Prisma.UserCreateNestedOneWithoutCreatedMovingsInput
+  sentBy?: Prisma.UserCreateNestedOneWithoutSentMovingsInput
+  receivedBy?: Prisma.UserCreateNestedOneWithoutReceivedMovingsInput
+  cancelledBy?: Prisma.UserCreateNestedOneWithoutCancelledMovingsInput
 }
 
 export type MovingUncheckedCreateWithoutItemsInput = {
@@ -537,6 +909,9 @@ export type MovingUncheckedCreateWithoutItemsInput = {
   sentAt?: Date | string | null
   receivedAt?: Date | string | null
   createdById: string
+  sentById?: string | null
+  receivedById?: string | null
+  cancelledById?: string | null
 }
 
 export type MovingCreateOrConnectWithoutItemsInput = {
@@ -563,7 +938,10 @@ export type MovingUpdateWithoutItemsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdBy?: Prisma.UserUpdateOneRequiredWithoutMovingsNestedInput
+  createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedMovingsNestedInput
+  sentBy?: Prisma.UserUpdateOneWithoutSentMovingsNestedInput
+  receivedBy?: Prisma.UserUpdateOneWithoutReceivedMovingsNestedInput
+  cancelledBy?: Prisma.UserUpdateOneWithoutCancelledMovingsNestedInput
 }
 
 export type MovingUncheckedUpdateWithoutItemsInput = {
@@ -575,6 +953,9 @@ export type MovingUncheckedUpdateWithoutItemsInput = {
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
+  sentById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receivedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type MovingCreateManyCreatedByInput = {
@@ -585,6 +966,48 @@ export type MovingCreateManyCreatedByInput = {
   createdAt?: Date | string
   sentAt?: Date | string | null
   receivedAt?: Date | string | null
+  sentById?: string | null
+  receivedById?: string | null
+  cancelledById?: string | null
+}
+
+export type MovingCreateManySentByInput = {
+  id?: string
+  number: string
+  status?: $Enums.MovingStatus
+  note?: string | null
+  createdAt?: Date | string
+  sentAt?: Date | string | null
+  receivedAt?: Date | string | null
+  createdById: string
+  receivedById?: string | null
+  cancelledById?: string | null
+}
+
+export type MovingCreateManyReceivedByInput = {
+  id?: string
+  number: string
+  status?: $Enums.MovingStatus
+  note?: string | null
+  createdAt?: Date | string
+  sentAt?: Date | string | null
+  receivedAt?: Date | string | null
+  createdById: string
+  sentById?: string | null
+  cancelledById?: string | null
+}
+
+export type MovingCreateManyCancelledByInput = {
+  id?: string
+  number: string
+  status?: $Enums.MovingStatus
+  note?: string | null
+  createdAt?: Date | string
+  sentAt?: Date | string | null
+  receivedAt?: Date | string | null
+  createdById: string
+  sentById?: string | null
+  receivedById?: string | null
 }
 
 export type MovingUpdateWithoutCreatedByInput = {
@@ -595,6 +1018,9 @@ export type MovingUpdateWithoutCreatedByInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sentBy?: Prisma.UserUpdateOneWithoutSentMovingsNestedInput
+  receivedBy?: Prisma.UserUpdateOneWithoutReceivedMovingsNestedInput
+  cancelledBy?: Prisma.UserUpdateOneWithoutCancelledMovingsNestedInput
   items?: Prisma.MovingItemUpdateManyWithoutMovingNestedInput
 }
 
@@ -606,6 +1032,9 @@ export type MovingUncheckedUpdateWithoutCreatedByInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sentById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receivedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   items?: Prisma.MovingItemUncheckedUpdateManyWithoutMovingNestedInput
 }
 
@@ -617,6 +1046,132 @@ export type MovingUncheckedUpdateManyWithoutCreatedByInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sentById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receivedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type MovingUpdateWithoutSentByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  number?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumMovingStatusFieldUpdateOperationsInput | $Enums.MovingStatus
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedMovingsNestedInput
+  receivedBy?: Prisma.UserUpdateOneWithoutReceivedMovingsNestedInput
+  cancelledBy?: Prisma.UserUpdateOneWithoutCancelledMovingsNestedInput
+  items?: Prisma.MovingItemUpdateManyWithoutMovingNestedInput
+}
+
+export type MovingUncheckedUpdateWithoutSentByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  number?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumMovingStatusFieldUpdateOperationsInput | $Enums.MovingStatus
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdById?: Prisma.StringFieldUpdateOperationsInput | string
+  receivedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  items?: Prisma.MovingItemUncheckedUpdateManyWithoutMovingNestedInput
+}
+
+export type MovingUncheckedUpdateManyWithoutSentByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  number?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumMovingStatusFieldUpdateOperationsInput | $Enums.MovingStatus
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdById?: Prisma.StringFieldUpdateOperationsInput | string
+  receivedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type MovingUpdateWithoutReceivedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  number?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumMovingStatusFieldUpdateOperationsInput | $Enums.MovingStatus
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedMovingsNestedInput
+  sentBy?: Prisma.UserUpdateOneWithoutSentMovingsNestedInput
+  cancelledBy?: Prisma.UserUpdateOneWithoutCancelledMovingsNestedInput
+  items?: Prisma.MovingItemUpdateManyWithoutMovingNestedInput
+}
+
+export type MovingUncheckedUpdateWithoutReceivedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  number?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumMovingStatusFieldUpdateOperationsInput | $Enums.MovingStatus
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdById?: Prisma.StringFieldUpdateOperationsInput | string
+  sentById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  items?: Prisma.MovingItemUncheckedUpdateManyWithoutMovingNestedInput
+}
+
+export type MovingUncheckedUpdateManyWithoutReceivedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  number?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumMovingStatusFieldUpdateOperationsInput | $Enums.MovingStatus
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdById?: Prisma.StringFieldUpdateOperationsInput | string
+  sentById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type MovingUpdateWithoutCancelledByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  number?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumMovingStatusFieldUpdateOperationsInput | $Enums.MovingStatus
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedMovingsNestedInput
+  sentBy?: Prisma.UserUpdateOneWithoutSentMovingsNestedInput
+  receivedBy?: Prisma.UserUpdateOneWithoutReceivedMovingsNestedInput
+  items?: Prisma.MovingItemUpdateManyWithoutMovingNestedInput
+}
+
+export type MovingUncheckedUpdateWithoutCancelledByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  number?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumMovingStatusFieldUpdateOperationsInput | $Enums.MovingStatus
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdById?: Prisma.StringFieldUpdateOperationsInput | string
+  sentById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receivedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  items?: Prisma.MovingItemUncheckedUpdateManyWithoutMovingNestedInput
+}
+
+export type MovingUncheckedUpdateManyWithoutCancelledByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  number?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumMovingStatusFieldUpdateOperationsInput | $Enums.MovingStatus
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  receivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdById?: Prisma.StringFieldUpdateOperationsInput | string
+  sentById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receivedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -659,7 +1214,13 @@ export type MovingSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   sentAt?: boolean
   receivedAt?: boolean
   createdById?: boolean
+  sentById?: boolean
+  receivedById?: boolean
+  cancelledById?: boolean
   createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  sentBy?: boolean | Prisma.Moving$sentByArgs<ExtArgs>
+  receivedBy?: boolean | Prisma.Moving$receivedByArgs<ExtArgs>
+  cancelledBy?: boolean | Prisma.Moving$cancelledByArgs<ExtArgs>
   items?: boolean | Prisma.Moving$itemsArgs<ExtArgs>
   _count?: boolean | Prisma.MovingCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["moving"]>
@@ -673,7 +1234,13 @@ export type MovingSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   sentAt?: boolean
   receivedAt?: boolean
   createdById?: boolean
+  sentById?: boolean
+  receivedById?: boolean
+  cancelledById?: boolean
   createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  sentBy?: boolean | Prisma.Moving$sentByArgs<ExtArgs>
+  receivedBy?: boolean | Prisma.Moving$receivedByArgs<ExtArgs>
+  cancelledBy?: boolean | Prisma.Moving$cancelledByArgs<ExtArgs>
 }, ExtArgs["result"]["moving"]>
 
 export type MovingSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -685,7 +1252,13 @@ export type MovingSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   sentAt?: boolean
   receivedAt?: boolean
   createdById?: boolean
+  sentById?: boolean
+  receivedById?: boolean
+  cancelledById?: boolean
   createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  sentBy?: boolean | Prisma.Moving$sentByArgs<ExtArgs>
+  receivedBy?: boolean | Prisma.Moving$receivedByArgs<ExtArgs>
+  cancelledBy?: boolean | Prisma.Moving$cancelledByArgs<ExtArgs>
 }, ExtArgs["result"]["moving"]>
 
 export type MovingSelectScalar = {
@@ -697,25 +1270,40 @@ export type MovingSelectScalar = {
   sentAt?: boolean
   receivedAt?: boolean
   createdById?: boolean
+  sentById?: boolean
+  receivedById?: boolean
+  cancelledById?: boolean
 }
 
-export type MovingOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "number" | "status" | "note" | "createdAt" | "sentAt" | "receivedAt" | "createdById", ExtArgs["result"]["moving"]>
+export type MovingOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "number" | "status" | "note" | "createdAt" | "sentAt" | "receivedAt" | "createdById" | "sentById" | "receivedById" | "cancelledById", ExtArgs["result"]["moving"]>
 export type MovingInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  sentBy?: boolean | Prisma.Moving$sentByArgs<ExtArgs>
+  receivedBy?: boolean | Prisma.Moving$receivedByArgs<ExtArgs>
+  cancelledBy?: boolean | Prisma.Moving$cancelledByArgs<ExtArgs>
   items?: boolean | Prisma.Moving$itemsArgs<ExtArgs>
   _count?: boolean | Prisma.MovingCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type MovingIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  sentBy?: boolean | Prisma.Moving$sentByArgs<ExtArgs>
+  receivedBy?: boolean | Prisma.Moving$receivedByArgs<ExtArgs>
+  cancelledBy?: boolean | Prisma.Moving$cancelledByArgs<ExtArgs>
 }
 export type MovingIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  sentBy?: boolean | Prisma.Moving$sentByArgs<ExtArgs>
+  receivedBy?: boolean | Prisma.Moving$receivedByArgs<ExtArgs>
+  cancelledBy?: boolean | Prisma.Moving$cancelledByArgs<ExtArgs>
 }
 
 export type $MovingPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Moving"
   objects: {
     createdBy: Prisma.$UserPayload<ExtArgs>
+    sentBy: Prisma.$UserPayload<ExtArgs> | null
+    receivedBy: Prisma.$UserPayload<ExtArgs> | null
+    cancelledBy: Prisma.$UserPayload<ExtArgs> | null
     items: Prisma.$MovingItemPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -727,6 +1315,9 @@ export type $MovingPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     sentAt: Date | null
     receivedAt: Date | null
     createdById: string
+    sentById: string | null
+    receivedById: string | null
+    cancelledById: string | null
   }, ExtArgs["result"]["moving"]>
   composites: {}
 }
@@ -1122,6 +1713,9 @@ readonly fields: MovingFieldRefs;
 export interface Prisma__MovingClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   createdBy<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  sentBy<T extends Prisma.Moving$sentByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Moving$sentByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  receivedBy<T extends Prisma.Moving$receivedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Moving$receivedByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  cancelledBy<T extends Prisma.Moving$cancelledByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Moving$cancelledByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   items<T extends Prisma.Moving$itemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Moving$itemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MovingItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1160,6 +1754,9 @@ export interface MovingFieldRefs {
   readonly sentAt: Prisma.FieldRef<"Moving", 'DateTime'>
   readonly receivedAt: Prisma.FieldRef<"Moving", 'DateTime'>
   readonly createdById: Prisma.FieldRef<"Moving", 'String'>
+  readonly sentById: Prisma.FieldRef<"Moving", 'String'>
+  readonly receivedById: Prisma.FieldRef<"Moving", 'String'>
+  readonly cancelledById: Prisma.FieldRef<"Moving", 'String'>
 }
     
 
@@ -1558,6 +2155,63 @@ export type MovingDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Intern
    * Limit how many Movings to delete.
    */
   limit?: number
+}
+
+/**
+ * Moving.sentBy
+ */
+export type Moving$sentByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
+}
+
+/**
+ * Moving.receivedBy
+ */
+export type Moving$receivedByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
+}
+
+/**
+ * Moving.cancelledBy
+ */
+export type Moving$cancelledByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
 }
 
 /**

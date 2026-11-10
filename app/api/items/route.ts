@@ -13,6 +13,7 @@ export async function GET(request: NextRequest) {
     const items = await prisma.item.findMany({
       orderBy: { id: "asc" },
     });
+    console.log("Fetched items:", items);
     return NextResponse.json(items);
   } catch (error) {
     console.error("Error fetching item:", error);

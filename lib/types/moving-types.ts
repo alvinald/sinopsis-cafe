@@ -46,7 +46,11 @@ export const MovingSchema = z.object({
   createdAt: z.string(),
   sentAt: z.string().nullable(),
   receivedAt: z.string().nullable(),
+  cancelledAt: z.string().nullable(),
   createdBy: MovingUserSchema,
+  sentBy: MovingUserSchema.nullable(),
+  receivedBy: MovingUserSchema.nullable(),
+  cancelledBy: MovingUserSchema.nullable(),
   items: z.array(MovingItemWithItemSchema),
 });
 

@@ -27,6 +27,8 @@ import {
   Package,
   IdCard,
   ShieldCheck,
+  User,
+  Users,
 } from "lucide-react";
 import { NavSettings } from "./nav-setting";
 import { NavDashboard } from "./nav-dashboard";
@@ -48,7 +50,7 @@ const data = {
   dashboard: [
     {
       name: "Dashboard",
-      url: "#",
+      url: "/admin/dashboard",
       icon: <HomeIcon />,
     },
   ],
@@ -60,12 +62,8 @@ const data = {
       isActive: true,
       items: [
         {
-          title: "Purchase Order",
-          url: "#",
-        },
-        {
           title: "Moving Item",
-          url: "#",
+          url: "/admin/moving-request",
         },
       ],
     },
@@ -96,7 +94,12 @@ const data = {
   settings: [
     {
       name: "Users",
-      url: "#",
+      url: "/admin/users",
+      icon: <Users />,
+    },
+    {
+      name: "Role",
+      url: "/admin/role",
       icon: <ShieldCheck />,
     },
   ],

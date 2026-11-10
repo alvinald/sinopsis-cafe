@@ -79,7 +79,7 @@ export default function MovingRequestPage() {
       try {
         const response = await fetch(`/api/moving-request`);
         if (!response.ok) {
-          throw new Error("Gagal mengambil data jadwal shift");
+          throw new Error("Gagal mengambil data moving request");
         }
         const data: Moving[] = await response.json();
         setMovings(data);
@@ -266,9 +266,9 @@ export default function MovingRequestPage() {
 
   return (
     <div className="py-4 md:py-6">
-      <div className="mx-auto w-full max-w-6xl px-4 lg:px-6">
+      <div className="w-full px-4 lg:px-6">
         {/* Header */}
-        <div className="mb-5 flex flex-wrap items-start justify-between gap-3">
+        <div className="mb-5 flex flex-wrap items-start justify-between gap-3 border-b border-zinc-200 space-y-3">
           <div>
             <h1 className="text-2xl font-bold tracking-tight">Moving Item</h1>
             <p className="mt-1 max-w-2xl text-sm text-muted-foreground">
