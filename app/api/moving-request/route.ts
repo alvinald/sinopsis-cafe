@@ -1,4 +1,5 @@
 import { auth } from "@/lib/auth";
+import { getUserPermissions } from "@/lib/permissions.server";
 import { prisma } from "@/lib/prisma";
 import {
   RequestMovingSchema,
@@ -6,8 +7,6 @@ import {
 } from "@/lib/types/moving-types";
 import { endOfYear, format, startOfYear } from "date-fns";
 import { NextRequest, NextResponse } from "next/server";
-import { parse } from "path";
-import { start } from "repl";
 
 export async function GET(request: NextRequest) {
   const session = await auth.api.getSession({ headers: request.headers });
@@ -16,7 +15,12 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: "Harap login ulang" }, { status: 401 });
   }
 
+  console.log("session:", session);
+
   try {
+    // 1 baris saja untuk ambil semua permission user
+    const perms = await getUserPermissions(session.user.roleId);
+
     const moving = await prisma.moving.findMany({
       include: {
         items: {
@@ -39,6 +43,18 @@ export async function GET(request: NextRequest) {
       },
       orderBy: { id: "asc" },
     });
+
+    const data = moving.map((item) => {
+      return {
+        ...item,
+        actions: {
+          canEdit: perms.has("moving:update"),
+          canApprove: perms.has("moving:approve"),
+          canDelete: perms.has("moving:delete"),
+        },
+      };
+    });
+
     return NextResponse.json(moving);
   } catch (error) {
     console.error("Error fetching shift schedules:", error);

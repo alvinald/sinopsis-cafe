@@ -17,37 +17,22 @@ export const auth = betterAuth({
   ],
   emailAndPassword: {
     enabled: true,
-    disableSignUp: true,
+    // disableSignUp: true,
   },
   advanced: {
     // Mematikan pemeriksaan CSRF/Origin saat testing di mode development
     disableCSRFCheck: process.env.NODE_ENV === "development",
-  },
-  callbacks: {
-    async session({ session }: { session: any }) {
-      // Tarik daftar permission berdasarkan role user dari DB
-      const permissions = await getPermissionsByRole(session.user.role);
-
-      return {
-        ...session,
-        user: {
-          ...session.user,
-          permissions, // Menjadi array string: ["post:create", "post:read", ...]
-        },
-      };
+    database: {
+      generateId: () => crypto.randomUUID(), // Menghasilkan UUID v4 standar
     },
   },
+
   user: {
     additionalFields: {
-      role: {
+      roleId: {
         type: "string",
         required: false,
         input: false, // Supaya user tidak bisa asal set role sendiri saat register
-      },
-      department: {
-        type: "string",
-        required: false,
-        input: true, // Boleh diisi dari form jika diperlukan
       },
       jobTitle: {
         type: "string",

@@ -19,7 +19,7 @@ enum UserStatus {
 
 // Model Master Role
 model Role {
-  id          String  @id @default(cuid())
+  id          String  @id @default(dbgenerated("gen_random_uuid()::text"))
   name        String  @unique // Contoh: "master", "admin", "editor"
   description String?
   isDeleted   Boolean @default(false)
@@ -32,7 +32,7 @@ model Role {
 
 // Model Master Permission (Resource & Action)
 model Permission {
-  id       String           @id @default(cuid())
+  id       String           @id @default(dbgenerated("gen_random_uuid()::text"))
   resource String // Contoh: "user", "post", "system"
   action   String // Contoh: "create", "read", "update", "delete"
   roles    RolePermission[]
@@ -144,7 +144,7 @@ enum LevelJob {
 }
 
 model JobTitle {
-  id           String      @id @default(uuid())
+  id           String      @id @default(dbgenerated("gen_random_uuid()::text"))
   name         String
   level        LevelJob
   departmentId String?
@@ -156,7 +156,7 @@ model JobTitle {
 }
 
 model Department {
-  id        String     @id @default(uuid())
+  id        String     @id @default(dbgenerated("gen_random_uuid()::text"))
   name      String
   jobTitles JobTitle[]
 
@@ -164,7 +164,7 @@ model Department {
 }
 
 model ShiftSchedule {
-  id          String   @id @default(uuid())
+  id          String   @id @default(dbgenerated("gen_random_uuid()::text"))
   userId      String   @map("user_id") // Foreign Key merujuk ke User
   shiftTypeId Int      @map("shift_type_id")
   date        DateTime @db.Date
@@ -195,12 +195,12 @@ enum MovingStatus {
 }
 
 model Item {
-  id       String  @id @default(uuid())
-  sku      String  @unique
-  name     String
-  unit     String // pcs, box, kg, dst
-  stock    Int     @default(0)
-  isActive Boolean @default(true) @map("is_active")
+  id        String  @id @default(dbgenerated("gen_random_uuid()::text"))
+  sku       String  @unique
+  name      String
+  unit      String // pcs, box, kg, dst
+  stock     Int     @default(0)
+  isDeleted Boolean @default(false) @map("is_deleted")
 
   movingItems MovingItem[]
 
@@ -208,7 +208,7 @@ model Item {
 }
 
 model Moving {
-  id         String       @id @default(uuid())
+  id         String       @id @default(dbgenerated("gen_random_uuid()::text"))
   number     String       @unique
   status     MovingStatus @default(PENDING)
   note       String?
@@ -237,7 +237,7 @@ model Moving {
 }
 
 model MovingItem {
-  id       String @id @default(uuid())
+  id       String @id @default(dbgenerated("gen_random_uuid()::text"))
   movingId String @map("moving_id")
   itemId   String @map("item_id")
   qty      Int
