@@ -1,58 +1,43 @@
-import { z } from "zod"
+import { z } from "zod";
+import { JobTitleSchema, JobTitleWithDeptSchema } from "./job-title-types";
+import { RoleSchema } from "./role-types";
+import { DepartmentSchema } from "./department-types";
 
-export type RoleOption = {
-  value: string;
-  label: string;
-};
-
-export const roles: RoleOption[] = [
-  { value: "administrator", label: "Admin" },
-  { value: "manager", label: "Manager" },
-  { value: "user", label: "User" },
-]
-
-export const userSchema = z.object({
+export const UserSchema = z.object({
   id: z.string(),
   name: z.string(),
   email: z.string().email(),
-  role: z.string().min(1).refine((val) => roles.some((r) => r.value === val)),
-  emailVerified: z.boolean(),
-  image: z.string().nullable(),
-  createdAt: z.string(),
-  updatedAt: z.string(),
-  department: z.string(),
-  jobTitle: z.string(),
+  createdAt: z.date(),
+  updatedAt: z.date(),
+  status: z.enum(["ACTIVE", "INACTIVE"]),
+
+  isScheduled: z.boolean(),
+  isDeleted: z.boolean(),
 
   // Status Keaktifan & Resign
+  resignedDate: z.string().nullable().nullable,
+  resignReason: z.string().nullable(),
+});
+
+export const UsersListSchema = UserSchema.extend({
+  jobTitle: JobTitleSchema.nullable(),
+  department: DepartmentSchema.nullable(),
+  role: RoleSchema.nullable(),
+});
+
+export const CreateUserRequestSchema = z.object({
+  name: z.string(),
+  email: z.email(),
+  jobTitle: z.string(),
+  role: z.string(),
   status: z.enum(["ACTIVE", "INACTIVE"]),
-  resignedDate: z.string().nullable(),
-  resignReason: z.string().nullable()
-})
+});
 
-export const createUserSchema = z.object({
-  name: z.string().trim().min(1, "Nama wajib diisi"),
-  email: z.string().trim().email("Email tidak valid"),
-  role: z.string().min(1).refine(
-    (val) => roles.some((r) => r.value === val), 
-    { message: "Role tidak valid" }
-  ),
-  password: z.string().min(8, "Password minimal 8 karakter"),
-})
+export const UpdateUserRequestSchema = CreateUserRequestSchema.extend({
+  id: z.string(),
+});
 
-export const updateUserSchema = z.object({
-  name: z.string().trim().min(1, "Nama wajib diisi"),
-  email: z.string().trim().email("Email tidak valid"),
-  role: z.string().min(1).refine(
-    (val) => roles.some((r) => r.value === val), 
-    { message: "Role tidak valid" }
-  ),
-})
-
-export const deleteUserSchema = z.object({
-  id: z.string().trim().min(1, "ID tidak ditemukan"),
-})
-
-export type User = z.infer<typeof userSchema>
-export type CreateUserInput = z.infer<typeof createUserSchema>
-export type UpdateUserInput = z.infer<typeof updateUserSchema>
-export type DeleteUserInput = z.infer<typeof deleteUserSchema>
+export type User = z.infer<typeof UserSchema>;
+export type UsersList = z.infer<typeof UsersListSchema>;
+export type CreateUserRequest = z.infer<typeof CreateUserRequestSchema>;
+export type UpdateUserRequest = z.infer<typeof UpdateUserRequestSchema>;

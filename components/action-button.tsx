@@ -9,14 +9,22 @@
 
   export const EditButton = ({
       href,
+      onClick,
   }: {
-      href: string
+      href?: string
+      onClick?: () => void
   }) => {
+      const button = (
+          <Button variant="ghost" size="icon" className="size-8 text-muted-foreground hover:text-purple-600" aria-label="Edit user" title="Edit" onClick={onClick}>
+              <PencilIcon />
+          </Button>
+      )
+
+      if (!href) return button
+
       return (
           <Link href={`${href}`} >
-              <Button variant="ghost" size="icon" className="size-8 text-muted-foreground hover:text-purple-600" aria-label="Edit user" title="Edit">
-                  <PencilIcon />
-              </Button>
+              {button}
           </Link>
       )
   }

@@ -58,6 +58,8 @@ export const ModelName = {
   Session: 'Session',
   Account: 'Account',
   Verification: 'Verification',
+  JobTitle: 'JobTitle',
+  Department: 'Department',
   ShiftSchedule: 'ShiftSchedule',
   ShiftType: 'ShiftType',
   Item: 'Item',
@@ -114,16 +116,15 @@ export const UserScalarFieldEnum = {
   email: 'email',
   emailVerified: 'emailVerified',
   image: 'image',
-  department: 'department',
-  jobTitle: 'jobTitle',
   status: 'status',
   isScheduled: 'isScheduled',
   resignedDate: 'resignedDate',
   resignReason: 'resignReason',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  roleId: 'roleId',
-  isDeleted: 'isDeleted'
+  isDeleted: 'isDeleted',
+  jobTitleId: 'jobTitleId',
+  roleId: 'roleId'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -173,6 +174,24 @@ export const VerificationScalarFieldEnum = {
 } as const
 
 export type VerificationScalarFieldEnum = (typeof VerificationScalarFieldEnum)[keyof typeof VerificationScalarFieldEnum]
+
+
+export const JobTitleScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  level: 'level',
+  departmentId: 'departmentId'
+} as const
+
+export type JobTitleScalarFieldEnum = (typeof JobTitleScalarFieldEnum)[keyof typeof JobTitleScalarFieldEnum]
+
+
+export const DepartmentScalarFieldEnum = {
+  id: 'id',
+  name: 'name'
+} as const
+
+export type DepartmentScalarFieldEnum = (typeof DepartmentScalarFieldEnum)[keyof typeof DepartmentScalarFieldEnum]
 
 
 export const ShiftScheduleScalarFieldEnum = {

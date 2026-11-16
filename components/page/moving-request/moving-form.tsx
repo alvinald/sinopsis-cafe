@@ -1,4 +1,14 @@
 import { Button } from "@/components/ui/button";
+import { Field, FieldLabel } from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Separator } from "@/components/ui/separator";
 import {
   UpdateMovingSchema,
   Item,
@@ -227,23 +237,20 @@ export default function MovingForm({
           </Button>
         </div>
 
-        <label className="block">
-          <span className="mb-1 block text-xs font-medium text-muted-foreground">
-            Catatan (opsional)
-          </span>
-          <input
+        <Field>
+          <FieldLabel htmlFor="moving-note">Catatan (opsional)</FieldLabel>
+          <Input
+            id="moving-note"
             value={note}
             onChange={(event) => setNote(event.target.value)}
             placeholder="mis. Restock bar mingguan"
-            className="h-10 w-full rounded-lg border border-border bg-background px-3 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            className="h-10"
           />
-        </label>
+        </Field>
 
-        <div className="mt-4">
-          <div className="mb-1.5 flex items-center justify-between">
-            <span className="text-xs font-medium text-muted-foreground">
-              Item
-            </span>
+        <Field className="mt-4">
+          <div className="flex items-center justify-between">
+            <FieldLabel>Item</FieldLabel>
             <span className="text-[11px] text-muted-foreground tabular-nums">
               {filledLines.length} item ·{" "}
               {filledLines.reduce((sum, line) => sum + parseInt(line.qty), 0)}{" "}
@@ -257,34 +264,39 @@ export default function MovingForm({
 
               return (
                 <div key={index} className="flex items-center gap-2">
-                  <select
-                    aria-label={`Item baris ${index + 1}`}
-                    value={line.itemId}
-                    onChange={(event) =>
-                      updateLine(index, { itemId: event.target.value })
+                  <Select
+                    value={line.itemId || null}
+                    onValueChange={(value) =>
+                      updateLine(index, { itemId: value ?? "" })
                     }
-                    className="h-10 min-w-0 flex-1 rounded-lg border border-border bg-background px-2.5 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring"
                   >
-                    <option value="">Pilih item…</option>
-                    {Object.values(items).map((item) => {
-                      const usedByOther = lines.some(
-                        (other, otherIndex) =>
-                          otherIndex !== index && other.itemId === item.id,
-                      );
+                    <SelectTrigger
+                      aria-label={`Item baris ${index + 1}`}
+                      className="h-10 w-full min-w-0 flex-1"
+                    >
+                      <SelectValue placeholder="Pilih item…" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {Object.values(items).map((item) => {
+                        const usedByOther = lines.some(
+                          (other, otherIndex) =>
+                            otherIndex !== index && other.itemId === item.id,
+                        );
 
-                      return (
-                        <option
-                          key={item.id}
-                          value={item.id}
-                          disabled={usedByOther}
-                        >
-                          {item.name} · stok {item.stock} {item.unit}
-                        </option>
-                      );
-                    })}
-                  </select>
+                        return (
+                          <SelectItem
+                            key={item.id}
+                            value={item.id}
+                            disabled={usedByOther}
+                          >
+                            {item.name} · stok {item.stock} {item.unit}
+                          </SelectItem>
+                        );
+                      })}
+                    </SelectContent>
+                  </Select>
 
-                  <input
+                  <Input
                     type="number"
                     min={1}
                     step={1}
@@ -295,7 +307,7 @@ export default function MovingForm({
                         qty: event.target.value,
                       })
                     }
-                    className="h-10 w-16 shrink-0 rounded-lg border border-border bg-background text-center text-sm tabular-nums outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                    className="h-10 w-16 shrink-0 text-center tabular-nums"
                   />
 
                   <span className="w-8 shrink-0 text-xs text-muted-foreground">
@@ -322,20 +334,18 @@ export default function MovingForm({
               Item yang sama tidak boleh dipilih dua kali.
             </p>
           )}
-        </div>
+        </Field>
 
         <div className="mt-4">
-          <button
-            type="button"
-            onClick={addLineFn}
-            className="inline-flex h-8 items-center gap-1.5 rounded-lg border border-border px-2.5 text-xs font-medium transition hover:bg-accent"
-          >
+          <Button type="button" variant="outline" size="sm" onClick={addLineFn}>
             <Plus className="size-3.5" />
             Tambah Item
-          </button>
+          </Button>
         </div>
 
-        <div className="mt-5 flex items-center justify-between gap-2 border-t border-border pt-4">
+        <Separator className="my-4" />
+
+        <div className="flex items-center justify-between gap-2">
           <div />
           <div className="flex items-center gap-2">
             <Button

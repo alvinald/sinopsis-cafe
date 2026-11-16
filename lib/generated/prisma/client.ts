@@ -77,6 +77,16 @@ export type Account = Prisma.AccountModel
  */
 export type Verification = Prisma.VerificationModel
 /**
+ * Model JobTitle
+ * 
+ */
+export type JobTitle = Prisma.JobTitleModel
+/**
+ * Model Department
+ * 
+ */
+export type Department = Prisma.DepartmentModel
+/**
  * Model ShiftSchedule
  * 
  */

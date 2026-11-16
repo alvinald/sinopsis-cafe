@@ -17,6 +17,17 @@ export const UserStatus = {
 export type UserStatus = (typeof UserStatus)[keyof typeof UserStatus]
 
 
+export const LevelJob = {
+  OWNER: 'OWNER',
+  DIREKTUR: 'DIREKTUR',
+  MANAGER: 'MANAGER',
+  HEAD: 'HEAD',
+  STAFF: 'STAFF'
+} as const
+
+export type LevelJob = (typeof LevelJob)[keyof typeof LevelJob]
+
+
 export const MovingStatus = {
   PENDING: 'PENDING',
   SENT: 'SENT',

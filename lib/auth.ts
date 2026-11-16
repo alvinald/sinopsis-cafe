@@ -2,12 +2,14 @@ import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { prisma } from "@/lib/prisma"; // your prisma client instance
 import { getPermissionsByRole } from "./rbac";
+import { admin } from "better-auth/plugins"; // 1. Import plugin
 
 export const auth = betterAuth({
   baseURL: process.env.BETTER_AUTH_URL || undefined,
   database: prismaAdapter(prisma, {
     provider: "postgresql", // or "mysql", "sqlite", ...etc
   }),
+
   trustedOrigins: [
     "http://localhost:3000",
     "https://sinopsis-cafe.vercel.app",
@@ -15,6 +17,7 @@ export const auth = betterAuth({
   ],
   emailAndPassword: {
     enabled: true,
+    disableSignUp: true,
   },
   advanced: {
     // Mematikan pemeriksaan CSRF/Origin saat testing di mode development

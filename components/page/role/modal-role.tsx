@@ -1,7 +1,9 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-
+import { Field, FieldLabel } from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
+import { Separator } from "@/components/ui/separator";
 import { CreateRoleRequest } from "@/lib/types/role-types";
 import { X } from "lucide-react";
 import { useState } from "react";
@@ -63,14 +65,14 @@ export const ModalRole = ({
     >
       <div
         onClick={(event) => event.stopPropagation()}
-        className="w-full max-w-sm rounded-t-2xl border border-border bg-card p-5 shadow-2xl sm:rounded-2xl"
+        className="max-h-[92dvh] w-full overflow-y-auto rounded-t-2xl border border-border bg-card p-4 shadow-2xl sm:max-w-sm sm:rounded-2xl"
       >
-        <div className="mb-4 flex items-start justify-between gap-3 border-b border-border pb-3">
+        <div className="mb-4 flex items-start justify-between gap-3">
           <div>
-            <h2 id="create-role-title" className="text-sm font-semibold">
+            <h2 id="create-role-title" className="text-lg font-semibold">
               Tambah Role Baru
             </h2>
-            <p className="mt-1 text-xs text-muted-foreground">
+            <p className="text-xs text-muted-foreground">
               Tambahkan role dan deskripsi akses pengguna.
             </p>
           </div>
@@ -93,35 +95,35 @@ export const ModalRole = ({
           }}
           className="space-y-4"
         >
-          <label className="block">
-            <span className="mb-1 block text-xs font-medium text-muted-foreground">
-              Nama Role
-            </span>
-            <input
+          <Field>
+            <FieldLabel htmlFor="role-name">Nama Role</FieldLabel>
+            <Input
+              id="role-name"
               type="text"
               required
               autoFocus
               value={newRoleName}
               onChange={(event) => setNewRoleName(event.target.value)}
               placeholder="Misalnya: Supervisor"
-              className="h-10 w-full rounded-lg border border-border bg-background px-3 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              className="h-10"
             />
-          </label>
+          </Field>
 
-          <label className="block">
-            <span className="mb-1 block text-xs font-medium text-muted-foreground">
-              Deskripsi Ringkas
-            </span>
-            <input
+          <Field>
+            <FieldLabel htmlFor="role-description">Deskripsi Ringkas</FieldLabel>
+            <Input
+              id="role-description"
               type="text"
               value={newRoleDesc}
               onChange={(event) => setNewRoleDesc(event.target.value)}
               placeholder="Misalnya: Meninjau laporan dan approval"
-              className="h-10 w-full rounded-lg border border-border bg-background px-3 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              className="h-10"
             />
-          </label>
+          </Field>
 
-          <div className="flex justify-end gap-2 border-t border-border pt-4">
+          <Separator />
+
+          <div className="flex justify-end gap-2">
             <Button
               type="button"
               variant="outline"

@@ -13,8 +13,8 @@ export function RoleList({
   onCreate: () => void;
 }) {
   return (
-    <div className="lg:col-span-1 lg:sticky lg:top-6 space-y-4">
-      <div className="bg-white border border-zinc-200 rounded-2xl p-4 shadow-sm space-y-3">
+    <div className="lg:col-span-1 lg:sticky lg:top-6 space-y-2">
+      <div className="bg-white border border-zinc-200 rounded-2xl p-3 shadow-sm space-y-2.5">
         <div className="flex items-center justify-between">
           <span className="text-xs font-semibold uppercase tracking-wider text-zinc-500">
             Daftar Role
@@ -56,7 +56,7 @@ export function RoleList({
         </div>
       </div>
 
-      <div className="hidden lg:block bg-zinc-100 border border-zinc-200/80 rounded-2xl p-4 text-xs space-y-2">
+      <div className="hidden lg:block bg-zinc-100 border border-zinc-200/80 rounded-2xl p-3 text-xs space-y-1.5">
         <div className="font-semibold text-zinc-700">Tips Ringkas:</div>
         <p className="text-zinc-500 leading-relaxed">
           Pilih role di panel samping lalu atur checkbox hak akses di sebelah

@@ -30,16 +30,15 @@ export type UserMinAggregateOutputType = {
   email: string | null
   emailVerified: boolean | null
   image: string | null
-  department: string | null
-  jobTitle: string | null
   status: $Enums.UserStatus | null
   isScheduled: boolean | null
   resignedDate: Date | null
   resignReason: string | null
   createdAt: Date | null
   updatedAt: Date | null
-  roleId: string | null
   isDeleted: boolean | null
+  jobTitleId: string | null
+  roleId: string | null
 }
 
 export type UserMaxAggregateOutputType = {
@@ -48,16 +47,15 @@ export type UserMaxAggregateOutputType = {
   email: string | null
   emailVerified: boolean | null
   image: string | null
-  department: string | null
-  jobTitle: string | null
   status: $Enums.UserStatus | null
   isScheduled: boolean | null
   resignedDate: Date | null
   resignReason: string | null
   createdAt: Date | null
   updatedAt: Date | null
-  roleId: string | null
   isDeleted: boolean | null
+  jobTitleId: string | null
+  roleId: string | null
 }
 
 export type UserCountAggregateOutputType = {
@@ -66,16 +64,15 @@ export type UserCountAggregateOutputType = {
   email: number
   emailVerified: number
   image: number
-  department: number
-  jobTitle: number
   status: number
   isScheduled: number
   resignedDate: number
   resignReason: number
   createdAt: number
   updatedAt: number
-  roleId: number
   isDeleted: number
+  jobTitleId: number
+  roleId: number
   _all: number
 }
 
@@ -86,16 +83,15 @@ export type UserMinAggregateInputType = {
   email?: true
   emailVerified?: true
   image?: true
-  department?: true
-  jobTitle?: true
   status?: true
   isScheduled?: true
   resignedDate?: true
   resignReason?: true
   createdAt?: true
   updatedAt?: true
-  roleId?: true
   isDeleted?: true
+  jobTitleId?: true
+  roleId?: true
 }
 
 export type UserMaxAggregateInputType = {
@@ -104,16 +100,15 @@ export type UserMaxAggregateInputType = {
   email?: true
   emailVerified?: true
   image?: true
-  department?: true
-  jobTitle?: true
   status?: true
   isScheduled?: true
   resignedDate?: true
   resignReason?: true
   createdAt?: true
   updatedAt?: true
-  roleId?: true
   isDeleted?: true
+  jobTitleId?: true
+  roleId?: true
 }
 
 export type UserCountAggregateInputType = {
@@ -122,16 +117,15 @@ export type UserCountAggregateInputType = {
   email?: true
   emailVerified?: true
   image?: true
-  department?: true
-  jobTitle?: true
   status?: true
   isScheduled?: true
   resignedDate?: true
   resignReason?: true
   createdAt?: true
   updatedAt?: true
-  roleId?: true
   isDeleted?: true
+  jobTitleId?: true
+  roleId?: true
   _all?: true
 }
 
@@ -213,16 +207,15 @@ export type UserGroupByOutputType = {
   email: string
   emailVerified: boolean
   image: string | null
-  department: string | null
-  jobTitle: string | null
   status: $Enums.UserStatus
   isScheduled: boolean
   resignedDate: Date | null
   resignReason: string | null
   createdAt: Date
   updatedAt: Date
-  roleId: string | null
   isDeleted: boolean
+  jobTitleId: string | null
+  roleId: string | null
   _count: UserCountAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
   _max: UserMaxAggregateOutputType | null
@@ -252,16 +245,16 @@ export type UserWhereInput = {
   email?: Prisma.StringFilter<"User"> | string
   emailVerified?: Prisma.BoolFilter<"User"> | boolean
   image?: Prisma.StringNullableFilter<"User"> | string | null
-  department?: Prisma.StringNullableFilter<"User"> | string | null
-  jobTitle?: Prisma.StringNullableFilter<"User"> | string | null
   status?: Prisma.EnumUserStatusFilter<"User"> | $Enums.UserStatus
   isScheduled?: Prisma.BoolFilter<"User"> | boolean
   resignedDate?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   resignReason?: Prisma.StringNullableFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
-  roleId?: Prisma.StringNullableFilter<"User"> | string | null
   isDeleted?: Prisma.BoolFilter<"User"> | boolean
+  jobTitleId?: Prisma.StringNullableFilter<"User"> | string | null
+  roleId?: Prisma.StringNullableFilter<"User"> | string | null
+  jobTitle?: Prisma.XOR<Prisma.JobTitleNullableScalarRelationFilter, Prisma.JobTitleWhereInput> | null
   role?: Prisma.XOR<Prisma.RoleNullableScalarRelationFilter, Prisma.RoleWhereInput> | null
   sessions?: Prisma.SessionListRelationFilter
   accounts?: Prisma.AccountListRelationFilter
@@ -278,16 +271,16 @@ export type UserOrderByWithRelationInput = {
   email?: Prisma.SortOrder
   emailVerified?: Prisma.SortOrder
   image?: Prisma.SortOrderInput | Prisma.SortOrder
-  department?: Prisma.SortOrderInput | Prisma.SortOrder
-  jobTitle?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   isScheduled?: Prisma.SortOrder
   resignedDate?: Prisma.SortOrderInput | Prisma.SortOrder
   resignReason?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  roleId?: Prisma.SortOrderInput | Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
+  jobTitleId?: Prisma.SortOrderInput | Prisma.SortOrder
+  roleId?: Prisma.SortOrderInput | Prisma.SortOrder
+  jobTitle?: Prisma.JobTitleOrderByWithRelationInput
   role?: Prisma.RoleOrderByWithRelationInput
   sessions?: Prisma.SessionOrderByRelationAggregateInput
   accounts?: Prisma.AccountOrderByRelationAggregateInput
@@ -307,16 +300,16 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   name?: Prisma.StringFilter<"User"> | string
   emailVerified?: Prisma.BoolFilter<"User"> | boolean
   image?: Prisma.StringNullableFilter<"User"> | string | null
-  department?: Prisma.StringNullableFilter<"User"> | string | null
-  jobTitle?: Prisma.StringNullableFilter<"User"> | string | null
   status?: Prisma.EnumUserStatusFilter<"User"> | $Enums.UserStatus
   isScheduled?: Prisma.BoolFilter<"User"> | boolean
   resignedDate?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   resignReason?: Prisma.StringNullableFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
-  roleId?: Prisma.StringNullableFilter<"User"> | string | null
   isDeleted?: Prisma.BoolFilter<"User"> | boolean
+  jobTitleId?: Prisma.StringNullableFilter<"User"> | string | null
+  roleId?: Prisma.StringNullableFilter<"User"> | string | null
+  jobTitle?: Prisma.XOR<Prisma.JobTitleNullableScalarRelationFilter, Prisma.JobTitleWhereInput> | null
   role?: Prisma.XOR<Prisma.RoleNullableScalarRelationFilter, Prisma.RoleWhereInput> | null
   sessions?: Prisma.SessionListRelationFilter
   accounts?: Prisma.AccountListRelationFilter
@@ -333,16 +326,15 @@ export type UserOrderByWithAggregationInput = {
   email?: Prisma.SortOrder
   emailVerified?: Prisma.SortOrder
   image?: Prisma.SortOrderInput | Prisma.SortOrder
-  department?: Prisma.SortOrderInput | Prisma.SortOrder
-  jobTitle?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   isScheduled?: Prisma.SortOrder
   resignedDate?: Prisma.SortOrderInput | Prisma.SortOrder
   resignReason?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  roleId?: Prisma.SortOrderInput | Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
+  jobTitleId?: Prisma.SortOrderInput | Prisma.SortOrder
+  roleId?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
   _min?: Prisma.UserMinOrderByAggregateInput
@@ -357,16 +349,15 @@ export type UserScalarWhereWithAggregatesInput = {
   email?: Prisma.StringWithAggregatesFilter<"User"> | string
   emailVerified?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   image?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
-  department?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
-  jobTitle?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   status?: Prisma.EnumUserStatusWithAggregatesFilter<"User"> | $Enums.UserStatus
   isScheduled?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   resignedDate?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   resignReason?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
-  roleId?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   isDeleted?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
+  jobTitleId?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  roleId?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
 }
 
 export type UserCreateInput = {
@@ -375,8 +366,6 @@ export type UserCreateInput = {
   email: string
   emailVerified?: boolean
   image?: string | null
-  department?: string | null
-  jobTitle?: string | null
   status?: $Enums.UserStatus
   isScheduled?: boolean
   resignedDate?: Date | string | null
@@ -384,6 +373,7 @@ export type UserCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
+  jobTitle?: Prisma.JobTitleCreateNestedOneWithoutUsersInput
   role?: Prisma.RoleCreateNestedOneWithoutUsersInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
@@ -400,16 +390,15 @@ export type UserUncheckedCreateInput = {
   email: string
   emailVerified?: boolean
   image?: string | null
-  department?: string | null
-  jobTitle?: string | null
   status?: $Enums.UserStatus
   isScheduled?: boolean
   resignedDate?: Date | string | null
   resignReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  roleId?: string | null
   isDeleted?: boolean
+  jobTitleId?: string | null
+  roleId?: string | null
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   shiftSchedules?: Prisma.ShiftScheduleUncheckedCreateNestedManyWithoutUserInput
@@ -425,8 +414,6 @@ export type UserUpdateInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  department?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  jobTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   isScheduled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   resignedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -434,6 +421,7 @@ export type UserUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  jobTitle?: Prisma.JobTitleUpdateOneWithoutUsersNestedInput
   role?: Prisma.RoleUpdateOneWithoutUsersNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
@@ -450,16 +438,15 @@ export type UserUncheckedUpdateInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  department?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  jobTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   isScheduled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   resignedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   resignReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  jobTitleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   shiftSchedules?: Prisma.ShiftScheduleUncheckedUpdateManyWithoutUserNestedInput
@@ -475,16 +462,15 @@ export type UserCreateManyInput = {
   email: string
   emailVerified?: boolean
   image?: string | null
-  department?: string | null
-  jobTitle?: string | null
   status?: $Enums.UserStatus
   isScheduled?: boolean
   resignedDate?: Date | string | null
   resignReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  roleId?: string | null
   isDeleted?: boolean
+  jobTitleId?: string | null
+  roleId?: string | null
 }
 
 export type UserUpdateManyMutationInput = {
@@ -493,8 +479,6 @@ export type UserUpdateManyMutationInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  department?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  jobTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   isScheduled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   resignedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -510,16 +494,15 @@ export type UserUncheckedUpdateManyInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  department?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  jobTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   isScheduled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   resignedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   resignReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  jobTitleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type UserListRelationFilter = {
@@ -538,16 +521,15 @@ export type UserCountOrderByAggregateInput = {
   email?: Prisma.SortOrder
   emailVerified?: Prisma.SortOrder
   image?: Prisma.SortOrder
-  department?: Prisma.SortOrder
-  jobTitle?: Prisma.SortOrder
   status?: Prisma.SortOrder
   isScheduled?: Prisma.SortOrder
   resignedDate?: Prisma.SortOrder
   resignReason?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  roleId?: Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
+  jobTitleId?: Prisma.SortOrder
+  roleId?: Prisma.SortOrder
 }
 
 export type UserMaxOrderByAggregateInput = {
@@ -556,16 +538,15 @@ export type UserMaxOrderByAggregateInput = {
   email?: Prisma.SortOrder
   emailVerified?: Prisma.SortOrder
   image?: Prisma.SortOrder
-  department?: Prisma.SortOrder
-  jobTitle?: Prisma.SortOrder
   status?: Prisma.SortOrder
   isScheduled?: Prisma.SortOrder
   resignedDate?: Prisma.SortOrder
   resignReason?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  roleId?: Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
+  jobTitleId?: Prisma.SortOrder
+  roleId?: Prisma.SortOrder
 }
 
 export type UserMinOrderByAggregateInput = {
@@ -574,16 +555,15 @@ export type UserMinOrderByAggregateInput = {
   email?: Prisma.SortOrder
   emailVerified?: Prisma.SortOrder
   image?: Prisma.SortOrder
-  department?: Prisma.SortOrder
-  jobTitle?: Prisma.SortOrder
   status?: Prisma.SortOrder
   isScheduled?: Prisma.SortOrder
   resignedDate?: Prisma.SortOrder
   resignReason?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  roleId?: Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
+  jobTitleId?: Prisma.SortOrder
+  roleId?: Prisma.SortOrder
 }
 
 export type UserScalarRelationFilter = {
@@ -678,6 +658,48 @@ export type UserUpdateOneRequiredWithoutAccountsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAccountsInput, Prisma.UserUpdateWithoutAccountsInput>, Prisma.UserUncheckedUpdateWithoutAccountsInput>
 }
 
+export type UserCreateNestedManyWithoutJobTitleInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutJobTitleInput, Prisma.UserUncheckedCreateWithoutJobTitleInput> | Prisma.UserCreateWithoutJobTitleInput[] | Prisma.UserUncheckedCreateWithoutJobTitleInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutJobTitleInput | Prisma.UserCreateOrConnectWithoutJobTitleInput[]
+  createMany?: Prisma.UserCreateManyJobTitleInputEnvelope
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+}
+
+export type UserUncheckedCreateNestedManyWithoutJobTitleInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutJobTitleInput, Prisma.UserUncheckedCreateWithoutJobTitleInput> | Prisma.UserCreateWithoutJobTitleInput[] | Prisma.UserUncheckedCreateWithoutJobTitleInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutJobTitleInput | Prisma.UserCreateOrConnectWithoutJobTitleInput[]
+  createMany?: Prisma.UserCreateManyJobTitleInputEnvelope
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+}
+
+export type UserUpdateManyWithoutJobTitleNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutJobTitleInput, Prisma.UserUncheckedCreateWithoutJobTitleInput> | Prisma.UserCreateWithoutJobTitleInput[] | Prisma.UserUncheckedCreateWithoutJobTitleInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutJobTitleInput | Prisma.UserCreateOrConnectWithoutJobTitleInput[]
+  upsert?: Prisma.UserUpsertWithWhereUniqueWithoutJobTitleInput | Prisma.UserUpsertWithWhereUniqueWithoutJobTitleInput[]
+  createMany?: Prisma.UserCreateManyJobTitleInputEnvelope
+  set?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  disconnect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  delete?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  update?: Prisma.UserUpdateWithWhereUniqueWithoutJobTitleInput | Prisma.UserUpdateWithWhereUniqueWithoutJobTitleInput[]
+  updateMany?: Prisma.UserUpdateManyWithWhereWithoutJobTitleInput | Prisma.UserUpdateManyWithWhereWithoutJobTitleInput[]
+  deleteMany?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
+}
+
+export type UserUncheckedUpdateManyWithoutJobTitleNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutJobTitleInput, Prisma.UserUncheckedCreateWithoutJobTitleInput> | Prisma.UserCreateWithoutJobTitleInput[] | Prisma.UserUncheckedCreateWithoutJobTitleInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutJobTitleInput | Prisma.UserCreateOrConnectWithoutJobTitleInput[]
+  upsert?: Prisma.UserUpsertWithWhereUniqueWithoutJobTitleInput | Prisma.UserUpsertWithWhereUniqueWithoutJobTitleInput[]
+  createMany?: Prisma.UserCreateManyJobTitleInputEnvelope
+  set?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  disconnect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  delete?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  update?: Prisma.UserUpdateWithWhereUniqueWithoutJobTitleInput | Prisma.UserUpdateWithWhereUniqueWithoutJobTitleInput[]
+  updateMany?: Prisma.UserUpdateManyWithWhereWithoutJobTitleInput | Prisma.UserUpdateManyWithWhereWithoutJobTitleInput[]
+  deleteMany?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
+}
+
 export type UserCreateNestedOneWithoutShiftSchedulesInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutShiftSchedulesInput, Prisma.UserUncheckedCreateWithoutShiftSchedulesInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutShiftSchedulesInput
@@ -760,8 +782,6 @@ export type UserCreateWithoutRoleInput = {
   email: string
   emailVerified?: boolean
   image?: string | null
-  department?: string | null
-  jobTitle?: string | null
   status?: $Enums.UserStatus
   isScheduled?: boolean
   resignedDate?: Date | string | null
@@ -769,6 +789,7 @@ export type UserCreateWithoutRoleInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
+  jobTitle?: Prisma.JobTitleCreateNestedOneWithoutUsersInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   shiftSchedules?: Prisma.ShiftScheduleCreateNestedManyWithoutUserInput
@@ -784,8 +805,6 @@ export type UserUncheckedCreateWithoutRoleInput = {
   email: string
   emailVerified?: boolean
   image?: string | null
-  department?: string | null
-  jobTitle?: string | null
   status?: $Enums.UserStatus
   isScheduled?: boolean
   resignedDate?: Date | string | null
@@ -793,6 +812,7 @@ export type UserUncheckedCreateWithoutRoleInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
+  jobTitleId?: string | null
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   shiftSchedules?: Prisma.ShiftScheduleUncheckedCreateNestedManyWithoutUserInput
@@ -837,16 +857,15 @@ export type UserScalarWhereInput = {
   email?: Prisma.StringFilter<"User"> | string
   emailVerified?: Prisma.BoolFilter<"User"> | boolean
   image?: Prisma.StringNullableFilter<"User"> | string | null
-  department?: Prisma.StringNullableFilter<"User"> | string | null
-  jobTitle?: Prisma.StringNullableFilter<"User"> | string | null
   status?: Prisma.EnumUserStatusFilter<"User"> | $Enums.UserStatus
   isScheduled?: Prisma.BoolFilter<"User"> | boolean
   resignedDate?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   resignReason?: Prisma.StringNullableFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
-  roleId?: Prisma.StringNullableFilter<"User"> | string | null
   isDeleted?: Prisma.BoolFilter<"User"> | boolean
+  jobTitleId?: Prisma.StringNullableFilter<"User"> | string | null
+  roleId?: Prisma.StringNullableFilter<"User"> | string | null
 }
 
 export type UserCreateWithoutSessionsInput = {
@@ -855,8 +874,6 @@ export type UserCreateWithoutSessionsInput = {
   email: string
   emailVerified?: boolean
   image?: string | null
-  department?: string | null
-  jobTitle?: string | null
   status?: $Enums.UserStatus
   isScheduled?: boolean
   resignedDate?: Date | string | null
@@ -864,6 +881,7 @@ export type UserCreateWithoutSessionsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
+  jobTitle?: Prisma.JobTitleCreateNestedOneWithoutUsersInput
   role?: Prisma.RoleCreateNestedOneWithoutUsersInput
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   shiftSchedules?: Prisma.ShiftScheduleCreateNestedManyWithoutUserInput
@@ -879,16 +897,15 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   email: string
   emailVerified?: boolean
   image?: string | null
-  department?: string | null
-  jobTitle?: string | null
   status?: $Enums.UserStatus
   isScheduled?: boolean
   resignedDate?: Date | string | null
   resignReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  roleId?: string | null
   isDeleted?: boolean
+  jobTitleId?: string | null
+  roleId?: string | null
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   shiftSchedules?: Prisma.ShiftScheduleUncheckedCreateNestedManyWithoutUserInput
   createdMovings?: Prisma.MovingUncheckedCreateNestedManyWithoutCreatedByInput
@@ -919,8 +936,6 @@ export type UserUpdateWithoutSessionsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  department?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  jobTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   isScheduled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   resignedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -928,6 +943,7 @@ export type UserUpdateWithoutSessionsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  jobTitle?: Prisma.JobTitleUpdateOneWithoutUsersNestedInput
   role?: Prisma.RoleUpdateOneWithoutUsersNestedInput
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   shiftSchedules?: Prisma.ShiftScheduleUpdateManyWithoutUserNestedInput
@@ -943,16 +959,15 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  department?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  jobTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   isScheduled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   resignedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   resignReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  jobTitleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   shiftSchedules?: Prisma.ShiftScheduleUncheckedUpdateManyWithoutUserNestedInput
   createdMovings?: Prisma.MovingUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -967,8 +982,6 @@ export type UserCreateWithoutAccountsInput = {
   email: string
   emailVerified?: boolean
   image?: string | null
-  department?: string | null
-  jobTitle?: string | null
   status?: $Enums.UserStatus
   isScheduled?: boolean
   resignedDate?: Date | string | null
@@ -976,6 +989,7 @@ export type UserCreateWithoutAccountsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
+  jobTitle?: Prisma.JobTitleCreateNestedOneWithoutUsersInput
   role?: Prisma.RoleCreateNestedOneWithoutUsersInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   shiftSchedules?: Prisma.ShiftScheduleCreateNestedManyWithoutUserInput
@@ -991,16 +1005,15 @@ export type UserUncheckedCreateWithoutAccountsInput = {
   email: string
   emailVerified?: boolean
   image?: string | null
-  department?: string | null
-  jobTitle?: string | null
   status?: $Enums.UserStatus
   isScheduled?: boolean
   resignedDate?: Date | string | null
   resignReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  roleId?: string | null
   isDeleted?: boolean
+  jobTitleId?: string | null
+  roleId?: string | null
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   shiftSchedules?: Prisma.ShiftScheduleUncheckedCreateNestedManyWithoutUserInput
   createdMovings?: Prisma.MovingUncheckedCreateNestedManyWithoutCreatedByInput
@@ -1031,8 +1044,6 @@ export type UserUpdateWithoutAccountsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  department?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  jobTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   isScheduled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   resignedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1040,6 +1051,7 @@ export type UserUpdateWithoutAccountsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  jobTitle?: Prisma.JobTitleUpdateOneWithoutUsersNestedInput
   role?: Prisma.RoleUpdateOneWithoutUsersNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   shiftSchedules?: Prisma.ShiftScheduleUpdateManyWithoutUserNestedInput
@@ -1055,16 +1067,15 @@ export type UserUncheckedUpdateWithoutAccountsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  department?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  jobTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   isScheduled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   resignedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   resignReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  jobTitleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   shiftSchedules?: Prisma.ShiftScheduleUncheckedUpdateManyWithoutUserNestedInput
   createdMovings?: Prisma.MovingUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -1073,14 +1084,12 @@ export type UserUncheckedUpdateWithoutAccountsInput = {
   cancelledMovings?: Prisma.MovingUncheckedUpdateManyWithoutCancelledByNestedInput
 }
 
-export type UserCreateWithoutShiftSchedulesInput = {
+export type UserCreateWithoutJobTitleInput = {
   id: string
   name: string
   email: string
   emailVerified?: boolean
   image?: string | null
-  department?: string | null
-  jobTitle?: string | null
   status?: $Enums.UserStatus
   isScheduled?: boolean
   resignedDate?: Date | string | null
@@ -1088,6 +1097,79 @@ export type UserCreateWithoutShiftSchedulesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
+  role?: Prisma.RoleCreateNestedOneWithoutUsersInput
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  shiftSchedules?: Prisma.ShiftScheduleCreateNestedManyWithoutUserInput
+  createdMovings?: Prisma.MovingCreateNestedManyWithoutCreatedByInput
+  sentMovings?: Prisma.MovingCreateNestedManyWithoutSentByInput
+  receivedMovings?: Prisma.MovingCreateNestedManyWithoutReceivedByInput
+  cancelledMovings?: Prisma.MovingCreateNestedManyWithoutCancelledByInput
+}
+
+export type UserUncheckedCreateWithoutJobTitleInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  status?: $Enums.UserStatus
+  isScheduled?: boolean
+  resignedDate?: Date | string | null
+  resignReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  isDeleted?: boolean
+  roleId?: string | null
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  shiftSchedules?: Prisma.ShiftScheduleUncheckedCreateNestedManyWithoutUserInput
+  createdMovings?: Prisma.MovingUncheckedCreateNestedManyWithoutCreatedByInput
+  sentMovings?: Prisma.MovingUncheckedCreateNestedManyWithoutSentByInput
+  receivedMovings?: Prisma.MovingUncheckedCreateNestedManyWithoutReceivedByInput
+  cancelledMovings?: Prisma.MovingUncheckedCreateNestedManyWithoutCancelledByInput
+}
+
+export type UserCreateOrConnectWithoutJobTitleInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutJobTitleInput, Prisma.UserUncheckedCreateWithoutJobTitleInput>
+}
+
+export type UserCreateManyJobTitleInputEnvelope = {
+  data: Prisma.UserCreateManyJobTitleInput | Prisma.UserCreateManyJobTitleInput[]
+  skipDuplicates?: boolean
+}
+
+export type UserUpsertWithWhereUniqueWithoutJobTitleInput = {
+  where: Prisma.UserWhereUniqueInput
+  update: Prisma.XOR<Prisma.UserUpdateWithoutJobTitleInput, Prisma.UserUncheckedUpdateWithoutJobTitleInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutJobTitleInput, Prisma.UserUncheckedCreateWithoutJobTitleInput>
+}
+
+export type UserUpdateWithWhereUniqueWithoutJobTitleInput = {
+  where: Prisma.UserWhereUniqueInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutJobTitleInput, Prisma.UserUncheckedUpdateWithoutJobTitleInput>
+}
+
+export type UserUpdateManyWithWhereWithoutJobTitleInput = {
+  where: Prisma.UserScalarWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateManyMutationInput, Prisma.UserUncheckedUpdateManyWithoutJobTitleInput>
+}
+
+export type UserCreateWithoutShiftSchedulesInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  status?: $Enums.UserStatus
+  isScheduled?: boolean
+  resignedDate?: Date | string | null
+  resignReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  isDeleted?: boolean
+  jobTitle?: Prisma.JobTitleCreateNestedOneWithoutUsersInput
   role?: Prisma.RoleCreateNestedOneWithoutUsersInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
@@ -1103,16 +1185,15 @@ export type UserUncheckedCreateWithoutShiftSchedulesInput = {
   email: string
   emailVerified?: boolean
   image?: string | null
-  department?: string | null
-  jobTitle?: string | null
   status?: $Enums.UserStatus
   isScheduled?: boolean
   resignedDate?: Date | string | null
   resignReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  roleId?: string | null
   isDeleted?: boolean
+  jobTitleId?: string | null
+  roleId?: string | null
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   createdMovings?: Prisma.MovingUncheckedCreateNestedManyWithoutCreatedByInput
@@ -1143,8 +1224,6 @@ export type UserUpdateWithoutShiftSchedulesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  department?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  jobTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   isScheduled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   resignedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1152,6 +1231,7 @@ export type UserUpdateWithoutShiftSchedulesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  jobTitle?: Prisma.JobTitleUpdateOneWithoutUsersNestedInput
   role?: Prisma.RoleUpdateOneWithoutUsersNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
@@ -1167,16 +1247,15 @@ export type UserUncheckedUpdateWithoutShiftSchedulesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  department?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  jobTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   isScheduled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   resignedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   resignReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  jobTitleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   createdMovings?: Prisma.MovingUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -1191,8 +1270,6 @@ export type UserCreateWithoutCreatedMovingsInput = {
   email: string
   emailVerified?: boolean
   image?: string | null
-  department?: string | null
-  jobTitle?: string | null
   status?: $Enums.UserStatus
   isScheduled?: boolean
   resignedDate?: Date | string | null
@@ -1200,6 +1277,7 @@ export type UserCreateWithoutCreatedMovingsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
+  jobTitle?: Prisma.JobTitleCreateNestedOneWithoutUsersInput
   role?: Prisma.RoleCreateNestedOneWithoutUsersInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
@@ -1215,16 +1293,15 @@ export type UserUncheckedCreateWithoutCreatedMovingsInput = {
   email: string
   emailVerified?: boolean
   image?: string | null
-  department?: string | null
-  jobTitle?: string | null
   status?: $Enums.UserStatus
   isScheduled?: boolean
   resignedDate?: Date | string | null
   resignReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  roleId?: string | null
   isDeleted?: boolean
+  jobTitleId?: string | null
+  roleId?: string | null
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   shiftSchedules?: Prisma.ShiftScheduleUncheckedCreateNestedManyWithoutUserInput
@@ -1244,8 +1321,6 @@ export type UserCreateWithoutSentMovingsInput = {
   email: string
   emailVerified?: boolean
   image?: string | null
-  department?: string | null
-  jobTitle?: string | null
   status?: $Enums.UserStatus
   isScheduled?: boolean
   resignedDate?: Date | string | null
@@ -1253,6 +1328,7 @@ export type UserCreateWithoutSentMovingsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
+  jobTitle?: Prisma.JobTitleCreateNestedOneWithoutUsersInput
   role?: Prisma.RoleCreateNestedOneWithoutUsersInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
@@ -1268,16 +1344,15 @@ export type UserUncheckedCreateWithoutSentMovingsInput = {
   email: string
   emailVerified?: boolean
   image?: string | null
-  department?: string | null
-  jobTitle?: string | null
   status?: $Enums.UserStatus
   isScheduled?: boolean
   resignedDate?: Date | string | null
   resignReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  roleId?: string | null
   isDeleted?: boolean
+  jobTitleId?: string | null
+  roleId?: string | null
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   shiftSchedules?: Prisma.ShiftScheduleUncheckedCreateNestedManyWithoutUserInput
@@ -1297,8 +1372,6 @@ export type UserCreateWithoutReceivedMovingsInput = {
   email: string
   emailVerified?: boolean
   image?: string | null
-  department?: string | null
-  jobTitle?: string | null
   status?: $Enums.UserStatus
   isScheduled?: boolean
   resignedDate?: Date | string | null
@@ -1306,6 +1379,7 @@ export type UserCreateWithoutReceivedMovingsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
+  jobTitle?: Prisma.JobTitleCreateNestedOneWithoutUsersInput
   role?: Prisma.RoleCreateNestedOneWithoutUsersInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
@@ -1321,16 +1395,15 @@ export type UserUncheckedCreateWithoutReceivedMovingsInput = {
   email: string
   emailVerified?: boolean
   image?: string | null
-  department?: string | null
-  jobTitle?: string | null
   status?: $Enums.UserStatus
   isScheduled?: boolean
   resignedDate?: Date | string | null
   resignReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  roleId?: string | null
   isDeleted?: boolean
+  jobTitleId?: string | null
+  roleId?: string | null
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   shiftSchedules?: Prisma.ShiftScheduleUncheckedCreateNestedManyWithoutUserInput
@@ -1350,8 +1423,6 @@ export type UserCreateWithoutCancelledMovingsInput = {
   email: string
   emailVerified?: boolean
   image?: string | null
-  department?: string | null
-  jobTitle?: string | null
   status?: $Enums.UserStatus
   isScheduled?: boolean
   resignedDate?: Date | string | null
@@ -1359,6 +1430,7 @@ export type UserCreateWithoutCancelledMovingsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
+  jobTitle?: Prisma.JobTitleCreateNestedOneWithoutUsersInput
   role?: Prisma.RoleCreateNestedOneWithoutUsersInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
@@ -1374,16 +1446,15 @@ export type UserUncheckedCreateWithoutCancelledMovingsInput = {
   email: string
   emailVerified?: boolean
   image?: string | null
-  department?: string | null
-  jobTitle?: string | null
   status?: $Enums.UserStatus
   isScheduled?: boolean
   resignedDate?: Date | string | null
   resignReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  roleId?: string | null
   isDeleted?: boolean
+  jobTitleId?: string | null
+  roleId?: string | null
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   shiftSchedules?: Prisma.ShiftScheduleUncheckedCreateNestedManyWithoutUserInput
@@ -1414,8 +1485,6 @@ export type UserUpdateWithoutCreatedMovingsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  department?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  jobTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   isScheduled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   resignedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1423,6 +1492,7 @@ export type UserUpdateWithoutCreatedMovingsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  jobTitle?: Prisma.JobTitleUpdateOneWithoutUsersNestedInput
   role?: Prisma.RoleUpdateOneWithoutUsersNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
@@ -1438,16 +1508,15 @@ export type UserUncheckedUpdateWithoutCreatedMovingsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  department?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  jobTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   isScheduled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   resignedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   resignReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  jobTitleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   shiftSchedules?: Prisma.ShiftScheduleUncheckedUpdateManyWithoutUserNestedInput
@@ -1473,8 +1542,6 @@ export type UserUpdateWithoutSentMovingsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  department?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  jobTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   isScheduled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   resignedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1482,6 +1549,7 @@ export type UserUpdateWithoutSentMovingsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  jobTitle?: Prisma.JobTitleUpdateOneWithoutUsersNestedInput
   role?: Prisma.RoleUpdateOneWithoutUsersNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
@@ -1497,16 +1565,15 @@ export type UserUncheckedUpdateWithoutSentMovingsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  department?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  jobTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   isScheduled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   resignedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   resignReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  jobTitleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   shiftSchedules?: Prisma.ShiftScheduleUncheckedUpdateManyWithoutUserNestedInput
@@ -1532,8 +1599,6 @@ export type UserUpdateWithoutReceivedMovingsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  department?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  jobTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   isScheduled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   resignedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1541,6 +1606,7 @@ export type UserUpdateWithoutReceivedMovingsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  jobTitle?: Prisma.JobTitleUpdateOneWithoutUsersNestedInput
   role?: Prisma.RoleUpdateOneWithoutUsersNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
@@ -1556,16 +1622,15 @@ export type UserUncheckedUpdateWithoutReceivedMovingsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  department?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  jobTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   isScheduled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   resignedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   resignReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  jobTitleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   shiftSchedules?: Prisma.ShiftScheduleUncheckedUpdateManyWithoutUserNestedInput
@@ -1591,8 +1656,6 @@ export type UserUpdateWithoutCancelledMovingsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  department?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  jobTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   isScheduled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   resignedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1600,6 +1663,7 @@ export type UserUpdateWithoutCancelledMovingsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  jobTitle?: Prisma.JobTitleUpdateOneWithoutUsersNestedInput
   role?: Prisma.RoleUpdateOneWithoutUsersNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
@@ -1615,16 +1679,15 @@ export type UserUncheckedUpdateWithoutCancelledMovingsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  department?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  jobTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   isScheduled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   resignedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   resignReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  jobTitleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   shiftSchedules?: Prisma.ShiftScheduleUncheckedUpdateManyWithoutUserNestedInput
@@ -1639,8 +1702,6 @@ export type UserCreateManyRoleInput = {
   email: string
   emailVerified?: boolean
   image?: string | null
-  department?: string | null
-  jobTitle?: string | null
   status?: $Enums.UserStatus
   isScheduled?: boolean
   resignedDate?: Date | string | null
@@ -1648,6 +1709,7 @@ export type UserCreateManyRoleInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   isDeleted?: boolean
+  jobTitleId?: string | null
 }
 
 export type UserUpdateWithoutRoleInput = {
@@ -1656,8 +1718,6 @@ export type UserUpdateWithoutRoleInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  department?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  jobTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   isScheduled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   resignedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1665,6 +1725,7 @@ export type UserUpdateWithoutRoleInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  jobTitle?: Prisma.JobTitleUpdateOneWithoutUsersNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   shiftSchedules?: Prisma.ShiftScheduleUpdateManyWithoutUserNestedInput
@@ -1680,8 +1741,6 @@ export type UserUncheckedUpdateWithoutRoleInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  department?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  jobTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   isScheduled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   resignedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1689,6 +1748,7 @@ export type UserUncheckedUpdateWithoutRoleInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  jobTitleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   shiftSchedules?: Prisma.ShiftScheduleUncheckedUpdateManyWithoutUserNestedInput
@@ -1704,8 +1764,6 @@ export type UserUncheckedUpdateManyWithoutRoleInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  department?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  jobTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   isScheduled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   resignedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1713,6 +1771,85 @@ export type UserUncheckedUpdateManyWithoutRoleInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  jobTitleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type UserCreateManyJobTitleInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  status?: $Enums.UserStatus
+  isScheduled?: boolean
+  resignedDate?: Date | string | null
+  resignReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  isDeleted?: boolean
+  roleId?: string | null
+}
+
+export type UserUpdateWithoutJobTitleInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  isScheduled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  resignedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  resignReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  role?: Prisma.RoleUpdateOneWithoutUsersNestedInput
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  shiftSchedules?: Prisma.ShiftScheduleUpdateManyWithoutUserNestedInput
+  createdMovings?: Prisma.MovingUpdateManyWithoutCreatedByNestedInput
+  sentMovings?: Prisma.MovingUpdateManyWithoutSentByNestedInput
+  receivedMovings?: Prisma.MovingUpdateManyWithoutReceivedByNestedInput
+  cancelledMovings?: Prisma.MovingUpdateManyWithoutCancelledByNestedInput
+}
+
+export type UserUncheckedUpdateWithoutJobTitleInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  isScheduled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  resignedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  resignReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  shiftSchedules?: Prisma.ShiftScheduleUncheckedUpdateManyWithoutUserNestedInput
+  createdMovings?: Prisma.MovingUncheckedUpdateManyWithoutCreatedByNestedInput
+  sentMovings?: Prisma.MovingUncheckedUpdateManyWithoutSentByNestedInput
+  receivedMovings?: Prisma.MovingUncheckedUpdateManyWithoutReceivedByNestedInput
+  cancelledMovings?: Prisma.MovingUncheckedUpdateManyWithoutCancelledByNestedInput
+}
+
+export type UserUncheckedUpdateManyWithoutJobTitleInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  isScheduled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  resignedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  resignReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -1806,16 +1943,16 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   email?: boolean
   emailVerified?: boolean
   image?: boolean
-  department?: boolean
-  jobTitle?: boolean
   status?: boolean
   isScheduled?: boolean
   resignedDate?: boolean
   resignReason?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  roleId?: boolean
   isDeleted?: boolean
+  jobTitleId?: boolean
+  roleId?: boolean
+  jobTitle?: boolean | Prisma.User$jobTitleArgs<ExtArgs>
   role?: boolean | Prisma.User$roleArgs<ExtArgs>
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
   accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
@@ -1833,16 +1970,16 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   email?: boolean
   emailVerified?: boolean
   image?: boolean
-  department?: boolean
-  jobTitle?: boolean
   status?: boolean
   isScheduled?: boolean
   resignedDate?: boolean
   resignReason?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  roleId?: boolean
   isDeleted?: boolean
+  jobTitleId?: boolean
+  roleId?: boolean
+  jobTitle?: boolean | Prisma.User$jobTitleArgs<ExtArgs>
   role?: boolean | Prisma.User$roleArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -1852,16 +1989,16 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   email?: boolean
   emailVerified?: boolean
   image?: boolean
-  department?: boolean
-  jobTitle?: boolean
   status?: boolean
   isScheduled?: boolean
   resignedDate?: boolean
   resignReason?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  roleId?: boolean
   isDeleted?: boolean
+  jobTitleId?: boolean
+  roleId?: boolean
+  jobTitle?: boolean | Prisma.User$jobTitleArgs<ExtArgs>
   role?: boolean | Prisma.User$roleArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -1871,20 +2008,20 @@ export type UserSelectScalar = {
   email?: boolean
   emailVerified?: boolean
   image?: boolean
-  department?: boolean
-  jobTitle?: boolean
   status?: boolean
   isScheduled?: boolean
   resignedDate?: boolean
   resignReason?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  roleId?: boolean
   isDeleted?: boolean
+  jobTitleId?: boolean
+  roleId?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "emailVerified" | "image" | "department" | "jobTitle" | "status" | "isScheduled" | "resignedDate" | "resignReason" | "createdAt" | "updatedAt" | "roleId" | "isDeleted", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "emailVerified" | "image" | "status" | "isScheduled" | "resignedDate" | "resignReason" | "createdAt" | "updatedAt" | "isDeleted" | "jobTitleId" | "roleId", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  jobTitle?: boolean | Prisma.User$jobTitleArgs<ExtArgs>
   role?: boolean | Prisma.User$roleArgs<ExtArgs>
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
   accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
@@ -1896,15 +2033,18 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  jobTitle?: boolean | Prisma.User$jobTitleArgs<ExtArgs>
   role?: boolean | Prisma.User$roleArgs<ExtArgs>
 }
 export type UserIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  jobTitle?: boolean | Prisma.User$jobTitleArgs<ExtArgs>
   role?: boolean | Prisma.User$roleArgs<ExtArgs>
 }
 
 export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "User"
   objects: {
+    jobTitle: Prisma.$JobTitlePayload<ExtArgs> | null
     role: Prisma.$RolePayload<ExtArgs> | null
     sessions: Prisma.$SessionPayload<ExtArgs>[]
     accounts: Prisma.$AccountPayload<ExtArgs>[]
@@ -1920,16 +2060,15 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     email: string
     emailVerified: boolean
     image: string | null
-    department: string | null
-    jobTitle: string | null
     status: $Enums.UserStatus
     isScheduled: boolean
     resignedDate: Date | null
     resignReason: string | null
     createdAt: Date
     updatedAt: Date
-    roleId: string | null
     isDeleted: boolean
+    jobTitleId: string | null
+    roleId: string | null
   }, ExtArgs["result"]["user"]>
   composites: {}
 }
@@ -2324,6 +2463,7 @@ readonly fields: UserFieldRefs;
  */
 export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  jobTitle<T extends Prisma.User$jobTitleArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$jobTitleArgs<ExtArgs>>): Prisma.Prisma__JobTitleClient<runtime.Types.Result.GetResult<Prisma.$JobTitlePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   role<T extends Prisma.User$roleArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$roleArgs<ExtArgs>>): Prisma.Prisma__RoleClient<runtime.Types.Result.GetResult<Prisma.$RolePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   sessions<T extends Prisma.User$sessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   accounts<T extends Prisma.User$accountsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$accountsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -2366,16 +2506,15 @@ export interface UserFieldRefs {
   readonly email: Prisma.FieldRef<"User", 'String'>
   readonly emailVerified: Prisma.FieldRef<"User", 'Boolean'>
   readonly image: Prisma.FieldRef<"User", 'String'>
-  readonly department: Prisma.FieldRef<"User", 'String'>
-  readonly jobTitle: Prisma.FieldRef<"User", 'String'>
   readonly status: Prisma.FieldRef<"User", 'UserStatus'>
   readonly isScheduled: Prisma.FieldRef<"User", 'Boolean'>
   readonly resignedDate: Prisma.FieldRef<"User", 'DateTime'>
   readonly resignReason: Prisma.FieldRef<"User", 'String'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>
-  readonly roleId: Prisma.FieldRef<"User", 'String'>
   readonly isDeleted: Prisma.FieldRef<"User", 'Boolean'>
+  readonly jobTitleId: Prisma.FieldRef<"User", 'String'>
+  readonly roleId: Prisma.FieldRef<"User", 'String'>
 }
     
 
@@ -2774,6 +2913,25 @@ export type UserDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * Limit how many Users to delete.
    */
   limit?: number
+}
+
+/**
+ * User.jobTitle
+ */
+export type User$jobTitleArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the JobTitle
+   */
+  select?: Prisma.JobTitleSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the JobTitle
+   */
+  omit?: Prisma.JobTitleOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.JobTitleInclude<ExtArgs> | null
+  where?: Prisma.JobTitleWhereInput
 }
 
 /**

@@ -1,6 +1,7 @@
 "use client";
 import { CardRequest } from "@/components/page/moving-request/card-request";
 import { ConfirmDialog } from "@/components/page/moving-request/confirm-dialog";
+import { PageHeader } from "@/components/page/page-header";
 import { DetailPopup } from "@/components/page/moving-request/detail-popup";
 import MovingForm from "@/components/page/moving-request/moving-form";
 import StatusTabs from "@/components/page/moving-request/status-tabs";
@@ -267,21 +268,21 @@ export default function MovingRequestPage() {
   return (
     <div className="py-4 md:py-6">
       <div className="w-full px-4 lg:px-6">
-        {/* Header */}
-        <div className="mb-5 flex flex-wrap items-start justify-between gap-3 border-b border-zinc-200 space-y-3">
-          <div>
-            <h1 className="text-2xl font-bold tracking-tight">Moving Item</h1>
-            <p className="mt-1 max-w-2xl text-sm text-muted-foreground">
-              Kelola request pindah item dari gudang ke lokasi cafe.
-            </p>
-          </div>
-          <div className="flex items-center gap-2">
-            <Button onClick={() => openForm(null)} size="sm">
+        <PageHeader
+          className="mb-4"
+          title="Moving Item"
+          description="Kelola request pindah item dari gudang ke lokasi cafe."
+          actions={
+            <Button
+              onClick={() => openForm(null)}
+              size="sm"
+              className="w-full sm:w-auto"
+            >
               <Plus className="size-4" />
               Buat Request
             </Button>
-          </div>
-        </div>
+          }
+        />
 
         <div className="flex w-full justify-center">
           <div className="flex flex-wrap justify-center gap-2">

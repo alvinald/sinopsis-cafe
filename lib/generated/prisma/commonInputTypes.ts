@@ -165,6 +165,23 @@ export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedDateTimeFilter<$PrismaModel>
 }
 
+export type EnumLevelJobFilter<$PrismaModel = never> = {
+  equals?: $Enums.LevelJob | Prisma.EnumLevelJobFieldRefInput<$PrismaModel>
+  in?: $Enums.LevelJob[] | Prisma.ListEnumLevelJobFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LevelJob[] | Prisma.ListEnumLevelJobFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLevelJobFilter<$PrismaModel> | $Enums.LevelJob
+}
+
+export type EnumLevelJobWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.LevelJob | Prisma.EnumLevelJobFieldRefInput<$PrismaModel>
+  in?: $Enums.LevelJob[] | Prisma.ListEnumLevelJobFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LevelJob[] | Prisma.ListEnumLevelJobFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLevelJobWithAggregatesFilter<$PrismaModel> | $Enums.LevelJob
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumLevelJobFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumLevelJobFilter<$PrismaModel>
+}
+
 export type IntFilter<$PrismaModel = never> = {
   equals?: number | Prisma.IntFieldRefInput<$PrismaModel>
   in?: number[] | Prisma.ListIntFieldRefInput<$PrismaModel>
@@ -371,6 +388,23 @@ export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedDateTimeFilter<$PrismaModel>
   _max?: Prisma.NestedDateTimeFilter<$PrismaModel>
+}
+
+export type NestedEnumLevelJobFilter<$PrismaModel = never> = {
+  equals?: $Enums.LevelJob | Prisma.EnumLevelJobFieldRefInput<$PrismaModel>
+  in?: $Enums.LevelJob[] | Prisma.ListEnumLevelJobFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LevelJob[] | Prisma.ListEnumLevelJobFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLevelJobFilter<$PrismaModel> | $Enums.LevelJob
+}
+
+export type NestedEnumLevelJobWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.LevelJob | Prisma.EnumLevelJobFieldRefInput<$PrismaModel>
+  in?: $Enums.LevelJob[] | Prisma.ListEnumLevelJobFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LevelJob[] | Prisma.ListEnumLevelJobFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLevelJobWithAggregatesFilter<$PrismaModel> | $Enums.LevelJob
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumLevelJobFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumLevelJobFilter<$PrismaModel>
 }
 
 export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {

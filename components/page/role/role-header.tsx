@@ -53,7 +53,7 @@ export function RoleHeader({
   }
 
   return (
-    <div className="bg-white border border-zinc-200 rounded-2xl p-4 sm:p-5 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+    <div className="bg-white border border-zinc-200 rounded-2xl p-3 sm:p-4 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3">
       <div>
         <div className="flex items-center gap-2">
           <h2 className="text-lg sm:text-xl font-bold">{activeRole?.name}</h2>
@@ -61,7 +61,7 @@ export function RoleHeader({
             {activeRole?.permissions.length || 0} Akses Aktif
           </span>
         </div>
-        <p className="text-xs text-zinc-500 mt-1">{activeRole?.description}</p>
+        <p className="text-xs text-zinc-500 mt-0.5">{activeRole?.description}</p>
       </div>
 
       <div className="flex items-center gap-2 self-end sm:self-auto">

@@ -7,6 +7,7 @@ import { seedSchedules } from "./seeders/seedSchedule";
 import { seedMoving } from "./seeders/seedMovingRequest";
 import { seedItems } from "./seeders/seedItems";
 import { seedPermissions } from "./seeders/seedPermissions";
+import { seedJobTitle } from "./seeders/seedJobTitle";
 
 const databaseUrl = process.env.DATABASE_URL;
 if (!databaseUrl) throw new Error("DATABASE_URL is not set");
@@ -24,7 +25,8 @@ async function main() {
   // await seedSchedules(prisma);
   // await seedItems(prisma);
   // await seedMoving(prisma);
-  await seedPermissions(prisma);
+  // await seedPermissions(prisma);
+  await seedJobTitle(prisma);
 
   console.log("\n✨ Semua seeder berhasil dijalankan!");
 }

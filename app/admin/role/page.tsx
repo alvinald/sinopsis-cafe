@@ -1,5 +1,6 @@
 "use client";
 
+import { PageHeader } from "@/components/page/page-header";
 import { ModalRole } from "@/components/page/role/modal-role";
 import { PermissionList } from "@/components/page/role/permission-list";
 import { RoleHeader } from "@/components/page/role/role-header";
@@ -139,21 +140,14 @@ export default function RolePermissionPage() {
   return (
     <div className="py-4 md:py-6">
       <div className="w-full px-4 lg:px-6">
-        <div className=" space-y-6">
-          {/* Top Bar Header */}
-          <div className="flex items-center justify-between pb-4 border-b border-zinc-200">
-            <div>
-              <h1 className="text-xl sm:text-2xl font-bold tracking-tight">
-                Role &amp; Permissions
-              </h1>
-              <p className="text-xs sm:text-sm text-zinc-500">
-                Kelola role dan kontrol hak akses sistem secara intuitif.
-              </p>
-            </div>
-          </div>
+        <div className="space-y-3">
+          <PageHeader
+            title="Role & Permissions"
+            description="Kelola role dan kontrol hak akses sistem secara intuitif."
+          />
 
           {/* MAIN LAYOUT */}
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-2 items-start">
             {/* LEFT COLUMN: Role Tabs */}
             <RoleList
               roles={roles}
@@ -162,7 +156,7 @@ export default function RolePermissionPage() {
               onCreate={() => setIsModalOpen(true)}
             />
 
-            <div className="lg:col-span-3 space-y-4">
+            <div className="lg:col-span-3 space-y-2">
               {/* Active Role Header Card */}
               <RoleHeader
                 key={activeRole?.id ?? "empty"}

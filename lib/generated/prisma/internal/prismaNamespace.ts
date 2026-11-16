@@ -404,6 +404,8 @@ export const ModelName = {
   Session: 'Session',
   Account: 'Account',
   Verification: 'Verification',
+  JobTitle: 'JobTitle',
+  Department: 'Department',
   ShiftSchedule: 'ShiftSchedule',
   ShiftType: 'ShiftType',
   Item: 'Item',
@@ -424,7 +426,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "role" | "permission" | "rolePermission" | "user" | "session" | "account" | "verification" | "shiftSchedule" | "shiftType" | "item" | "moving" | "movingItem"
+    modelProps: "role" | "permission" | "rolePermission" | "user" | "session" | "account" | "verification" | "jobTitle" | "department" | "shiftSchedule" | "shiftType" | "item" | "moving" | "movingItem"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -946,6 +948,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    JobTitle: {
+      payload: Prisma.$JobTitlePayload<ExtArgs>
+      fields: Prisma.JobTitleFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.JobTitleFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JobTitlePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.JobTitleFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JobTitlePayload>
+        }
+        findFirst: {
+          args: Prisma.JobTitleFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JobTitlePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.JobTitleFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JobTitlePayload>
+        }
+        findMany: {
+          args: Prisma.JobTitleFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JobTitlePayload>[]
+        }
+        create: {
+          args: Prisma.JobTitleCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JobTitlePayload>
+        }
+        createMany: {
+          args: Prisma.JobTitleCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.JobTitleCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JobTitlePayload>[]
+        }
+        delete: {
+          args: Prisma.JobTitleDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JobTitlePayload>
+        }
+        update: {
+          args: Prisma.JobTitleUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JobTitlePayload>
+        }
+        deleteMany: {
+          args: Prisma.JobTitleDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.JobTitleUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.JobTitleUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JobTitlePayload>[]
+        }
+        upsert: {
+          args: Prisma.JobTitleUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JobTitlePayload>
+        }
+        aggregate: {
+          args: Prisma.JobTitleAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateJobTitle>
+        }
+        groupBy: {
+          args: Prisma.JobTitleGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.JobTitleGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.JobTitleCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.JobTitleCountAggregateOutputType> | number
+        }
+      }
+    }
+    Department: {
+      payload: Prisma.$DepartmentPayload<ExtArgs>
+      fields: Prisma.DepartmentFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.DepartmentFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DepartmentPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.DepartmentFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DepartmentPayload>
+        }
+        findFirst: {
+          args: Prisma.DepartmentFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DepartmentPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.DepartmentFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DepartmentPayload>
+        }
+        findMany: {
+          args: Prisma.DepartmentFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DepartmentPayload>[]
+        }
+        create: {
+          args: Prisma.DepartmentCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DepartmentPayload>
+        }
+        createMany: {
+          args: Prisma.DepartmentCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.DepartmentCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DepartmentPayload>[]
+        }
+        delete: {
+          args: Prisma.DepartmentDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DepartmentPayload>
+        }
+        update: {
+          args: Prisma.DepartmentUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DepartmentPayload>
+        }
+        deleteMany: {
+          args: Prisma.DepartmentDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.DepartmentUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.DepartmentUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DepartmentPayload>[]
+        }
+        upsert: {
+          args: Prisma.DepartmentUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DepartmentPayload>
+        }
+        aggregate: {
+          args: Prisma.DepartmentAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDepartment>
+        }
+        groupBy: {
+          args: Prisma.DepartmentGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DepartmentGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.DepartmentCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DepartmentCountAggregateOutputType> | number
+        }
+      }
+    }
     ShiftSchedule: {
       payload: Prisma.$ShiftSchedulePayload<ExtArgs>
       fields: Prisma.ShiftScheduleFieldRefs
@@ -1388,16 +1538,15 @@ export const UserScalarFieldEnum = {
   email: 'email',
   emailVerified: 'emailVerified',
   image: 'image',
-  department: 'department',
-  jobTitle: 'jobTitle',
   status: 'status',
   isScheduled: 'isScheduled',
   resignedDate: 'resignedDate',
   resignReason: 'resignReason',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  roleId: 'roleId',
-  isDeleted: 'isDeleted'
+  isDeleted: 'isDeleted',
+  jobTitleId: 'jobTitleId',
+  roleId: 'roleId'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -1447,6 +1596,24 @@ export const VerificationScalarFieldEnum = {
 } as const
 
 export type VerificationScalarFieldEnum = (typeof VerificationScalarFieldEnum)[keyof typeof VerificationScalarFieldEnum]
+
+
+export const JobTitleScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  level: 'level',
+  departmentId: 'departmentId'
+} as const
+
+export type JobTitleScalarFieldEnum = (typeof JobTitleScalarFieldEnum)[keyof typeof JobTitleScalarFieldEnum]
+
+
+export const DepartmentScalarFieldEnum = {
+  id: 'id',
+  name: 'name'
+} as const
+
+export type DepartmentScalarFieldEnum = (typeof DepartmentScalarFieldEnum)[keyof typeof DepartmentScalarFieldEnum]
 
 
 export const ShiftScheduleScalarFieldEnum = {
@@ -1585,6 +1752,20 @@ export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel
  * Reference to a field of type 'DateTime[]'
  */
 export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+/**
+ * Reference to a field of type 'LevelJob'
+ */
+export type EnumLevelJobFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LevelJob'>
+    
+
+
+/**
+ * Reference to a field of type 'LevelJob[]'
+ */
+export type ListEnumLevelJobFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LevelJob[]'>
     
 
 
@@ -1787,6 +1968,8 @@ export type GlobalOmitConfig = {
   session?: Prisma.SessionOmit
   account?: Prisma.AccountOmit
   verification?: Prisma.VerificationOmit
+  jobTitle?: Prisma.JobTitleOmit
+  department?: Prisma.DepartmentOmit
   shiftSchedule?: Prisma.ShiftScheduleOmit
   shiftType?: Prisma.ShiftTypeOmit
   item?: Prisma.ItemOmit

@@ -94,7 +94,7 @@ const data = {
   settings: [
     {
       name: "Users",
-      url: "/admin/users",
+      url: "/admin/user",
       icon: <Users />,
     },
     {

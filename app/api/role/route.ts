@@ -1,11 +1,10 @@
 import {
+  CreateRoleSchema,
+  DeleteRoleSchema,
   RoleWithPermissions,
-  roleWithPermissionsSchema,
 } from "./../../../lib/types/role-types";
-import { False } from "./../../../lib/generated/prisma/internal/prismaNamespace";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { createRoleSchema, deleteRoleSchema } from "@/lib/types/role-types";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
@@ -66,7 +65,7 @@ export async function POST(request: NextRequest) {
 
   const body = await request.json().catch(() => null);
 
-  const parsed = createRoleSchema.safeParse(body);
+  const parsed = CreateRoleSchema.safeParse(body);
 
   if (!parsed.success) {
     return NextResponse.json(
@@ -107,7 +106,7 @@ export async function DELETE(request: NextRequest) {
 
   const body = await request.json().catch(() => null);
 
-  const parsed = deleteRoleSchema.safeParse(body);
+  const parsed = DeleteRoleSchema.safeParse(body);
 
   if (!parsed.success) {
     return NextResponse.json(

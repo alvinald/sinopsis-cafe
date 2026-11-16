@@ -54,23 +54,24 @@ model RolePermission {
 }
 
 model User {
-  id            String  @id
+  id            String     @id
   name          String
   email         String
-  emailVerified Boolean @default(false)
+  emailVerified Boolean    @default(false)
   image         String?
+  status        UserStatus @default(ACTIVE)
+  isScheduled   Boolean    @default(false)
+  resignedDate  DateTime?  @map("resigned_date") @db.Date
+  resignReason  String?    @map("resign_reason")
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+  isDeleted     Boolean    @default(false)
 
-  department   String?
-  jobTitle     String?    @map("job_title")
-  status       UserStatus @default(ACTIVE)
-  isScheduled  Boolean    @default(false)
-  resignedDate DateTime?  @map("resigned_date") @db.Date
-  resignReason String?    @map("resign_reason")
-  createdAt    DateTime   @default(now())
-  updatedAt    DateTime   @updatedAt
-  role         Role?      @relation(fields: [roleId], references: [id])
-  roleId       String?
-  isDeleted    Boolean    @default(false)
+  jobTitle   JobTitle? @relation(fields: [jobTitleId], references: [id])
+  jobTitleId String?
+
+  role   Role?   @relation(fields: [roleId], references: [id])
+  roleId String?
 
   sessions         Session[]
   accounts         Account[]
@@ -132,6 +133,34 @@ model Verification {
 
   @@index([identifier])
   @@map("verification")
+}
+
+enum LevelJob {
+  OWNER
+  DIREKTUR
+  MANAGER
+  HEAD
+  STAFF
+}
+
+model JobTitle {
+  id           String      @id @default(uuid())
+  name         String
+  level        LevelJob
+  departmentId String?
+  department   Department? @relation(fields: [departmentId], references: [id])
+
+  users User[]
+
+  @@map("job_title")
+}
+
+model Department {
+  id        String     @id @default(uuid())
+  name      String
+  jobTitles JobTitle[]
+
+  @@map("department")
 }
 
 model ShiftSchedule {
