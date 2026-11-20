@@ -37,7 +37,7 @@ export const auth = betterAuth({
         ) ?? [];
 
       const jobTitle = dataUser?.jobTitle?.name ?? undefined;
-      const departmentId = dataUser?.jobTitle?.department?.name ?? undefined;
+      const departmentId = dataUser?.jobTitle?.department?.id ?? undefined;
       const department = dataUser?.jobTitle?.department?.name ?? undefined;
 
       return {

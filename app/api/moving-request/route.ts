@@ -21,6 +21,24 @@ export async function GET(request: NextRequest) {
 
     const moving = await prisma.moving.findMany({
       include: {
+        cancelledBy: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+        sentBy: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+        receivedBy: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
         items: {
           include: {
             item: {

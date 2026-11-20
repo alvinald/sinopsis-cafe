@@ -23,7 +23,6 @@ export function DetailPopup({
   const [confirmCancel, setConfirmCancel] = useState(false);
 
   if (!moving) return null;
-  console.log("Detail moving:", moving);
   return (
     <div
       role="dialog"
