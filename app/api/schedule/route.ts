@@ -19,6 +19,16 @@ export async function GET(request: NextRequest) {
   try {
     const rawUserSchedules = await prisma.user.findMany({
       include: {
+        jobTitle: {
+          select: {
+            name: true,
+            department: {
+              select: {
+                name: true,
+              },
+            },
+          },
+        },
         shiftSchedules: {
           include: {
             shiftType: true,
@@ -46,8 +56,8 @@ export async function GET(request: NextRequest) {
     const shiftSchedule: UserSchedule[] = rawUserSchedules.map((user) => ({
       id: user.id,
       name: user.name,
-      department: user.department,
-      jobTitle: user.jobTitle,
+      department: user.jobTitle?.department?.name ?? null,
+      jobTitle: user.jobTitle?.name ?? null,
       shiftSchedules: user.shiftSchedules.map((schedule) => ({
         id: schedule.id,
         userId: schedule.userId,

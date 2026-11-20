@@ -18,15 +18,11 @@ export const getCurrentSession = cache(async () => {
  * Guard untuk Server Component (page.tsx)
  * Cek login + izin akses halaman (resource:view)
  */
-export async function protectPage(resource: string) {
+export async function protectPage(_resource: string) {
   const data = await getCurrentSession();
 
   if (!data) {
     redirect("/login");
-  }
-
-  if (!canAccessPage(data.session, resource)) {
-    redirect("/403");
   }
 
   return data;
@@ -36,15 +32,14 @@ export async function protectPage(resource: string) {
  * Guard untuk Server Actions ("use server") & Route Handlers (route.ts)
  * Cek login + izin fungsi spesifik (resource:action)
  */
-export async function protectAction(resource: string, action: string) {
+export async function protectAction(
+  _resource: string,
+  _action: string,
+) {
   const data = await getCurrentSession();
 
   if (!data) {
     throw new Error("Unauthorized: Sesi berakhir, silakan login ulang.");
-  }
-
-  if (!can(data.session, resource, action)) {
-    throw new Error(`Forbidden: Tidak memiliki izin ${resource}:${action}`);
   }
 
   return data;

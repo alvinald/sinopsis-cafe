@@ -1,5 +1,9 @@
 import { faker } from "@faker-js/faker";
-import { PrismaClient, Role, UserStatus } from "@/lib/generated/prisma/client";
+import {
+  PrismaClient,
+  Role,
+  status as UserStatus,
+} from "@/lib/generated/prisma/client";
 
 export async function seedUsers(prisma: PrismaClient) {
   console.log("🌱 Seeding users...");

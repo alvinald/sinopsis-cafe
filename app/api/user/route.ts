@@ -28,6 +28,7 @@ export async function GET(request: NextRequest) {
           select: {
             id: true,
             name: true,
+            level: true,
             // Ambil relasi department menggunakan 'select' di dalam select jobTitle
             department: {
               select: {
@@ -55,6 +56,7 @@ export async function GET(request: NextRequest) {
         ? {
             id: item.jobTitle.id,
             name: item.jobTitle.name,
+            level: item.jobTitle.level,
             departement: item.jobTitle.department,
           }
         : null,
