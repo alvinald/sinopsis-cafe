@@ -82,9 +82,6 @@ export async function POST(request: NextRequest) {
   }
 
   const body = await request.json().catch(() => null);
-
-  console.log(body);
-
   const parsed = CreateUserRequestSchema.safeParse(body);
 
   if (!parsed.success) {
@@ -126,7 +123,7 @@ export async function POST(request: NextRequest) {
         data: {
           id: crypto.randomUUID(),
           userId: user.id,
-          issuer: "credential",
+          issuer: "local:credential",
           accountId: user.id,
           providerId: "credential",
           password: hashedPassword,
