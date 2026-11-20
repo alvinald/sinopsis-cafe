@@ -9,12 +9,12 @@
 * 🟢 You can import this file directly.
 */
 
-export const UserStatus = {
+export const status = {
   ACTIVE: 'ACTIVE',
   INACTIVE: 'INACTIVE'
 } as const
 
-export type UserStatus = (typeof UserStatus)[keyof typeof UserStatus]
+export type status = (typeof status)[keyof typeof status]
 
 
 export const LevelJob = {

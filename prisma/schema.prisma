@@ -12,7 +12,7 @@ datasource db {
   provider = "postgresql"
 }
 
-enum UserStatus {
+enum status {
   ACTIVE
   INACTIVE
 }
@@ -54,18 +54,18 @@ model RolePermission {
 }
 
 model User {
-  id            String     @id
+  id            String    @id
   name          String
   email         String
-  emailVerified Boolean    @default(false)
+  emailVerified Boolean   @default(false)
   image         String?
-  status        UserStatus @default(ACTIVE)
-  isScheduled   Boolean    @default(false)
-  resignedDate  DateTime?  @map("resigned_date") @db.Date
-  resignReason  String?    @map("resign_reason")
-  createdAt     DateTime   @default(now())
-  updatedAt     DateTime   @updatedAt
-  isDeleted     Boolean    @default(false)
+  status        status    @default(ACTIVE)
+  isScheduled   Boolean   @default(false)
+  resignedDate  DateTime? @map("resigned_date") @db.Date
+  resignReason  String?   @map("resign_reason")
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  isDeleted     Boolean   @default(false)
 
   jobTitle   JobTitle? @relation(fields: [jobTitleId], references: [id])
   jobTitleId String?
@@ -86,15 +86,16 @@ model User {
 }
 
 model Session {
-  id        String   @id
-  expiresAt DateTime
-  token     String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  ipAddress String?
-  userAgent String?
-  userId    String
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id          String   @id
+  expiresAt   DateTime
+  token       String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  ipAddress   String?
+  userAgent   String?
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  permissions String[] @default([]) // <-- Pastikan baris ini ada
 
   @@unique([token])
   @@index([userId])
@@ -195,11 +196,13 @@ enum MovingStatus {
 }
 
 model Item {
-  id        String  @id @default(dbgenerated("gen_random_uuid()::text"))
-  sku       String  @unique
-  name      String
-  unit      String // pcs, box, kg, dst
-  stock     Int     @default(0)
+  id     String @id @default(dbgenerated("gen_random_uuid()::text"))
+  sku    String @unique
+  name   String
+  unit   String // pcs, box, kg, dst
+  stock  Int    @default(0)
+  status status @default(ACTIVE)
+
   isDeleted Boolean @default(false) @map("is_deleted")
 
   movingItems MovingItem[]

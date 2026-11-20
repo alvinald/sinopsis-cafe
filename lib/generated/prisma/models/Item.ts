@@ -40,7 +40,8 @@ export type ItemMinAggregateOutputType = {
   name: string | null
   unit: string | null
   stock: number | null
-  isActive: boolean | null
+  status: $Enums.status | null
+  isDeleted: boolean | null
 }
 
 export type ItemMaxAggregateOutputType = {
@@ -49,7 +50,8 @@ export type ItemMaxAggregateOutputType = {
   name: string | null
   unit: string | null
   stock: number | null
-  isActive: boolean | null
+  status: $Enums.status | null
+  isDeleted: boolean | null
 }
 
 export type ItemCountAggregateOutputType = {
@@ -58,7 +60,8 @@ export type ItemCountAggregateOutputType = {
   name: number
   unit: number
   stock: number
-  isActive: number
+  status: number
+  isDeleted: number
   _all: number
 }
 
@@ -77,7 +80,8 @@ export type ItemMinAggregateInputType = {
   name?: true
   unit?: true
   stock?: true
-  isActive?: true
+  status?: true
+  isDeleted?: true
 }
 
 export type ItemMaxAggregateInputType = {
@@ -86,7 +90,8 @@ export type ItemMaxAggregateInputType = {
   name?: true
   unit?: true
   stock?: true
-  isActive?: true
+  status?: true
+  isDeleted?: true
 }
 
 export type ItemCountAggregateInputType = {
@@ -95,7 +100,8 @@ export type ItemCountAggregateInputType = {
   name?: true
   unit?: true
   stock?: true
-  isActive?: true
+  status?: true
+  isDeleted?: true
   _all?: true
 }
 
@@ -191,7 +197,8 @@ export type ItemGroupByOutputType = {
   name: string
   unit: string
   stock: number
-  isActive: boolean
+  status: $Enums.status
+  isDeleted: boolean
   _count: ItemCountAggregateOutputType | null
   _avg: ItemAvgAggregateOutputType | null
   _sum: ItemSumAggregateOutputType | null
@@ -223,7 +230,8 @@ export type ItemWhereInput = {
   name?: Prisma.StringFilter<"Item"> | string
   unit?: Prisma.StringFilter<"Item"> | string
   stock?: Prisma.IntFilter<"Item"> | number
-  isActive?: Prisma.BoolFilter<"Item"> | boolean
+  status?: Prisma.EnumstatusFilter<"Item"> | $Enums.status
+  isDeleted?: Prisma.BoolFilter<"Item"> | boolean
   movingItems?: Prisma.MovingItemListRelationFilter
 }
 
@@ -233,7 +241,8 @@ export type ItemOrderByWithRelationInput = {
   name?: Prisma.SortOrder
   unit?: Prisma.SortOrder
   stock?: Prisma.SortOrder
-  isActive?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  isDeleted?: Prisma.SortOrder
   movingItems?: Prisma.MovingItemOrderByRelationAggregateInput
 }
 
@@ -246,7 +255,8 @@ export type ItemWhereUniqueInput = Prisma.AtLeast<{
   name?: Prisma.StringFilter<"Item"> | string
   unit?: Prisma.StringFilter<"Item"> | string
   stock?: Prisma.IntFilter<"Item"> | number
-  isActive?: Prisma.BoolFilter<"Item"> | boolean
+  status?: Prisma.EnumstatusFilter<"Item"> | $Enums.status
+  isDeleted?: Prisma.BoolFilter<"Item"> | boolean
   movingItems?: Prisma.MovingItemListRelationFilter
 }, "id" | "sku">
 
@@ -256,7 +266,8 @@ export type ItemOrderByWithAggregationInput = {
   name?: Prisma.SortOrder
   unit?: Prisma.SortOrder
   stock?: Prisma.SortOrder
-  isActive?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  isDeleted?: Prisma.SortOrder
   _count?: Prisma.ItemCountOrderByAggregateInput
   _avg?: Prisma.ItemAvgOrderByAggregateInput
   _max?: Prisma.ItemMaxOrderByAggregateInput
@@ -273,7 +284,8 @@ export type ItemScalarWhereWithAggregatesInput = {
   name?: Prisma.StringWithAggregatesFilter<"Item"> | string
   unit?: Prisma.StringWithAggregatesFilter<"Item"> | string
   stock?: Prisma.IntWithAggregatesFilter<"Item"> | number
-  isActive?: Prisma.BoolWithAggregatesFilter<"Item"> | boolean
+  status?: Prisma.EnumstatusWithAggregatesFilter<"Item"> | $Enums.status
+  isDeleted?: Prisma.BoolWithAggregatesFilter<"Item"> | boolean
 }
 
 export type ItemCreateInput = {
@@ -282,7 +294,8 @@ export type ItemCreateInput = {
   name: string
   unit: string
   stock?: number
-  isActive?: boolean
+  status?: $Enums.status
+  isDeleted?: boolean
   movingItems?: Prisma.MovingItemCreateNestedManyWithoutItemInput
 }
 
@@ -292,7 +305,8 @@ export type ItemUncheckedCreateInput = {
   name: string
   unit: string
   stock?: number
-  isActive?: boolean
+  status?: $Enums.status
+  isDeleted?: boolean
   movingItems?: Prisma.MovingItemUncheckedCreateNestedManyWithoutItemInput
 }
 
@@ -302,7 +316,8 @@ export type ItemUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   unit?: Prisma.StringFieldUpdateOperationsInput | string
   stock?: Prisma.IntFieldUpdateOperationsInput | number
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumstatusFieldUpdateOperationsInput | $Enums.status
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   movingItems?: Prisma.MovingItemUpdateManyWithoutItemNestedInput
 }
 
@@ -312,7 +327,8 @@ export type ItemUncheckedUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   unit?: Prisma.StringFieldUpdateOperationsInput | string
   stock?: Prisma.IntFieldUpdateOperationsInput | number
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumstatusFieldUpdateOperationsInput | $Enums.status
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   movingItems?: Prisma.MovingItemUncheckedUpdateManyWithoutItemNestedInput
 }
 
@@ -322,7 +338,8 @@ export type ItemCreateManyInput = {
   name: string
   unit: string
   stock?: number
-  isActive?: boolean
+  status?: $Enums.status
+  isDeleted?: boolean
 }
 
 export type ItemUpdateManyMutationInput = {
@@ -331,7 +348,8 @@ export type ItemUpdateManyMutationInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   unit?: Prisma.StringFieldUpdateOperationsInput | string
   stock?: Prisma.IntFieldUpdateOperationsInput | number
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumstatusFieldUpdateOperationsInput | $Enums.status
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type ItemUncheckedUpdateManyInput = {
@@ -340,7 +358,8 @@ export type ItemUncheckedUpdateManyInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   unit?: Prisma.StringFieldUpdateOperationsInput | string
   stock?: Prisma.IntFieldUpdateOperationsInput | number
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumstatusFieldUpdateOperationsInput | $Enums.status
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type ItemCountOrderByAggregateInput = {
@@ -349,7 +368,8 @@ export type ItemCountOrderByAggregateInput = {
   name?: Prisma.SortOrder
   unit?: Prisma.SortOrder
   stock?: Prisma.SortOrder
-  isActive?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  isDeleted?: Prisma.SortOrder
 }
 
 export type ItemAvgOrderByAggregateInput = {
@@ -362,7 +382,8 @@ export type ItemMaxOrderByAggregateInput = {
   name?: Prisma.SortOrder
   unit?: Prisma.SortOrder
   stock?: Prisma.SortOrder
-  isActive?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  isDeleted?: Prisma.SortOrder
 }
 
 export type ItemMinOrderByAggregateInput = {
@@ -371,7 +392,8 @@ export type ItemMinOrderByAggregateInput = {
   name?: Prisma.SortOrder
   unit?: Prisma.SortOrder
   stock?: Prisma.SortOrder
-  isActive?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  isDeleted?: Prisma.SortOrder
 }
 
 export type ItemSumOrderByAggregateInput = {
@@ -403,7 +425,8 @@ export type ItemCreateWithoutMovingItemsInput = {
   name: string
   unit: string
   stock?: number
-  isActive?: boolean
+  status?: $Enums.status
+  isDeleted?: boolean
 }
 
 export type ItemUncheckedCreateWithoutMovingItemsInput = {
@@ -412,7 +435,8 @@ export type ItemUncheckedCreateWithoutMovingItemsInput = {
   name: string
   unit: string
   stock?: number
-  isActive?: boolean
+  status?: $Enums.status
+  isDeleted?: boolean
 }
 
 export type ItemCreateOrConnectWithoutMovingItemsInput = {
@@ -437,7 +461,8 @@ export type ItemUpdateWithoutMovingItemsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   unit?: Prisma.StringFieldUpdateOperationsInput | string
   stock?: Prisma.IntFieldUpdateOperationsInput | number
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumstatusFieldUpdateOperationsInput | $Enums.status
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type ItemUncheckedUpdateWithoutMovingItemsInput = {
@@ -446,7 +471,8 @@ export type ItemUncheckedUpdateWithoutMovingItemsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   unit?: Prisma.StringFieldUpdateOperationsInput | string
   stock?: Prisma.IntFieldUpdateOperationsInput | number
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumstatusFieldUpdateOperationsInput | $Enums.status
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 
@@ -486,7 +512,8 @@ export type ItemSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   name?: boolean
   unit?: boolean
   stock?: boolean
-  isActive?: boolean
+  status?: boolean
+  isDeleted?: boolean
   movingItems?: boolean | Prisma.Item$movingItemsArgs<ExtArgs>
   _count?: boolean | Prisma.ItemCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["item"]>
@@ -497,7 +524,8 @@ export type ItemSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   name?: boolean
   unit?: boolean
   stock?: boolean
-  isActive?: boolean
+  status?: boolean
+  isDeleted?: boolean
 }, ExtArgs["result"]["item"]>
 
 export type ItemSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -506,7 +534,8 @@ export type ItemSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   name?: boolean
   unit?: boolean
   stock?: boolean
-  isActive?: boolean
+  status?: boolean
+  isDeleted?: boolean
 }, ExtArgs["result"]["item"]>
 
 export type ItemSelectScalar = {
@@ -515,10 +544,11 @@ export type ItemSelectScalar = {
   name?: boolean
   unit?: boolean
   stock?: boolean
-  isActive?: boolean
+  status?: boolean
+  isDeleted?: boolean
 }
 
-export type ItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "sku" | "name" | "unit" | "stock" | "isActive", ExtArgs["result"]["item"]>
+export type ItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "sku" | "name" | "unit" | "stock" | "status" | "isDeleted", ExtArgs["result"]["item"]>
 export type ItemInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   movingItems?: boolean | Prisma.Item$movingItemsArgs<ExtArgs>
   _count?: boolean | Prisma.ItemCountOutputTypeDefaultArgs<ExtArgs>
@@ -537,7 +567,8 @@ export type $ItemPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     name: string
     unit: string
     stock: number
-    isActive: boolean
+    status: $Enums.status
+    isDeleted: boolean
   }, ExtArgs["result"]["item"]>
   composites: {}
 }
@@ -967,7 +998,8 @@ export interface ItemFieldRefs {
   readonly name: Prisma.FieldRef<"Item", 'String'>
   readonly unit: Prisma.FieldRef<"Item", 'String'>
   readonly stock: Prisma.FieldRef<"Item", 'Int'>
-  readonly isActive: Prisma.FieldRef<"Item", 'Boolean'>
+  readonly status: Prisma.FieldRef<"Item", 'status'>
+  readonly isDeleted: Prisma.FieldRef<"Item", 'Boolean'>
 }
     
 

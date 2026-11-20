@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { JobTitleSchema, JobTitleWithDeptSchema } from "./job-title-types";
+import { JobTitleSchema } from "./job-title-types";
 import { RoleSchema } from "./role-types";
 import { DepartmentSchema } from "./department-types";
 

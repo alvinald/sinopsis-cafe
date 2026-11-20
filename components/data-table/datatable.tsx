@@ -20,12 +20,15 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Input } from "@/components/ui/input";
-import { cn } from "@/lib/utils";
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+} from "@/components/ui/input-group";
+import { Inbox, Loader2, Search } from "lucide-react";
 
 import { features, type DataTableFeatures } from "./features";
 import { DataTablePagination } from "./pagination";
-import { Card, CardContent, CardHeader } from "../ui/card";
 
 interface DataTableProps<TData extends RowData> {
   columns: ColumnDef<DataTableFeatures, TData>[];
@@ -33,6 +36,7 @@ interface DataTableProps<TData extends RowData> {
   enableSearch?: boolean;
   searchPlaceholder?: string;
   toolbar?: React.ReactNode;
+  emptyMessage?: string;
   getRowId?: (row: TData) => string;
   // Server-side (manual) mode. When set, sorting/pagination/globalFilter
   // values and callbacks below must be provided by the parent.
@@ -54,8 +58,9 @@ export function DataTable<TData extends RowData>({
   columns,
   data,
   enableSearch = true,
-  searchPlaceholder = "Search...",
+  searchPlaceholder = "Cari...",
   toolbar,
+  emptyMessage = "Tidak ada data.",
   getRowId,
   manualPagination,
   manualSorting,
@@ -120,78 +125,95 @@ export function DataTable<TData extends RowData>({
   });
 
   return (
-    <div>
-      <Card>
-        <CardContent>
-          {(enableSearch || toolbar) && (
-            <div className="flex items-center justify-between gap-3 py-4">
-              {enableSearch && (
-                <Input
-                  placeholder={searchPlaceholder}
-                  value={globalFilter}
-                  onChange={(event) => {
-                    onGlobalFilterChange(event.target.value);
-                    onPaginationChange((prev) => ({ ...prev, pageIndex: 0 }));
-                  }}
-                  className="max-w-sm"
-                />
-              )}
-              {toolbar}
-            </div>
+    <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
+      {(enableSearch || toolbar) && (
+        <div className="flex flex-col gap-3 border-b border-border p-4 sm:flex-row sm:items-center sm:justify-between">
+          {enableSearch && (
+            <InputGroup className="sm:max-w-xs">
+              <InputGroupAddon>
+                <Search />
+              </InputGroupAddon>
+              <InputGroupInput
+                placeholder={searchPlaceholder}
+                value={globalFilter}
+                onChange={(event) => {
+                  onGlobalFilterChange(event.target.value);
+                  onPaginationChange((prev) => ({ ...prev, pageIndex: 0 }));
+                }}
+              />
+            </InputGroup>
           )}
 
-          <div
-            className={cn(
-              "transition-opacity",
-              loading ? "pointer-events-none opacity-50" : "opacity-100",
-            )}
-          >
-            <div className="overflow-hidden rounded-md border">
-              <Table>
-                <TableHeader className="bg-muted/90">
-                  {table.getHeaderGroups().map((headerGroup) => (
-                    <TableRow key={headerGroup.id}>
-                      {headerGroup.headers.map((header) => (
-                        <TableHead key={header.id} colSpan={header.colSpan}>
-                          {header.isPlaceholder ? null : (
-                            <table.FlexRender header={header} />
-                          )}
-                        </TableHead>
-                      ))}
-                    </TableRow>
-                  ))}
-                </TableHeader>
-                <TableBody>
-                  {table.getRowModel().rows?.length ? (
-                    table.getRowModel().rows.map((row) => (
-                      <TableRow
-                        key={row.id}
-                        data-state={row.getIsSelected() && "selected"}
-                      >
-                        {row.getVisibleCells().map((cell) => (
-                          <TableCell key={cell.id}>
-                            <table.FlexRender cell={cell} />
-                          </TableCell>
-                        ))}
-                      </TableRow>
-                    ))
-                  ) : (
-                    <TableRow>
-                      <TableCell
-                        colSpan={columns.length}
-                        className="h-24 text-center"
-                      >
-                        No results.
-                      </TableCell>
-                    </TableRow>
-                  )}
-                </TableBody>
-              </Table>
+          {toolbar ? (
+            <div className="flex flex-wrap items-center gap-2 sm:ml-auto">
+              {toolbar}
             </div>
-            <DataTablePagination table={table} />
+          ) : null}
+        </div>
+      )}
+
+      <div className="relative">
+        {loading && (
+          <div className="absolute inset-0 z-10 flex items-center justify-center bg-background/60 backdrop-blur-[1px]">
+            <Loader2 className="size-5 animate-spin text-muted-foreground" />
           </div>
-        </CardContent>
-      </Card>
+        )}
+
+        <Table>
+          <TableHeader>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <TableRow
+                key={headerGroup.id}
+                className="bg-muted/40 hover:bg-muted/40"
+              >
+                {headerGroup.headers.map((header) => (
+                  <TableHead
+                    key={header.id}
+                    colSpan={header.colSpan}
+                    className="h-9 px-4 text-xs font-medium tracking-wide text-muted-foreground uppercase"
+                  >
+                    {header.isPlaceholder ? null : (
+                      <table.FlexRender header={header} />
+                    )}
+                  </TableHead>
+                ))}
+              </TableRow>
+            ))}
+          </TableHeader>
+          <TableBody>
+            {table.getRowModel().rows?.length ? (
+              table.getRowModel().rows.map((row) => (
+                <TableRow
+                  key={row.id}
+                  data-state={row.getIsSelected() && "selected"}
+                >
+                  {row.getVisibleCells().map((cell) => (
+                    <TableCell key={cell.id} className="px-4 py-3">
+                      <table.FlexRender cell={cell} />
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))
+            ) : (
+              <TableRow className="hover:bg-transparent">
+                <TableCell
+                  colSpan={columns.length}
+                  className="h-40 text-center"
+                >
+                  <div className="flex flex-col items-center justify-center gap-2 text-muted-foreground">
+                    <Inbox className="size-7 opacity-60" />
+                    <p className="text-sm">{emptyMessage}</p>
+                  </div>
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </div>
+
+      <div className="border-t border-border">
+        <DataTablePagination table={table} />
+      </div>
     </div>
   );
 }

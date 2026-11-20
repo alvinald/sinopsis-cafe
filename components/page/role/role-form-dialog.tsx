@@ -9,7 +9,7 @@ import { X } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 
-export const ModalRole = ({
+export const RoleFormDialog = ({
   onOpenModal,
   setLoading,
   successCreate,
@@ -110,7 +110,9 @@ export const ModalRole = ({
           </Field>
 
           <Field>
-            <FieldLabel htmlFor="role-description">Deskripsi Ringkas</FieldLabel>
+            <FieldLabel htmlFor="role-description">
+              Deskripsi Ringkas
+            </FieldLabel>
             <Input
               id="role-description"
               type="text"

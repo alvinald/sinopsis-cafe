@@ -1,8 +1,8 @@
+import { JobTitle } from "./types/job-title-types";
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { prisma } from "@/lib/prisma"; // your prisma client instance
-import { getPermissionsByRole } from "./rbac";
-import { admin } from "better-auth/plugins"; // 1. Import plugin
+import { customSession } from "better-auth/plugins";
 
 export const auth = betterAuth({
   baseURL: process.env.BETTER_AUTH_URL || undefined,
@@ -26,7 +26,32 @@ export const auth = betterAuth({
       generateId: () => crypto.randomUUID(), // Menghasilkan UUID v4 standar
     },
   },
+  plugins: [
+    customSession(async ({ user, session }) => {
+      // Query permissions user dari tabel RBAC Anda di sini
+      const dataUser = await getUserPermissions(user.id);
 
+      const permissions: string[] =
+        dataUser?.role?.permissions?.map(
+          (rp) => `${rp.permission.resource}:${rp.permission.action}`,
+        ) ?? [];
+
+      const jobTitle = dataUser?.jobTitle?.name ?? undefined;
+      const departmentId = dataUser?.jobTitle?.department?.name ?? undefined;
+      const department = dataUser?.jobTitle?.department?.name ?? undefined;
+
+      return {
+        user: {
+          ...user,
+          jobTitle,
+          departmentId,
+          department,
+        },
+        session,
+        permissions,
+      };
+    }),
+  ],
   user: {
     additionalFields: {
       roleId: {
@@ -34,10 +59,20 @@ export const auth = betterAuth({
         required: false,
         input: false, // Supaya user tidak bisa asal set role sendiri saat register
       },
-      jobTitle: {
+      jobTitleId: {
         type: "string",
         required: false,
         input: true,
+      },
+      jobTitle: {
+        type: "string",
+        required: false,
+        input: false,
+      },
+      department: {
+        type: "string",
+        required: false,
+        input: false,
       },
       status: {
         type: "string",
@@ -64,3 +99,38 @@ export const auth = betterAuth({
     },
   },
 });
+
+async function getUserPermissions(userId: string) {
+  const user = await prisma.user.findUnique({
+    where: { id: userId },
+    select: {
+      jobTitle: {
+        select: {
+          name: true,
+          department: {
+            select: {
+              id: true,
+              name: true,
+            },
+          },
+        },
+      },
+      role: {
+        select: {
+          permissions: {
+            select: {
+              permission: {
+                select: {
+                  resource: true, // Page
+                  action: true, // Fungsi
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  });
+
+  return user;
+}

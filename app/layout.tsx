@@ -16,18 +16,31 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Test",
+  title: "Sinopsis Coffee",
   description:
     "Sinopsis Coffee — cozy cafe offering handcrafted specialty coffees, artisan pastries, and wholesome meals. Visit us today.",
 };
 
-export default function RootLayout({  children }: LayoutProps<"/">) {
+export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
-      lang="en" suppressHydrationWarning 
-      className={cn("h-full", "antialiased", geistSans.variable, geistMono.variable, "font-sans", inter.variable)}
+      lang="en"
+      suppressHydrationWarning
+      className={cn(
+        "h-full",
+        "antialiased",
+        geistSans.variable,
+        geistMono.variable,
+        "font-sans",
+        inter.variable,
+      )}
     >
-      <body className="min-h-full flex flex-col" style={{ scrollbarGutter: "stable" }}>{children}</body>
+      <body
+        className="min-h-full flex flex-col"
+        style={{ scrollbarGutter: "stable" }}
+      >
+        {children}
+      </body>
     </html>
   );
 }

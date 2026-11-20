@@ -1,9 +1,10 @@
 "use client";
 import { CardRequest } from "@/components/page/moving-request/card-request";
 import { ConfirmDialog } from "@/components/page/moving-request/confirm-dialog";
+import { DateRangeFilter } from "@/components/page/moving-request/date-range-filter";
 import { PageHeader } from "@/components/page/page-header";
 import { DetailPopup } from "@/components/page/moving-request/detail-popup";
-import MovingForm from "@/components/page/moving-request/moving-form";
+import MovingForm from "@/components/page/moving-request/moving-form-dialog";
 import StatusTabs from "@/components/page/moving-request/status-tabs";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,9 +13,14 @@ import {
   MovingStatus,
   UpdateMovingStatusSchema,
 } from "@/lib/types/moving-types";
+import { endOfDay, format, parseISO, startOfDay, subMonths } from "date-fns";
 import { Plus } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
+import { can } from "@/lib/rbac";
+import { authClient } from "@/lib/auth-client";
+import { LoadingScreen } from "@/components/loading";
+import { useRouter } from "next/navigation";
 
 const STATUS_META: Record<
   MovingStatus,
@@ -46,6 +52,15 @@ const STATUS_META: Record<
   },
 };
 
+function getDefaultDateRange() {
+  const today = new Date();
+
+  return {
+    from: format(subMonths(today, 1), "yyyy-MM-dd"),
+    to: format(today, "yyyy-MM-dd"),
+  };
+}
+
 export default function MovingRequestPage() {
   const [movings, setMovings] = useState<Moving[]>([]);
   const [items, setItems] = useState<Item[]>([]);
@@ -57,6 +72,7 @@ export default function MovingRequestPage() {
   const [error, setError] = useState<string | null>(null);
 
   const [activeStatus, setActiveStatus] = useState<MovingStatus>("PENDING");
+  const [dateRange, setDateRange] = useState(getDefaultDateRange);
 
   const [note, setNote] = useState("");
   const [lines, setLines] = useState<{ itemId: string; qty: number }[]>([
@@ -73,6 +89,23 @@ export default function MovingRequestPage() {
 
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const [isDetailOpen, setIsDetailOpen] = useState(false);
+
+  const router = useRouter();
+  const { data: session, isPending } = authClient.useSession();
+
+  useEffect(() => {
+    if (isPending) return;
+
+    if (!session) {
+      router.replace("/login");
+      return;
+    }
+
+    // Pastikan path properti permissions sesuai struktur session kamu
+    if (!can(session.permissions, "MOVING:VIEW")) {
+      router.replace("/forbidden");
+    }
+  }, [isPending, session, router]);
 
   useEffect(() => {
     // Fetch data jadwal shift dari API
@@ -109,9 +142,27 @@ export default function MovingRequestPage() {
         setUpdatedData(false);
       }
     };
+    setLoading(true);
     fetchItems();
     fetchMovingReq();
+    setLoading(false);
   }, [updatedData]);
+
+  const filteredMovings = useMemo(() => {
+    const fromDate = dateRange.from
+      ? startOfDay(parseISO(dateRange.from))
+      : null;
+    const toDate = dateRange.to ? endOfDay(parseISO(dateRange.to)) : null;
+
+    return movings.filter((moving) => {
+      const createdAt = new Date(moving.createdAt);
+
+      if (fromDate && createdAt < fromDate) return false;
+      if (toDate && createdAt > toDate) return false;
+
+      return true;
+    });
+  }, [movings, dateRange]);
 
   const groupedMovings: Record<MovingStatus, Moving[]> = useMemo(() => {
     const result: Record<MovingStatus, Moving[]> = {
@@ -120,9 +171,9 @@ export default function MovingRequestPage() {
       RECEIVED: [],
       CANCELLED: [],
     };
-    for (const moving of movings) result[moving.status].push(moving);
+    for (const moving of filteredMovings) result[moving.status].push(moving);
     return result;
-  }, [movings]);
+  }, [filteredMovings]);
 
   function requestMove(
     id: string,
@@ -264,7 +315,9 @@ export default function MovingRequestPage() {
       cancelTransaction();
     }
   }
-
+  if (loading || isPending) {
+    return <LoadingScreen />; // atau return null / skeleton
+  }
   return (
     <div className="py-4 md:py-6">
       <div className="w-full px-4 lg:px-6">
@@ -284,11 +337,14 @@ export default function MovingRequestPage() {
           }
         />
 
-        <div className="flex w-full justify-center">
-          <div className="flex flex-wrap justify-center gap-2">
-            {/* Tombol-tombol status */}
-          </div>
-        </div>
+        <DateRangeFilter
+          className="mb-3"
+          from={dateRange.from}
+          to={dateRange.to}
+          onFromChange={(from) => setDateRange((prev) => ({ ...prev, from }))}
+          onToChange={(to) => setDateRange((prev) => ({ ...prev, to }))}
+          onReset={() => setDateRange(getDefaultDateRange())}
+        />
 
         {/* Papan status */}
         <StatusTabs
@@ -307,6 +363,7 @@ export default function MovingRequestPage() {
           {groupedMovings[activeStatus].map((moving) => (
             <CardRequest
               key={moving.id}
+              canSent={can(session?.permissions, "MOVING:SENT")}
               moving={moving}
               onOpen={() => openDetail(moving)}
               onEdit={
@@ -326,7 +383,8 @@ export default function MovingRequestPage() {
 
           {groupedMovings[activeStatus].length === 0 && (
             <div className="flex min-h-[180px] items-center justify-center rounded-2xl border border-dashed border-border bg-muted/20 text-center text-sm text-muted-foreground md:col-span-2 xl:col-span-3">
-              Belum ada dokumen di status ini.
+              Tidak ada dokumen pada status ini untuk rentang tanggal yang
+              dipilih.
             </div>
           )}
         </div>

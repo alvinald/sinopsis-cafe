@@ -19,7 +19,7 @@ import { Plus, Trash2, X } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 
-export default function MovingForm({
+export default function MovingFormDialog({
   moving,
   items,
   closeForm,
@@ -269,6 +269,10 @@ export default function MovingForm({
                     onValueChange={(value) =>
                       updateLine(index, { itemId: value ?? "" })
                     }
+                    items={items?.map((item) => ({
+                      value: item.id,
+                      label: item.name,
+                    }))}
                   >
                     <SelectTrigger
                       aria-label={`Item baris ${index + 1}`}
@@ -282,7 +286,6 @@ export default function MovingForm({
                           (other, otherIndex) =>
                             otherIndex !== index && other.itemId === item.id,
                         );
-
                         return (
                           <SelectItem
                             key={item.id}
@@ -307,7 +310,7 @@ export default function MovingForm({
                         qty: event.target.value,
                       })
                     }
-                    className="h-10 w-16 shrink-0 text-center tabular-nums"
+                    className="h-8 w-14 shrink-0 text-center text-xs tabular-nums"
                   />
 
                   <span className="w-8 shrink-0 text-xs text-muted-foreground">

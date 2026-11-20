@@ -1,7 +1,7 @@
 "use client";
 
 import { PageHeader } from "@/components/page/page-header";
-import { ModalRole } from "@/components/page/role/modal-role";
+import { RoleFormDialog } from "@/components/page/role/role-form-dialog";
 import { PermissionList } from "@/components/page/role/permission-list";
 import { RoleHeader } from "@/components/page/role/role-header";
 import { RoleList } from "@/components/page/role/role-list";
@@ -178,7 +178,7 @@ export default function RolePermissionPage() {
         </div>
       </div>
       {isModalOpen && (
-        <ModalRole
+        <RoleFormDialog
           onOpenModal={toggleModal}
           setLoading={setLoading}
           successCreate={successCreate}

@@ -21,7 +21,7 @@ import {
 import { X } from "lucide-react";
 import { useState } from "react";
 
-export function UserForm({
+export function UserFormDialog({
   mode,
   user,
   roles,
@@ -195,6 +195,9 @@ export function UserForm({
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
+                    <SelectItem key={"-"} value="">
+                      --Pilih--
+                    </SelectItem>
                     <SelectItem key={"ACTIVE"} value="ACTIVE">
                       Active
                     </SelectItem>

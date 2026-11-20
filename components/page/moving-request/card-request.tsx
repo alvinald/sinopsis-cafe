@@ -8,11 +8,13 @@ import { formatDate } from "date-fns";
 
 export function CardRequest({
   moving,
+  canSent,
   onMove,
   onOpen,
   onEdit,
 }: {
   moving: Moving;
+  canSent: boolean;
   onMove: (
     id: string,
     status: MovingStatus,
@@ -90,6 +92,7 @@ export function CardRequest({
           <CardAction
             key={moving.id}
             moving={moving}
+            canSent={canSent}
             onMove={(id, status) =>
               onMove(
                 id,

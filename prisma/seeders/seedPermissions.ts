@@ -45,6 +45,51 @@ export async function seedPermissions(prisma: PrismaClient) {
     action: "DELETE",
   });
 
+  permissionCreate.push({
+    resource: "MOVING",
+    action: "VIEW",
+  });
+
+  permissionCreate.push({
+    resource: "MOVING",
+    action: "CREATE",
+  });
+
+  permissionCreate.push({
+    resource: "MOVING",
+    action: "UPDATE",
+  });
+
+  permissionCreate.push({
+    resource: "MOVING",
+    action: "DELETE",
+  });
+
+  permissionCreate.push({
+    resource: "MOVING",
+    action: "SENT",
+  });
+
+  permissionCreate.push({
+    resource: "ITEM",
+    action: "VIEW",
+  });
+
+  permissionCreate.push({
+    resource: "ITEM",
+    action: "CREATE",
+  });
+
+  permissionCreate.push({
+    resource: "ITEM",
+    action: "UPDATE",
+  });
+
+  permissionCreate.push({
+    resource: "ITEM",
+    action: "DELETE",
+  });
+
   // Insert ke database menggunakan createMany dengan skipDuplicates (aman untuk @@unique([sku]))
   const result = await prisma.permission.createMany({
     data: permissionCreate,

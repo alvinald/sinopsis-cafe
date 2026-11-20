@@ -1,6 +1,7 @@
 import { auth } from "@/lib/auth";
 import { getUserPermissions } from "@/lib/permissions.server";
 import { prisma } from "@/lib/prisma";
+import { can } from "@/lib/rbac";
 import {
   RequestMovingSchema,
   UpdateMovingSchema,
@@ -15,11 +16,8 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: "Harap login ulang" }, { status: 401 });
   }
 
-  console.log("session:", session);
-
   try {
     // 1 baris saja untuk ambil semua permission user
-    const perms = await getUserPermissions(session.user.roleId);
 
     const moving = await prisma.moving.findMany({
       include: {
@@ -42,17 +40,6 @@ export async function GET(request: NextRequest) {
         },
       },
       orderBy: { id: "asc" },
-    });
-
-    const data = moving.map((item) => {
-      return {
-        ...item,
-        actions: {
-          canEdit: perms.has("moving:update"),
-          canApprove: perms.has("moving:approve"),
-          canDelete: perms.has("moving:delete"),
-        },
-      };
     });
 
     return NextResponse.json(moving);
@@ -113,7 +100,6 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    console.log(parsed.data);
     return NextResponse.json(updatedSchedule);
   } catch (error) {
     console.error("Error fetching moving request:", error);
@@ -143,7 +129,7 @@ export async function PUT(request: NextRequest) {
   }
 
   const { id, note, items } = parsed.data;
-  console.log(parsed.data);
+
   try {
     const updatedMovingRequest = await prisma.$transaction(async (tx) => {
       // 1. Hapus item yang tidak ada

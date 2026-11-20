@@ -5,9 +5,11 @@ import { CheckCheck, Send, X } from "lucide-react";
 
 export default function CardAction({
   moving,
+  canSent,
   onMove,
 }: {
   moving: Moving;
+  canSent: boolean;
   onMove: (id: string, status: MovingStatus) => void;
 }) {
   const getButtonLabel = (status: string) => {
@@ -22,7 +24,7 @@ export default function CardAction({
     }
     return "";
   };
-  if (moving.status === "PENDING" || moving.status === "SENT") {
+  if ((moving.status === "PENDING" && canSent) || moving.status === "SENT") {
     return (
       <Button
         type="button"
@@ -44,19 +46,21 @@ export default function CardAction({
     );
   }
 
-  return (
-    <span
-      className={cn(
-        "flex items-center gap-1 rounded-2xl px-2 py-0.5 text-[11px] font-semibold",
-        {
-          "bg-green-100 text-green-800": moving.status === "RECEIVED",
-          "bg-red-100 text-red-800": moving.status === "CANCELLED",
-        },
-      )}
-    >
-      {moving.status === "RECEIVED" && <CheckCheck className="size-3.5" />}
-      {moving.status === "CANCELLED" && <X className="size-3.5" />}
-      {getButtonLabel(moving.status)}
-    </span>
-  );
+  if (moving.status === "RECEIVED" || moving.status === "CANCELLED") {
+    return (
+      <span
+        className={cn(
+          "flex items-center gap-1 rounded-2xl px-2 py-0.5 text-[11px] font-semibold",
+          {
+            "bg-green-100 text-green-800": moving.status === "RECEIVED",
+            "bg-red-100 text-red-800": moving.status === "CANCELLED",
+          },
+        )}
+      >
+        {moving.status === "RECEIVED" && <CheckCheck className="size-3.5" />}
+        {moving.status === "CANCELLED" && <X className="size-3.5" />}
+        {getButtonLabel(moving.status)}
+      </span>
+    );
+  }
 }

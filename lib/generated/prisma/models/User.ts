@@ -30,7 +30,7 @@ export type UserMinAggregateOutputType = {
   email: string | null
   emailVerified: boolean | null
   image: string | null
-  status: $Enums.UserStatus | null
+  status: $Enums.status | null
   isScheduled: boolean | null
   resignedDate: Date | null
   resignReason: string | null
@@ -47,7 +47,7 @@ export type UserMaxAggregateOutputType = {
   email: string | null
   emailVerified: boolean | null
   image: string | null
-  status: $Enums.UserStatus | null
+  status: $Enums.status | null
   isScheduled: boolean | null
   resignedDate: Date | null
   resignReason: string | null
@@ -207,7 +207,7 @@ export type UserGroupByOutputType = {
   email: string
   emailVerified: boolean
   image: string | null
-  status: $Enums.UserStatus
+  status: $Enums.status
   isScheduled: boolean
   resignedDate: Date | null
   resignReason: string | null
@@ -245,7 +245,7 @@ export type UserWhereInput = {
   email?: Prisma.StringFilter<"User"> | string
   emailVerified?: Prisma.BoolFilter<"User"> | boolean
   image?: Prisma.StringNullableFilter<"User"> | string | null
-  status?: Prisma.EnumUserStatusFilter<"User"> | $Enums.UserStatus
+  status?: Prisma.EnumstatusFilter<"User"> | $Enums.status
   isScheduled?: Prisma.BoolFilter<"User"> | boolean
   resignedDate?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   resignReason?: Prisma.StringNullableFilter<"User"> | string | null
@@ -300,7 +300,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   name?: Prisma.StringFilter<"User"> | string
   emailVerified?: Prisma.BoolFilter<"User"> | boolean
   image?: Prisma.StringNullableFilter<"User"> | string | null
-  status?: Prisma.EnumUserStatusFilter<"User"> | $Enums.UserStatus
+  status?: Prisma.EnumstatusFilter<"User"> | $Enums.status
   isScheduled?: Prisma.BoolFilter<"User"> | boolean
   resignedDate?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   resignReason?: Prisma.StringNullableFilter<"User"> | string | null
@@ -349,7 +349,7 @@ export type UserScalarWhereWithAggregatesInput = {
   email?: Prisma.StringWithAggregatesFilter<"User"> | string
   emailVerified?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   image?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
-  status?: Prisma.EnumUserStatusWithAggregatesFilter<"User"> | $Enums.UserStatus
+  status?: Prisma.EnumstatusWithAggregatesFilter<"User"> | $Enums.status
   isScheduled?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   resignedDate?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   resignReason?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
@@ -366,7 +366,7 @@ export type UserCreateInput = {
   email: string
   emailVerified?: boolean
   image?: string | null
-  status?: $Enums.UserStatus
+  status?: $Enums.status
   isScheduled?: boolean
   resignedDate?: Date | string | null
   resignReason?: string | null
@@ -390,7 +390,7 @@ export type UserUncheckedCreateInput = {
   email: string
   emailVerified?: boolean
   image?: string | null
-  status?: $Enums.UserStatus
+  status?: $Enums.status
   isScheduled?: boolean
   resignedDate?: Date | string | null
   resignReason?: string | null
@@ -414,7 +414,7 @@ export type UserUpdateInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  status?: Prisma.EnumstatusFieldUpdateOperationsInput | $Enums.status
   isScheduled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   resignedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   resignReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -438,7 +438,7 @@ export type UserUncheckedUpdateInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  status?: Prisma.EnumstatusFieldUpdateOperationsInput | $Enums.status
   isScheduled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   resignedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   resignReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -462,7 +462,7 @@ export type UserCreateManyInput = {
   email: string
   emailVerified?: boolean
   image?: string | null
-  status?: $Enums.UserStatus
+  status?: $Enums.status
   isScheduled?: boolean
   resignedDate?: Date | string | null
   resignReason?: string | null
@@ -479,7 +479,7 @@ export type UserUpdateManyMutationInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  status?: Prisma.EnumstatusFieldUpdateOperationsInput | $Enums.status
   isScheduled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   resignedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   resignReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -494,7 +494,7 @@ export type UserUncheckedUpdateManyInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  status?: Prisma.EnumstatusFieldUpdateOperationsInput | $Enums.status
   isScheduled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   resignedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   resignReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -618,8 +618,8 @@ export type UserUncheckedUpdateManyWithoutRoleNestedInput = {
   deleteMany?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
 }
 
-export type EnumUserStatusFieldUpdateOperationsInput = {
-  set?: $Enums.UserStatus
+export type EnumstatusFieldUpdateOperationsInput = {
+  set?: $Enums.status
 }
 
 export type NullableDateTimeFieldUpdateOperationsInput = {
@@ -782,7 +782,7 @@ export type UserCreateWithoutRoleInput = {
   email: string
   emailVerified?: boolean
   image?: string | null
-  status?: $Enums.UserStatus
+  status?: $Enums.status
   isScheduled?: boolean
   resignedDate?: Date | string | null
   resignReason?: string | null
@@ -805,7 +805,7 @@ export type UserUncheckedCreateWithoutRoleInput = {
   email: string
   emailVerified?: boolean
   image?: string | null
-  status?: $Enums.UserStatus
+  status?: $Enums.status
   isScheduled?: boolean
   resignedDate?: Date | string | null
   resignReason?: string | null
@@ -857,7 +857,7 @@ export type UserScalarWhereInput = {
   email?: Prisma.StringFilter<"User"> | string
   emailVerified?: Prisma.BoolFilter<"User"> | boolean
   image?: Prisma.StringNullableFilter<"User"> | string | null
-  status?: Prisma.EnumUserStatusFilter<"User"> | $Enums.UserStatus
+  status?: Prisma.EnumstatusFilter<"User"> | $Enums.status
   isScheduled?: Prisma.BoolFilter<"User"> | boolean
   resignedDate?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   resignReason?: Prisma.StringNullableFilter<"User"> | string | null
@@ -874,7 +874,7 @@ export type UserCreateWithoutSessionsInput = {
   email: string
   emailVerified?: boolean
   image?: string | null
-  status?: $Enums.UserStatus
+  status?: $Enums.status
   isScheduled?: boolean
   resignedDate?: Date | string | null
   resignReason?: string | null
@@ -897,7 +897,7 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   email: string
   emailVerified?: boolean
   image?: string | null
-  status?: $Enums.UserStatus
+  status?: $Enums.status
   isScheduled?: boolean
   resignedDate?: Date | string | null
   resignReason?: string | null
@@ -936,7 +936,7 @@ export type UserUpdateWithoutSessionsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  status?: Prisma.EnumstatusFieldUpdateOperationsInput | $Enums.status
   isScheduled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   resignedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   resignReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -959,7 +959,7 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  status?: Prisma.EnumstatusFieldUpdateOperationsInput | $Enums.status
   isScheduled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   resignedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   resignReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -982,7 +982,7 @@ export type UserCreateWithoutAccountsInput = {
   email: string
   emailVerified?: boolean
   image?: string | null
-  status?: $Enums.UserStatus
+  status?: $Enums.status
   isScheduled?: boolean
   resignedDate?: Date | string | null
   resignReason?: string | null
@@ -1005,7 +1005,7 @@ export type UserUncheckedCreateWithoutAccountsInput = {
   email: string
   emailVerified?: boolean
   image?: string | null
-  status?: $Enums.UserStatus
+  status?: $Enums.status
   isScheduled?: boolean
   resignedDate?: Date | string | null
   resignReason?: string | null
@@ -1044,7 +1044,7 @@ export type UserUpdateWithoutAccountsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  status?: Prisma.EnumstatusFieldUpdateOperationsInput | $Enums.status
   isScheduled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   resignedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   resignReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1067,7 +1067,7 @@ export type UserUncheckedUpdateWithoutAccountsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  status?: Prisma.EnumstatusFieldUpdateOperationsInput | $Enums.status
   isScheduled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   resignedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   resignReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1090,7 +1090,7 @@ export type UserCreateWithoutJobTitleInput = {
   email: string
   emailVerified?: boolean
   image?: string | null
-  status?: $Enums.UserStatus
+  status?: $Enums.status
   isScheduled?: boolean
   resignedDate?: Date | string | null
   resignReason?: string | null
@@ -1113,7 +1113,7 @@ export type UserUncheckedCreateWithoutJobTitleInput = {
   email: string
   emailVerified?: boolean
   image?: string | null
-  status?: $Enums.UserStatus
+  status?: $Enums.status
   isScheduled?: boolean
   resignedDate?: Date | string | null
   resignReason?: string | null
@@ -1162,7 +1162,7 @@ export type UserCreateWithoutShiftSchedulesInput = {
   email: string
   emailVerified?: boolean
   image?: string | null
-  status?: $Enums.UserStatus
+  status?: $Enums.status
   isScheduled?: boolean
   resignedDate?: Date | string | null
   resignReason?: string | null
@@ -1185,7 +1185,7 @@ export type UserUncheckedCreateWithoutShiftSchedulesInput = {
   email: string
   emailVerified?: boolean
   image?: string | null
-  status?: $Enums.UserStatus
+  status?: $Enums.status
   isScheduled?: boolean
   resignedDate?: Date | string | null
   resignReason?: string | null
@@ -1224,7 +1224,7 @@ export type UserUpdateWithoutShiftSchedulesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  status?: Prisma.EnumstatusFieldUpdateOperationsInput | $Enums.status
   isScheduled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   resignedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   resignReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1247,7 +1247,7 @@ export type UserUncheckedUpdateWithoutShiftSchedulesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  status?: Prisma.EnumstatusFieldUpdateOperationsInput | $Enums.status
   isScheduled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   resignedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   resignReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1270,7 +1270,7 @@ export type UserCreateWithoutCreatedMovingsInput = {
   email: string
   emailVerified?: boolean
   image?: string | null
-  status?: $Enums.UserStatus
+  status?: $Enums.status
   isScheduled?: boolean
   resignedDate?: Date | string | null
   resignReason?: string | null
@@ -1293,7 +1293,7 @@ export type UserUncheckedCreateWithoutCreatedMovingsInput = {
   email: string
   emailVerified?: boolean
   image?: string | null
-  status?: $Enums.UserStatus
+  status?: $Enums.status
   isScheduled?: boolean
   resignedDate?: Date | string | null
   resignReason?: string | null
@@ -1321,7 +1321,7 @@ export type UserCreateWithoutSentMovingsInput = {
   email: string
   emailVerified?: boolean
   image?: string | null
-  status?: $Enums.UserStatus
+  status?: $Enums.status
   isScheduled?: boolean
   resignedDate?: Date | string | null
   resignReason?: string | null
@@ -1344,7 +1344,7 @@ export type UserUncheckedCreateWithoutSentMovingsInput = {
   email: string
   emailVerified?: boolean
   image?: string | null
-  status?: $Enums.UserStatus
+  status?: $Enums.status
   isScheduled?: boolean
   resignedDate?: Date | string | null
   resignReason?: string | null
@@ -1372,7 +1372,7 @@ export type UserCreateWithoutReceivedMovingsInput = {
   email: string
   emailVerified?: boolean
   image?: string | null
-  status?: $Enums.UserStatus
+  status?: $Enums.status
   isScheduled?: boolean
   resignedDate?: Date | string | null
   resignReason?: string | null
@@ -1395,7 +1395,7 @@ export type UserUncheckedCreateWithoutReceivedMovingsInput = {
   email: string
   emailVerified?: boolean
   image?: string | null
-  status?: $Enums.UserStatus
+  status?: $Enums.status
   isScheduled?: boolean
   resignedDate?: Date | string | null
   resignReason?: string | null
@@ -1423,7 +1423,7 @@ export type UserCreateWithoutCancelledMovingsInput = {
   email: string
   emailVerified?: boolean
   image?: string | null
-  status?: $Enums.UserStatus
+  status?: $Enums.status
   isScheduled?: boolean
   resignedDate?: Date | string | null
   resignReason?: string | null
@@ -1446,7 +1446,7 @@ export type UserUncheckedCreateWithoutCancelledMovingsInput = {
   email: string
   emailVerified?: boolean
   image?: string | null
-  status?: $Enums.UserStatus
+  status?: $Enums.status
   isScheduled?: boolean
   resignedDate?: Date | string | null
   resignReason?: string | null
@@ -1485,7 +1485,7 @@ export type UserUpdateWithoutCreatedMovingsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  status?: Prisma.EnumstatusFieldUpdateOperationsInput | $Enums.status
   isScheduled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   resignedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   resignReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1508,7 +1508,7 @@ export type UserUncheckedUpdateWithoutCreatedMovingsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  status?: Prisma.EnumstatusFieldUpdateOperationsInput | $Enums.status
   isScheduled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   resignedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   resignReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1542,7 +1542,7 @@ export type UserUpdateWithoutSentMovingsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  status?: Prisma.EnumstatusFieldUpdateOperationsInput | $Enums.status
   isScheduled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   resignedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   resignReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1565,7 +1565,7 @@ export type UserUncheckedUpdateWithoutSentMovingsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  status?: Prisma.EnumstatusFieldUpdateOperationsInput | $Enums.status
   isScheduled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   resignedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   resignReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1599,7 +1599,7 @@ export type UserUpdateWithoutReceivedMovingsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  status?: Prisma.EnumstatusFieldUpdateOperationsInput | $Enums.status
   isScheduled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   resignedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   resignReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1622,7 +1622,7 @@ export type UserUncheckedUpdateWithoutReceivedMovingsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  status?: Prisma.EnumstatusFieldUpdateOperationsInput | $Enums.status
   isScheduled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   resignedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   resignReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1656,7 +1656,7 @@ export type UserUpdateWithoutCancelledMovingsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  status?: Prisma.EnumstatusFieldUpdateOperationsInput | $Enums.status
   isScheduled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   resignedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   resignReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1679,7 +1679,7 @@ export type UserUncheckedUpdateWithoutCancelledMovingsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  status?: Prisma.EnumstatusFieldUpdateOperationsInput | $Enums.status
   isScheduled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   resignedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   resignReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1702,7 +1702,7 @@ export type UserCreateManyRoleInput = {
   email: string
   emailVerified?: boolean
   image?: string | null
-  status?: $Enums.UserStatus
+  status?: $Enums.status
   isScheduled?: boolean
   resignedDate?: Date | string | null
   resignReason?: string | null
@@ -1718,7 +1718,7 @@ export type UserUpdateWithoutRoleInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  status?: Prisma.EnumstatusFieldUpdateOperationsInput | $Enums.status
   isScheduled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   resignedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   resignReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1741,7 +1741,7 @@ export type UserUncheckedUpdateWithoutRoleInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  status?: Prisma.EnumstatusFieldUpdateOperationsInput | $Enums.status
   isScheduled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   resignedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   resignReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1764,7 +1764,7 @@ export type UserUncheckedUpdateManyWithoutRoleInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  status?: Prisma.EnumstatusFieldUpdateOperationsInput | $Enums.status
   isScheduled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   resignedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   resignReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1780,7 +1780,7 @@ export type UserCreateManyJobTitleInput = {
   email: string
   emailVerified?: boolean
   image?: string | null
-  status?: $Enums.UserStatus
+  status?: $Enums.status
   isScheduled?: boolean
   resignedDate?: Date | string | null
   resignReason?: string | null
@@ -1796,7 +1796,7 @@ export type UserUpdateWithoutJobTitleInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  status?: Prisma.EnumstatusFieldUpdateOperationsInput | $Enums.status
   isScheduled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   resignedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   resignReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1819,7 +1819,7 @@ export type UserUncheckedUpdateWithoutJobTitleInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  status?: Prisma.EnumstatusFieldUpdateOperationsInput | $Enums.status
   isScheduled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   resignedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   resignReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1842,7 +1842,7 @@ export type UserUncheckedUpdateManyWithoutJobTitleInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  status?: Prisma.EnumstatusFieldUpdateOperationsInput | $Enums.status
   isScheduled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   resignedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   resignReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2060,7 +2060,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     email: string
     emailVerified: boolean
     image: string | null
-    status: $Enums.UserStatus
+    status: $Enums.status
     isScheduled: boolean
     resignedDate: Date | null
     resignReason: string | null
@@ -2506,7 +2506,7 @@ export interface UserFieldRefs {
   readonly email: Prisma.FieldRef<"User", 'String'>
   readonly emailVerified: Prisma.FieldRef<"User", 'Boolean'>
   readonly image: Prisma.FieldRef<"User", 'String'>
-  readonly status: Prisma.FieldRef<"User", 'UserStatus'>
+  readonly status: Prisma.FieldRef<"User", 'status'>
   readonly isScheduled: Prisma.FieldRef<"User", 'Boolean'>
   readonly resignedDate: Prisma.FieldRef<"User", 'DateTime'>
   readonly resignReason: Prisma.FieldRef<"User", 'String'>

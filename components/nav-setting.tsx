@@ -1,27 +1,15 @@
 "use client";
 
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+
 import {
   SidebarGroup,
   SidebarGroupLabel,
   SidebarMenu,
-  SidebarMenuAction,
   SidebarMenuButton,
   SidebarMenuItem,
-  useSidebar,
 } from "@/components/ui/sidebar";
-import {
-  MoreHorizontalIcon,
-  FolderIcon,
-  ArrowRightIcon,
-  Trash2Icon,
-} from "lucide-react";
 
 export function NavSettings({
   items,
@@ -32,19 +20,33 @@ export function NavSettings({
     icon: React.ReactNode;
   }[];
 }) {
-  const { isMobile } = useSidebar();
+  const pathname = usePathname();
+
   return (
-    <SidebarGroup className="group-data-[collapsible=icon]:hidden">
-      <SidebarGroupLabel>Settings</SidebarGroupLabel>
+    <SidebarGroup>
+      <SidebarGroupLabel className="px-2 text-[10px] font-semibold tracking-[0.14em] text-sidebar-foreground/50 uppercase">
+        Pengaturan
+      </SidebarGroupLabel>
       <SidebarMenu>
-        {items.map((item) => (
-          <SidebarMenuItem key={item.name}>
-            <SidebarMenuButton render={<a href={item.url} />}>
-              {item.icon}
-              <span>{item.name}</span>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        ))}
+        {items.map((item) => {
+          const isActive =
+            item.url !== "#" &&
+            (pathname === item.url || pathname.startsWith(`${item.url}/`));
+
+          return (
+            <SidebarMenuItem key={item.name}>
+              <SidebarMenuButton
+                isActive={isActive}
+                tooltip={item.name}
+                render={<Link href={item.url} />}
+                className="h-9 gap-2.5 rounded-lg px-2.5 font-medium text-sidebar-foreground/80 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground data-active:bg-sidebar-primary/10 data-active:font-semibold data-active:text-sidebar-primary data-active:shadow-[inset_2px_0_0_0_var(--sidebar-primary)]"
+              >
+                {item.icon}
+                <span>{item.name}</span>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          );
+        })}
       </SidebarMenu>
     </SidebarGroup>
   );

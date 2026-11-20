@@ -20,9 +20,8 @@ import UserDetail from "@/components/page/user/user-detail";
 import { JobTitleWithDept } from "@/lib/types/job-title-types";
 import { Role } from "@/lib/types/role-types";
 import { Department } from "@/lib/types/department-types";
-import { UserForm } from "@/components/page/user/user-form";
+import { UserFormDialog } from "@/components/page/user/user-form-dialog";
 import { toast } from "sonner";
-import { create } from "domain";
 
 export default function UserListPage() {
   const [loading, setLoading] = useState<boolean>(false);
@@ -237,7 +236,7 @@ export default function UserListPage() {
         )}
 
         {userForm && (
-          <UserForm
+          <UserFormDialog
             key={userForm.mode === "edit" ? userForm.user.id : "create-user"}
             mode={userForm.mode}
             user={userForm.mode === "edit" ? userForm.user : null}

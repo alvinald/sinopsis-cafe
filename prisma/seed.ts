@@ -21,12 +21,12 @@ async function main() {
 
   // Jalankan seeder secara modular
   // await seedUsers(prisma);
-  await seedShiftTypes(prisma);
+  // await seedShiftTypes(prisma);
   // await seedSchedules(prisma);
   // await seedItems(prisma);
   // await seedMoving(prisma);
-  await seedPermissions(prisma);
-  await seedJobTitle(prisma);
+  // await seedPermissions(prisma);
+  // await seedJobTitle(prisma);
 
   console.log("\n✨ Semua seeder berhasil dijalankan!");
 }

@@ -23,22 +23,23 @@ export function DataTableColumnHeader<TData extends RowData, TValue>({
   const isSorted = column.getIsSorted()
 
   return (
-    <div className={cn("flex items-center gap-2", className)}>
-      <Button
-        variant="ghost"
-        size="sm"
-        className="-ml-3 h-8"
-        onClick={() => column.toggleSorting()}
-      >
-        <span>{title}</span>
-        {isSorted === "asc" ? (
-          <ArrowUp className="ml-2 h-4 w-4" />
-        ) : isSorted === "desc" ? (
-          <ArrowDown className="ml-2 h-4 w-4" />
-        ) : (
-          <ChevronsUpDown className="ml-2 h-4 w-4" />
-        )}
-      </Button>
-    </div>
+    <Button
+      variant="ghost"
+      size="sm"
+      className={cn(
+        "-ml-2 h-7 gap-1 px-2 font-medium text-muted-foreground hover:text-foreground",
+        className,
+      )}
+      onClick={() => column.toggleSorting()}
+    >
+      <span>{title}</span>
+      {isSorted === "asc" ? (
+        <ArrowUp className="size-3.5" />
+      ) : isSorted === "desc" ? (
+        <ArrowDown className="size-3.5" />
+      ) : (
+        <ChevronsUpDown className="size-3.5 opacity-50" />
+      )}
+    </Button>
   )
 }

@@ -138,7 +138,8 @@ export const SessionScalarFieldEnum = {
   updatedAt: 'updatedAt',
   ipAddress: 'ipAddress',
   userAgent: 'userAgent',
-  userId: 'userId'
+  userId: 'userId',
+  permissions: 'permissions'
 } as const
 
 export type SessionScalarFieldEnum = (typeof SessionScalarFieldEnum)[keyof typeof SessionScalarFieldEnum]
@@ -221,7 +222,8 @@ export const ItemScalarFieldEnum = {
   name: 'name',
   unit: 'unit',
   stock: 'stock',
-  isActive: 'isActive'
+  status: 'status',
+  isDeleted: 'isDeleted'
 } as const
 
 export type ItemScalarFieldEnum = (typeof ItemScalarFieldEnum)[keyof typeof ItemScalarFieldEnum]
