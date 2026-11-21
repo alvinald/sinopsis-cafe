@@ -8,11 +8,14 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { Loader2 } from "lucide-react";
+
 export function ConfirmDialog({
   open,
   title,
   description,
   buttonText,
+  loading = false,
   onOpenChange,
   onConfirm,
 }: {
@@ -20,25 +23,37 @@ export function ConfirmDialog({
   title: string;
   description: string;
   buttonText: string;
-  onOpenChange: () => void;
-  onConfirm: () => void;
+  loading?: boolean;
+  onOpenChange: (open: boolean) => void;
+  onConfirm: () => void | Promise<void>;
 }) {
-  function handleConfirm() {
-    onConfirm();
-    onOpenChange();
+  async function handleConfirm() {
+    await onConfirm();
   }
 
   return (
-    <AlertDialog open={open} onOpenChange={onOpenChange}>
+    <AlertDialog
+      open={open}
+      onOpenChange={(nextOpen) => {
+        if (!loading) onOpenChange(nextOpen);
+      }}
+    >
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>{title}</AlertDialogTitle>
           <AlertDialogDescription>{description}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Batal</AlertDialogCancel>
-          <AlertDialogAction onClick={handleConfirm}>
-            {buttonText}
+          <AlertDialogCancel disabled={loading}>Batal</AlertDialogCancel>
+          <AlertDialogAction disabled={loading} onClick={handleConfirm}>
+            {loading ? (
+              <>
+                <Loader2 className="size-4 animate-spin" />
+                Memproses...
+              </>
+            ) : (
+              buttonText
+            )}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

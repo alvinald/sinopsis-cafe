@@ -1,13 +1,14 @@
 import { Button } from "@/components/ui/button";
+import {
+  Combobox,
+  ComboboxContent,
+  ComboboxEmpty,
+  ComboboxInput,
+  ComboboxItem,
+  ComboboxList,
+} from "@/components/ui/combobox";
 import { Field, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 import {
   UpdateMovingSchema,
@@ -15,8 +16,8 @@ import {
   Moving,
   RequestMovingSchema,
 } from "@/lib/types/moving-types";
-import { Plus, Trash2, X } from "lucide-react";
-import { useState } from "react";
+import { Loader2, Plus, Trash2, X } from "lucide-react";
+import { useMemo, useState } from "react";
 import { toast } from "sonner";
 
 export default function MovingFormDialog({
@@ -26,7 +27,7 @@ export default function MovingFormDialog({
 }: {
   moving: Moving | null;
   items: Item[];
-  closeForm: () => void;
+  closeForm: (refresh?: boolean) => void | Promise<void>;
 }) {
   const [prevMoving, setPrevMoving] = useState<Moving | null>(null);
   const [note, setNote] = useState("");
@@ -35,7 +36,15 @@ export default function MovingFormDialog({
   ]);
 
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+
+  const itemOptions = useMemo(
+    () =>
+      items.map((item) => ({
+        value: item.id,
+        label: `${item.name} · stok ${item.stock} ${item.unit}`,
+      })),
+    [items],
+  );
 
   // Sync state saat prop moving berubah tanpa memicu cascading renders dari effect
   if (moving !== prevMoving) {
@@ -59,9 +68,9 @@ export default function MovingFormDialog({
   };
 
   // Bungkus closeForm agar selalu menjalankan reset
-  const handleClose = () => {
+  const handleClose = async (refresh = false) => {
     resetForm();
-    closeForm();
+    await closeForm(refresh);
   };
 
   // Hanya baris yang sudah dipilih itemnya dan qty-nya valid.
@@ -100,105 +109,85 @@ export default function MovingFormDialog({
   }
 
   async function submitRequest() {
-    const movingId = moving?.id ?? null;
+    if (loading) return;
 
-    setLoading(true);
-    // Validasi sederhana
     if (!filledLines || filledLines.length === 0) {
       toast.error("Minimal harus memilih 1 item");
-      setLoading(false);
       return;
     }
-    if (movingId) {
-      await updateRequest();
-    } else {
-      // Mode CREATE
-      await createRequest();
+
+    setLoading(true);
+    try {
+      const result = moving ? await updateRequest() : await createRequest();
+
+      toast.success("Success", {
+        description: moving ? "Data berhasil diperbarui!" : "Data berhasil dibuat!",
+      });
+      await handleClose(true);
+      return result;
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : "Terjadi kesalahan";
+
+      console.error("Log error:", err);
+      toast.error(message);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   }
 
   async function createRequest() {
-    setLoading(true);
-    setError(null);
-    try {
-      const body: RequestMovingSchema = {
-        note: note,
-        items: filledLines.map((item) => ({
-          itemId: item.itemId,
-          qty: parseInt(item.qty),
-        })),
-      };
+    const body: RequestMovingSchema = {
+      note: note,
+      items: filledLines.map((item) => ({
+        itemId: item.itemId,
+        qty: parseInt(item.qty),
+      })),
+    };
 
-      const response = await fetch("/api/moving-request", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(body),
-      });
+    const response = await fetch("/api/moving-request", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    });
 
-      const result = await response.json();
+    const result = await response.json();
 
-      if (!response.ok) {
-        throw new Error(result.message || "Gagal menyimpan data moving");
-      }
-
-      console.log("Response Data:", result.data);
-      toast.success("Success", { description: "Data berhasil dibuat!" });
-      handleClose();
-      return result.data;
-    } catch (err: unknown) {
-      // Type Guard
-      const message = err instanceof Error ? err.message : "Terjadi kesalahan";
-
-      console.error("Log error:", err);
-      toast.error(message);
-    } finally {
-      setLoading(false);
+    if (!response.ok) {
+      throw new Error(result.message || "Gagal menyimpan data moving");
     }
+
+    return result.data;
   }
 
   async function updateRequest() {
-    if (!moving) return;
-    setLoading(true);
-    setError(null);
+    if (!moving) return null;
 
-    try {
-      const body: UpdateMovingSchema = {
-        id: moving.id,
-        note: note,
-        items: filledLines.map((item) => ({
-          itemId: item.itemId,
-          qty: parseInt(item.qty),
-        })),
-      };
-      const response = await fetch("/api/moving-request", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(body),
-      });
+    const body: UpdateMovingSchema = {
+      id: moving.id,
+      note: note,
+      items: filledLines.map((item) => ({
+        itemId: item.itemId,
+        qty: parseInt(item.qty),
+      })),
+    };
 
-      const result = await response.json();
+    const response = await fetch("/api/moving-request", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    });
 
-      if (!response.ok) {
-        throw new Error(result.message || "Gagal menyimpan data moving");
-      }
+    const result = await response.json();
 
-      toast.success("Success", { description: "Data berhasil dibuat!" });
-      handleClose();
-      return result.data;
-    } catch (err: unknown) {
-      // Type Guard
-      const message = err instanceof Error ? err.message : "Terjadi kesalahan";
-
-      console.error("Log error:", err);
-      toast.error(message);
-    } finally {
-      setLoading(false);
+    if (!response.ok) {
+      throw new Error(result.message || "Gagal menyimpan data moving");
     }
+
+    return result.data;
   }
 
   return (
@@ -206,7 +195,9 @@ export default function MovingFormDialog({
       role="dialog"
       aria-modal="true"
       aria-labelledby="create-moving-title"
-      onClick={handleClose}
+      onClick={() => {
+        if (!loading) void handleClose();
+      }}
       className="fixed inset-0 z-50 flex items-end justify-center bg-black/40 backdrop-blur-sm sm:items-center sm:p-4"
     >
       <div
@@ -229,7 +220,8 @@ export default function MovingFormDialog({
             variant="ghost"
             size="icon-sm"
             aria-label="Tutup"
-            onClick={handleClose}
+            disabled={loading}
+            onClick={() => void handleClose()}
           >
             <X className="size-4" />
           </Button>
@@ -262,40 +254,48 @@ export default function MovingFormDialog({
 
               return (
                 <div key={index} className="flex items-center gap-2">
-                  <Select
-                    value={line.itemId || null}
-                    onValueChange={(value) =>
-                      updateLine(index, { itemId: value ?? "" })
+                  <Combobox
+                    items={itemOptions}
+                    value={
+                      itemOptions.find((option) => option.value === line.itemId) ??
+                      null
                     }
-                    items={items?.map((item) => ({
-                      value: item.id,
-                      label: item.name,
-                    }))}
+                    onValueChange={(option) =>
+                      updateLine(index, { itemId: option?.value ?? "" })
+                    }
+                    isItemEqualToValue={(option, value) =>
+                      option?.value === value?.value
+                    }
+                    autoHighlight
                   >
-                    <SelectTrigger
+                    <ComboboxInput
                       aria-label={`Item baris ${index + 1}`}
-                      className="h-10 w-full min-w-0 flex-1"
-                    >
-                      <SelectValue placeholder="Pilih item…" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {Object.values(items).map((item) => {
-                        const usedByOther = lines.some(
-                          (other, otherIndex) =>
-                            otherIndex !== index && other.itemId === item.id,
-                        );
-                        return (
-                          <SelectItem
-                            key={item.id}
-                            value={item.id}
-                            disabled={usedByOther}
-                          >
-                            {item.name} · stok {item.stock} {item.unit}
-                          </SelectItem>
-                        );
-                      })}
-                    </SelectContent>
-                  </Select>
+                      placeholder="Cari item…"
+                      showClear={Boolean(line.itemId)}
+                      className="h-8 w-full min-w-0 flex-1 [&>input]:text-xs"
+                    />
+                    <ComboboxContent>
+                      <ComboboxList>
+                        {itemOptions.map((option) => {
+                          const usedByOther = lines.some(
+                            (other, otherIndex) =>
+                              otherIndex !== index &&
+                              other.itemId === option.value,
+                          );
+                          return (
+                            <ComboboxItem
+                              key={option.value}
+                              value={option}
+                              disabled={usedByOther}
+                            >
+                              {option.label}
+                            </ComboboxItem>
+                          );
+                        })}
+                        <ComboboxEmpty>Tidak ada item cocok.</ComboboxEmpty>
+                      </ComboboxList>
+                    </ComboboxContent>
+                  </Combobox>
 
                   <Input
                     type="number"
@@ -353,17 +353,27 @@ export default function MovingFormDialog({
               type="button"
               variant="outline"
               size="sm"
-              onClick={handleClose}
+              disabled={loading}
+              onClick={() => void handleClose()}
             >
               Tutup
             </Button>
             <Button
               type="button"
               size="sm"
-              disabled={!canSubmit}
-              onClick={submitRequest}
+              disabled={!canSubmit || loading}
+              onClick={() => void submitRequest()}
             >
-              {moving ? "Simpan Perubahan" : "Buat Permintaan"}
+              {loading ? (
+                <>
+                  <Loader2 className="size-4 animate-spin" />
+                  Menyimpan...
+                </>
+              ) : moving ? (
+                "Simpan Perubahan"
+              ) : (
+                "Buat Permintaan"
+              )}
             </Button>
           </div>
         </div>

@@ -3,12 +3,13 @@ import { MovingStatus } from "@/lib/generated/prisma/enums";
 import { Moving } from "@/lib/types/moving-types";
 import { cn } from "@/lib/utils";
 import { formatDate } from "date-fns";
-import { Ban, X } from "lucide-react";
+import { Ban, Loader2, X } from "lucide-react";
 import { useState } from "react";
 
 export function DetailPopup({
   statusMeta,
   moving,
+  loading = false,
   onClose,
   onCancelTransaction,
 }: {
@@ -17,6 +18,7 @@ export function DetailPopup({
     { label: string; hint: string; dot: string; badge: string }
   >;
   moving: Moving;
+  loading?: boolean;
   onClose: () => void;
   onCancelTransaction: () => void;
 }) {
@@ -28,7 +30,9 @@ export function DetailPopup({
       role="dialog"
       aria-modal="true"
       aria-labelledby="detail-moving-title"
-      onClick={onClose}
+      onClick={() => {
+        if (!loading) onClose();
+      }}
       className="fixed inset-0 z-50 flex items-end justify-center bg-black/40 backdrop-blur-sm sm:items-center sm:p-4"
     >
       <div
@@ -58,6 +62,7 @@ export function DetailPopup({
               variant="ghost"
               size="icon-sm"
               aria-label="Tutup"
+              disabled={loading}
               onClick={() => {
                 setConfirmCancel(false);
                 onClose();
@@ -162,10 +167,18 @@ export function DetailPopup({
                 <Button
                   type="button"
                   size="sm"
+                  disabled={loading}
                   className="bg-destructive text-white hover:bg-destructive/90"
                   onClick={() => onCancelTransaction()}
                 >
-                  Ya, batalkan
+                  {loading ? (
+                    <>
+                      <Loader2 className="size-4 animate-spin" />
+                      Membatalkan...
+                    </>
+                  ) : (
+                    "Ya, batalkan"
+                  )}
                 </Button>
               </div>
             ) : (
@@ -182,7 +195,13 @@ export function DetailPopup({
             ))}
 
           <div className="flex items-center gap-2">
-            <Button type="button" variant="outline" size="sm" onClick={onClose}>
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              disabled={loading}
+              onClick={onClose}
+            >
               Tutup
             </Button>
           </div>

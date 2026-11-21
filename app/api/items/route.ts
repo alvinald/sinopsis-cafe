@@ -1,4 +1,3 @@
-import { True } from "./../../../lib/generated/prisma/internal/prismaNamespace";
 import { NextRequest, NextResponse } from "next/server";
 
 import { auth } from "@/lib/auth";
@@ -18,10 +17,10 @@ export async function GET(request: NextRequest) {
   if (!session) {
     return NextResponse.json({ error: "Harap login ulang" }, { status: 401 });
   }
-  console.log(session);
 
   try {
     const items = await prisma.item.findMany({
+      where: { isDeleted: false },
       orderBy: { id: "asc" },
     });
 
@@ -157,13 +156,19 @@ export async function DELETE(request: NextRequest) {
     return NextResponse.json({ error: "Harap login ulang" }, { status: 401 });
   }
 
-  const body = await request.json().catch(() => null);
-  const parsed = DeleteItemRequestSchema.safeParse(body);
+  const body = (await request.json().catch(() => null)) as
+    | { id?: unknown }
+    | null;
+  const parsed = DeleteItemRequestSchema.safeParse({ id: body?.id });
 
   if (!parsed.success) {
-    return NextResponse.json(validationError(parsed.error), {
-      status: 400,
-    });
+    const details = validationError(parsed.error);
+    const message = details.errors[0]?.message ?? "ID item tidak valid";
+
+    return NextResponse.json(
+      { ...details, error: message, message },
+      { status: 400 },
+    );
   }
 
   const values = parsed.data;

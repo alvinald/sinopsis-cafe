@@ -18,7 +18,7 @@ import {
   UpdateUserRequest,
   UsersList,
 } from "@/lib/types/user-types";
-import { X } from "lucide-react";
+import { Loader2, X } from "lucide-react";
 import { useState } from "react";
 
 export function UserFormDialog({
@@ -26,6 +26,7 @@ export function UserFormDialog({
   user,
   roles,
   jobTitles,
+  saving = false,
   onClose,
   onSave,
 }: {
@@ -33,11 +34,12 @@ export function UserFormDialog({
   user?: UsersList | null;
   roles: Role[] | null;
   jobTitles: JobTitleWithDept[] | null;
+  saving?: boolean;
   onClose: () => void;
   onSave: (
     mode: "create" | "edit",
     values: CreateUserRequest | UpdateUserRequest,
-  ) => void;
+  ) => void | Promise<void>;
 }) {
   const [name, setName] = useState<string>(user?.name ?? "");
   const [email, setEmail] = useState<string>(user?.email ?? "");
@@ -47,8 +49,9 @@ export function UserFormDialog({
     user?.status ?? "ACTIVE",
   );
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (saving) return;
 
     if (mode && mode === "create") {
       const values: CreateUserRequest = {
@@ -58,7 +61,7 @@ export function UserFormDialog({
         role: role,
         status: status,
       };
-      onSave(mode, values);
+      await onSave(mode, values);
     } else if (mode && user && mode === "edit") {
       const values: UpdateUserRequest = {
         id: user.id,
@@ -68,7 +71,7 @@ export function UserFormDialog({
         role: role,
         status: status,
       };
-      onSave(mode, values);
+      await onSave(mode, values);
     }
   }
 
@@ -77,7 +80,9 @@ export function UserFormDialog({
       role="dialog"
       aria-modal="true"
       aria-labelledby="user-form-title"
-      onClick={onClose}
+      onClick={() => {
+        if (!saving) onClose();
+      }}
       className="fixed inset-0 z-50 flex items-end justify-center bg-black/40 backdrop-blur-sm sm:items-center sm:p-4"
     >
       <div
@@ -101,6 +106,7 @@ export function UserFormDialog({
             variant="ghost"
             size="icon-sm"
             aria-label="Tutup"
+            disabled={saving}
             onClick={onClose}
           >
             <X className="size-4" />
@@ -213,11 +219,26 @@ export function UserFormDialog({
           <Separator className="my-4" />
 
           <div className="flex justify-end gap-2">
-            <Button type="button" variant="outline" size="sm" onClick={onClose}>
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              disabled={saving}
+              onClick={onClose}
+            >
               Batal
             </Button>
-            <Button type="submit" size="sm">
-              {user ? "Simpan" : "Tambah"}
+            <Button type="submit" size="sm" disabled={saving}>
+              {saving ? (
+                <>
+                  <Loader2 className="size-4 animate-spin" />
+                  Menyimpan...
+                </>
+              ) : user ? (
+                "Simpan"
+              ) : (
+                "Tambah"
+              )}
             </Button>
           </div>
         </form>

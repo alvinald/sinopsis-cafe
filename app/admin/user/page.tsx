@@ -2,6 +2,7 @@
 
 import { useState, useMemo, useCallback, useEffect } from "react";
 import { Plus } from "lucide-react";
+import { LoadingScreen } from "@/components/loading";
 
 // Komponen Shadcn UI
 import { Button } from "@/components/ui/button";
@@ -24,7 +25,8 @@ import { UserFormDialog } from "@/components/page/user/user-form-dialog";
 import { toast } from "sonner";
 
 export default function UserListPage() {
-  const [loading, setLoading] = useState<boolean>(false);
+  const [fetchLoading, setFetchLoading] = useState<boolean>(true);
+  const [saving, setSaving] = useState<boolean>(false);
 
   const [users, setUsers] = useState<UsersList[] | null>(null);
   const [jobTitles, setJobTitles] = useState<JobTitleWithDept[] | null>(null);
@@ -91,12 +93,21 @@ export default function UserListPage() {
   }, []);
 
   useEffect(() => {
-    (async () => {
-      fetchDepts();
-      fetchRoles();
-      fetchJobTitles();
-      fetchUsers();
+    let active = true;
+
+    void (async () => {
+      await Promise.all([
+        fetchDepts(),
+        fetchRoles(),
+        fetchJobTitles(),
+        fetchUsers(),
+      ]);
+      if (active) setFetchLoading(false);
     })();
+
+    return () => {
+      active = false;
+    };
   }, [fetchUsers, fetchJobTitles, fetchRoles, fetchDepts]);
 
   // Filter Logic
@@ -145,9 +156,8 @@ export default function UserListPage() {
     values: CreateUserRequest | UpdateUserRequest,
   ) => {
     const isCreate = mode === "create";
-    console.log(values);
 
-    setLoading(true);
+    setSaving(true);
     try {
       const response = await fetch("/api/user", {
         method: isCreate ? "POST" : "PUT",
@@ -162,21 +172,25 @@ export default function UserListPage() {
         return;
       }
 
+      await fetchUsers();
+
       toast.success("Success", {
         description: isCreate
           ? "Data berhasil dibuat!"
           : "Data berhasil diubah!",
       });
-
       setUserForm(null);
-      await fetchUsers();
       return result?.data;
     } catch {
       toast.error("Tidak dapat terhubung ke server");
     } finally {
-      setLoading(false);
+      setSaving(false);
     }
   };
+
+  if (fetchLoading) {
+    return <LoadingScreen text="Memuat data pengguna..." />;
+  }
 
   return (
     <div className="py-4 md:py-6">
@@ -242,6 +256,7 @@ export default function UserListPage() {
             user={userForm.mode === "edit" ? userForm.user : null}
             roles={roles}
             jobTitles={jobTitles}
+            saving={saving}
             onClose={() => setUserForm(null)}
             onSave={onSaveUser}
           />

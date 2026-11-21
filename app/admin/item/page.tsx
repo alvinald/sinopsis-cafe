@@ -16,10 +16,9 @@ import {
   type Item,
   type UpdateItemRequest,
 } from "@/lib/types/item-types";
-import { ApiError, ValidationError } from "@/lib/types/validation-types";
 import { can } from "@/lib/rbac";
 import { authClient } from "@/lib/auth-client";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { LoadingScreen } from "@/components/loading";
 
 type ApiResult = {
@@ -97,21 +96,22 @@ export default function ItemPage() {
       const response = await fetch("/api/items", {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(null),
+        body: JSON.stringify(body),
       });
       if (!response.ok) {
         const body = (await response.json().catch(() => null)) as
-          | ValidationError
-          | ApiError
+          | { error?: string; message?: string }
           | null;
+        const message =
+          body?.error ?? body?.message ?? "Gagal menghapus item";
 
         toast.error("Error", {
-          description: `Data gagal dihapus`,
+          description: message,
         });
-        throw new Error(body?.message);
+        throw new Error(message);
       }
 
-      fetchItems();
+      await fetchItems();
       toast.success("Item dihapus", {
         description: `${item.name} berhasil dihapus.`,
       });

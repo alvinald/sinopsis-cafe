@@ -15,7 +15,7 @@ import {
 } from "@/lib/types/moving-types";
 import { endOfDay, format, parseISO, startOfDay, subMonths } from "date-fns";
 import { Plus } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 import { can } from "@/lib/rbac";
 import { authClient } from "@/lib/auth-client";
@@ -64,12 +64,11 @@ function getDefaultDateRange() {
 export default function MovingRequestPage() {
   const [movings, setMovings] = useState<Moving[]>([]);
   const [items, setItems] = useState<Item[]>([]);
-  const [updatedData, setUpdatedData] = useState<boolean>(true);
   const [isFormOpen, setIsFormOpen] = useState<boolean>(false);
   const [selectedMoving, setSelectedMoving] = useState<Moving | null>(null);
 
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [actionLoading, setActionLoading] = useState(false);
 
   const [activeStatus, setActiveStatus] = useState<MovingStatus>("PENDING");
   const [dateRange, setDateRange] = useState(getDefaultDateRange);
@@ -107,46 +106,43 @@ export default function MovingRequestPage() {
     }
   }, [isPending, session, router]);
 
+  const fetchData = useCallback(async () => {
+    try {
+      const [movingsResponse, itemsResponse] = await Promise.all([
+        fetch("/api/moving-request"),
+        fetch("/api/items"),
+      ]);
+
+      if (!movingsResponse.ok) {
+        throw new Error("Gagal mengambil data moving request");
+      }
+      if (!itemsResponse.ok) {
+        throw new Error("Gagal mengambil data item");
+      }
+
+      const [movingsData, itemsData] = await Promise.all([
+        movingsResponse.json() as Promise<Moving[]>,
+        itemsResponse.json() as Promise<Item[]>,
+      ]);
+
+      setMovings(movingsData);
+      setItems(itemsData);
+    } catch (err) {
+      console.error("Error fetching data:", err);
+    }
+  }, []);
+
   useEffect(() => {
-    // Fetch data jadwal shift dari API
-    const fetchMovingReq = async () => {
-      try {
-        const response = await fetch(`/api/moving-request`);
-        if (!response.ok) {
-          throw new Error("Gagal mengambil data moving request");
-        }
-        const data: Moving[] = await response.json();
-        setMovings(data);
-
-        setUpdatedData(false);
-      } catch (error) {
-        console.error("Error fetching schedules:", error);
-      } finally {
-        setUpdatedData(false);
-      }
-    };
-
-    const fetchItems = async () => {
-      try {
-        const response = await fetch(`/api/items`);
-        if (!response.ok) {
-          throw new Error("Gagal mengambil data jadwal shift");
-        }
-        const data: Item[] = await response.json();
-        setItems(data);
-
-        setUpdatedData(false);
-      } catch (error) {
-        console.error("Error fetching schedules:", error);
-      } finally {
-        setUpdatedData(false);
-      }
-    };
+    let active = true;
     setLoading(true);
-    fetchItems();
-    fetchMovingReq();
-    setLoading(false);
-  }, [updatedData]);
+    fetchData().finally(() => {
+      if (active) setLoading(false);
+    });
+
+    return () => {
+      active = false;
+    };
+  }, [fetchData]);
 
   const filteredMovings = useMemo(() => {
     const fromDate = dateRange.from
@@ -189,7 +185,7 @@ export default function MovingRequestPage() {
       description: description,
       buttonText: buttonText,
     });
-    onChangeConfirm();
+    setIsConfirmOpen(true);
   }
 
   function openDetail(moving: Moving) {
@@ -199,10 +195,11 @@ export default function MovingRequestPage() {
     setIsDetailOpen(true);
   }
 
-  function closeForm() {
+  async function closeForm(refresh = false) {
+    if (refresh) await fetchData();
+
     setIsFormOpen(false);
     setSelectedMoving(null);
-    setUpdatedData(true);
     setNote("");
     setLines([{ itemId: "", qty: 1 }]);
   }
@@ -215,108 +212,83 @@ export default function MovingRequestPage() {
     setIsFormOpen(true);
   }
 
-  function onChangeConfirm() {
-    setIsConfirmOpen(!isConfirmOpen);
-    // if (!confirmOpen) {
-    //   setDetailOpen(false);
-    // }
+  function closeConfirm() {
+    setIsConfirmOpen(false);
+    setConfirmMove(null);
   }
 
-  function onUpdateStatus() {
-    async function updateStatus(status: MovingStatus) {
-      try {
-        const body: UpdateMovingStatusSchema = {
-          status: status,
-        };
+  async function onUpdateStatus() {
+    if (!confirmMove || actionLoading) return;
 
-        const response = await fetch(`/api/moving-request/${confirmMove?.id}`, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(body),
-        });
+    setActionLoading(true);
+    try {
+      const nextStatus: MovingStatus =
+        confirmMove.status === "PENDING" ? "SENT" : "RECEIVED";
+      const body: UpdateMovingStatusSchema = { status: nextStatus };
 
-        const result = await response.json();
+      const response = await fetch(`/api/moving-request/${confirmMove.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      });
 
-        if (!response.ok) {
-          throw new Error(result.message || "Gagal menyimpan data moving");
-        }
+      const result = await response.json();
 
-        toast.success("Success", { description: "Data berhasil dibuat!" });
-        onChangeConfirm();
-        setConfirmMove(null);
-        setUpdatedData(true);
-        return result.data;
-      } catch (err: unknown) {
-        // Type Guard
-        const message =
-          err instanceof Error ? err.message : "Terjadi kesalahan";
-
-        console.error("Log error:", err);
-        toast.error(message);
-      } finally {
-        setLoading(false);
+      if (!response.ok) {
+        throw new Error(result.message || "Gagal menyimpan data moving");
       }
-    }
 
-    if (confirmMove) {
-      if (confirmMove.status === "PENDING") {
-        setLoading(true);
-        updateStatus("SENT");
-        setLoading(false);
-      } else {
-        setLoading(true);
-        updateStatus("RECEIVED");
-        setLoading(false);
-      }
+      await fetchData();
+
+      toast.success("Success", { description: "Status berhasil diperbarui." });
+      closeConfirm();
+      return result.data;
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : "Terjadi kesalahan";
+
+      console.error("Log error:", err);
+      toast.error(message);
+    } finally {
+      setActionLoading(false);
     }
   }
 
-  function onCancelTransaction() {
-    async function cancelTransaction() {
-      try {
-        const body: UpdateMovingStatusSchema = {
-          status: "CANCELLED",
-        };
+  async function onCancelTransaction() {
+    if (!selectedMoving || actionLoading) return;
 
-        const response = await fetch(
-          `/api/moving-request/${selectedMoving?.id}`,
-          {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(body),
-          },
-        );
+    setActionLoading(true);
+    try {
+      const body: UpdateMovingStatusSchema = { status: "CANCELLED" };
 
-        const result = await response.json();
+      const response = await fetch(`/api/moving-request/${selectedMoving.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      });
 
-        if (!response.ok) {
-          throw new Error(result.message || "Gagal menyimpan data moving");
-        }
+      const result = await response.json();
 
-        toast.success("Success", { description: "Data berhasil dibuat!" });
-        setIsDetailOpen(false);
-        setSelectedMoving(null);
-        setUpdatedData(true);
-        return result.data;
-      } catch (err: unknown) {
-        // Type Guard
-        const message =
-          err instanceof Error ? err.message : "Terjadi kesalahan";
-
-        console.error("Log error:", err);
-        toast.error(message);
-      } finally {
-        setLoading(false);
+      if (!response.ok) {
+        throw new Error(result.message || "Gagal menyimpan data moving");
       }
-    }
 
-    if (selectedMoving) {
-      console.log("Cancel transaction:", selectedMoving);
-      cancelTransaction();
+      await fetchData();
+
+      toast.success("Success", { description: "Status berhasil diperbarui." });
+      setIsDetailOpen(false);
+      setSelectedMoving(null);
+      return result.data;
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : "Terjadi kesalahan";
+
+      console.error("Log error:", err);
+      toast.error(message);
+    } finally {
+      setActionLoading(false);
     }
   }
   if (loading || isPending) {
@@ -405,6 +377,7 @@ export default function MovingRequestPage() {
         <DetailPopup
           statusMeta={STATUS_META}
           moving={selectedMoving as Moving}
+          loading={actionLoading}
           onClose={closeForm}
           onCancelTransaction={onCancelTransaction}
         />
@@ -415,7 +388,10 @@ export default function MovingRequestPage() {
         title={confirmMove?.title || ""}
         description={confirmMove?.description || ""}
         buttonText={confirmMove?.buttonText || ""}
-        onOpenChange={onChangeConfirm}
+        loading={actionLoading}
+        onOpenChange={(open) => {
+          if (!open) closeConfirm();
+        }}
         onConfirm={onUpdateStatus}
       />
     </div>
