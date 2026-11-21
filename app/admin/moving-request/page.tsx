@@ -262,9 +262,13 @@ export default function MovingRequestPage() {
 
     if (confirmMove) {
       if (confirmMove.status === "PENDING") {
+        setLoading(true);
         updateStatus("SENT");
+        setLoading(false);
       } else {
+        setLoading(true);
         updateStatus("RECEIVED");
+        setLoading(false);
       }
     }
   }

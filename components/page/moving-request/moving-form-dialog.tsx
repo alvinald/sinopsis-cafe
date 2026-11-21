@@ -39,7 +39,6 @@ export default function MovingFormDialog({
 
   // Sync state saat prop moving berubah tanpa memicu cascading renders dari effect
   if (moving !== prevMoving) {
-    console.log("moving: " + moving);
     setPrevMoving(moving);
     setNote(moving?.note ?? "");
 
@@ -71,7 +70,7 @@ export default function MovingFormDialog({
   );
   const hasDuplicateItem =
     new Set(filledLines.map((line) => line.itemId)).size !== filledLines.length;
-  const canSubmit = filledLines.length > 0 && !hasDuplicateItem;
+  const canSubmit = filledLines.length > 0 && !hasDuplicateItem && !loading;
 
   function updateLine(
     index: number,
@@ -103,18 +102,20 @@ export default function MovingFormDialog({
   async function submitRequest() {
     const movingId = moving?.id ?? null;
 
+    setLoading(true);
     // Validasi sederhana
     if (!filledLines || filledLines.length === 0) {
       toast.error("Minimal harus memilih 1 item");
+      setLoading(false);
       return;
     }
     if (movingId) {
-      // Mode EDIT/UPDATE
       await updateRequest();
     } else {
       // Mode CREATE
       await createRequest();
     }
+    setLoading(false);
   }
 
   async function createRequest() {
@@ -172,9 +173,6 @@ export default function MovingFormDialog({
           qty: parseInt(item.qty),
         })),
       };
-
-      console.log(body);
-
       const response = await fetch("/api/moving-request", {
         method: "PUT",
         headers: {
