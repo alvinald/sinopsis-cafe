@@ -1,4 +1,4 @@
-import { RotateCcw } from "lucide-react";
+import { Download, RotateCcw } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Field } from "@/components/ui/field";
@@ -11,6 +11,8 @@ export function DateRangeFilter({
   onFromChange,
   onToChange,
   onReset,
+  onExport,
+  exportDisabled = false,
   className,
 }: {
   from: string;
@@ -18,6 +20,8 @@ export function DateRangeFilter({
   onFromChange: (value: string) => void;
   onToChange: (value: string) => void;
   onReset: () => void;
+  onExport: () => void;
+  exportDisabled?: boolean;
   className?: string;
 }) {
   const isInvalid = Boolean(from && to && from > to);
@@ -59,15 +63,28 @@ export function DateRangeFilter({
         )}
       </div>
 
-      <Button
-        type="button"
-        variant="outline"
-        size="sm"
-        onClick={onReset}
-        className="w-full sm:w-auto"
-      >
-        <RotateCcw className="size-3.5" />1 Bulan Terakhir
-      </Button>
+      <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row">
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          onClick={onReset}
+          className="w-full sm:w-auto"
+        >
+          <RotateCcw className="size-3.5" />
+          1 Bulan Terakhir
+        </Button>
+        <Button
+          type="button"
+          size="sm"
+          onClick={onExport}
+          disabled={exportDisabled}
+          className="w-full sm:w-auto"
+        >
+          <Download className="size-3.5" />
+          Export Excel
+        </Button>
+      </div>
     </div>
   );
 }

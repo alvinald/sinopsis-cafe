@@ -20,6 +20,7 @@ import { toast } from "sonner";
 import { can } from "@/lib/rbac";
 import { authClient } from "@/lib/auth-client";
 import { LoadingScreen } from "@/components/loading";
+import { exportToExcel } from "@/lib/export-excel";
 import { useRouter } from "next/navigation";
 
 const STATUS_META: Record<
@@ -171,6 +172,120 @@ export default function MovingRequestPage() {
     return result;
   }, [filteredMovings]);
 
+  function handleExport() {
+    if (filteredMovings.length === 0) {
+      toast.error("Tidak ada data untuk diekspor");
+      return;
+    }
+
+    const formatDate = (value: string | null) =>
+      value ? format(new Date(value), "dd/MM/yyyy HH:mm") : "";
+
+    type ExportRow = {
+      no: number | "";
+      nomor: string;
+      tanggalDibuat: string;
+      tanggalDikirim: string;
+      tanggalDiterima: string;
+      tanggalDibatalkan: string;
+      status: string;
+      dibuatOleh: string;
+      dikirimOleh: string;
+      diterimaOleh: string;
+      dibatalkanOleh: string;
+      catatan: string;
+      item: string;
+      qty: number | "";
+      satuan: string;
+    };
+
+    const columns = [
+      { header: "No", key: "no", width: 6 },
+      { header: "Nomor", key: "nomor", width: 22 },
+      { header: "Item", key: "item", width: 28 },
+      { header: "Qty", key: "qty", width: 8 },
+      { header: "Satuan", key: "satuan", width: 10 },
+      { header: "Catatan", key: "catatan", width: 30 },
+      { header: "Dibuat Oleh", key: "dibuatOleh", width: 20 },
+      { header: "Tanggal Dibuat", key: "tanggalDibuat", width: 20 },
+      { header: "Dikirim Oleh", key: "dikirimOleh", width: 20 },
+      { header: "Tanggal Dikirim", key: "tanggalDikirim", width: 20 },
+      { header: "Diterima Oleh", key: "diterimaOleh", width: 20 },
+      { header: "Tanggal Diterima", key: "tanggalDiterima", width: 20 },
+      { header: "Dibatalkan Oleh", key: "dibatalkanOleh", width: 20 },
+      { header: "Tanggal Dibatalkan", key: "tanggalDibatalkan", width: 20 },
+    ] as const;
+
+    const rowsByStatus: Record<MovingStatus, ExportRow[]> = {
+      PENDING: [],
+      SENT: [],
+      RECEIVED: [],
+      CANCELLED: [],
+    };
+
+    for (const moving of filteredMovings) {
+      const no = rowsByStatus[moving.status].length + 1;
+      const base = {
+        no,
+        nomor: moving.number,
+        tanggalDibuat: formatDate(moving.createdAt),
+        tanggalDikirim: formatDate(moving.sentAt),
+        tanggalDiterima: formatDate(moving.receivedAt),
+        tanggalDibatalkan: formatDate(moving.cancelledAt),
+        status: STATUS_META[moving.status].label,
+        dibuatOleh: moving.createdBy.name,
+        dikirimOleh: moving.sentBy?.name ?? "",
+        diterimaOleh: moving.receivedBy?.name ?? "",
+        dibatalkanOleh: moving.cancelledBy?.name ?? "",
+        catatan: moving.note ?? "",
+      };
+
+      if (moving.items.length === 0) {
+        rowsByStatus[moving.status].push({
+          ...base,
+          item: "",
+          qty: "",
+          satuan: "",
+        });
+        continue;
+      }
+
+      moving.items.forEach((line, itemIndex) => {
+        rowsByStatus[moving.status].push({
+          ...base,
+          no: itemIndex === 0 ? no : "",
+          item: line.item.name,
+          qty: line.qty,
+          satuan: line.item.unit,
+        });
+      });
+    }
+
+    const statusOrder: MovingStatus[] = [
+      "PENDING",
+      "SENT",
+      "RECEIVED",
+      "CANCELLED",
+    ];
+
+    exportToExcel({
+      fileName: `moving-request_${dateRange.from || "all"}_${dateRange.to || "all"}`,
+      sheets: statusOrder.map((status) => ({
+        sheetName: STATUS_META[status].label,
+        data: rowsByStatus[status],
+        columns: columns.map((column) => ({
+          header: column.header,
+          key: column.key,
+          width: column.width,
+        })),
+      })),
+    });
+
+    toast.success("Export berhasil", {
+      description: `${filteredMovings.length} transaksi diekspor ke 4 sheet.`,
+    });
+  }
+
   function requestMove(
     id: string,
     status: MovingStatus,
@@ -320,6 +435,8 @@ export default function MovingRequestPage() {
           onFromChange={(from) => setDateRange((prev) => ({ ...prev, from }))}
           onToChange={(to) => setDateRange((prev) => ({ ...prev, to }))}
           onReset={() => setDateRange(getDefaultDateRange())}
+          onExport={handleExport}
+          exportDisabled={loading || filteredMovings.length === 0}
         />
 
         {/* Papan status */}
