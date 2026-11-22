@@ -46,26 +46,21 @@ export function ItemFormDialog({
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (saving) return;
+
     setSaving(true);
     setError(null);
 
-    if (mode && mode === "create") {
-      const values: CreateItemRequest = {
-        sku: sku,
-        name: name,
-        unit: unit,
-        status: status,
-      };
-      onSave(mode, values);
-    } else if (mode && item && mode === "edit") {
-      const values: UpdateItemRequest = {
-        id: item.id,
-        sku: sku,
-        name: name,
-        unit: unit,
-        status: status,
-      };
-      onSave(mode, values);
+    try {
+      if (mode === "create") {
+        await onSave(mode, { sku, name, unit, status });
+      } else if (item) {
+        await onSave("edit", { id: item.id, sku, name, unit, status });
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Gagal menyimpan item");
+    } finally {
+      setSaving(false);
     }
   }
 

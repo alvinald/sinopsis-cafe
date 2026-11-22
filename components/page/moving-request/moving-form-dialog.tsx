@@ -121,7 +121,9 @@ export default function MovingFormDialog({
       const result = moving ? await updateRequest() : await createRequest();
 
       toast.success("Success", {
-        description: moving ? "Data berhasil diperbarui!" : "Data berhasil dibuat!",
+        description: moving
+          ? "Data berhasil diperbarui!"
+          : "Data berhasil dibuat!",
       });
       await handleClose(true);
       return result;
@@ -257,8 +259,9 @@ export default function MovingFormDialog({
                   <Combobox
                     items={itemOptions}
                     value={
-                      itemOptions.find((option) => option.value === line.itemId) ??
-                      null
+                      itemOptions.find(
+                        (option) => option.value === line.itemId,
+                      ) ?? null
                     }
                     onValueChange={(option) =>
                       updateLine(index, { itemId: option?.value ?? "" })
@@ -274,29 +277,25 @@ export default function MovingFormDialog({
                       showClear={Boolean(line.itemId)}
                       className="h-8 w-full min-w-0 flex-1 [&>input]:text-xs"
                     />
+
                     <ComboboxContent>
+                      <ComboboxEmpty>Tidak ada item cocok.</ComboboxEmpty>
                       <ComboboxList>
-                        {itemOptions.map((option) => {
-                          const usedByOther = lines.some(
-                            (other, otherIndex) =>
-                              otherIndex !== index &&
-                              other.itemId === option.value,
-                          );
-                          return (
-                            <ComboboxItem
-                              key={option.value}
-                              value={option}
-                              disabled={usedByOther}
-                            >
-                              {option.label}
-                            </ComboboxItem>
-                          );
-                        })}
-                        <ComboboxEmpty>Tidak ada item cocok.</ComboboxEmpty>
+                        {(option) => (
+                          <ComboboxItem
+                            key={option.value}
+                            value={option}
+                            disabled={lines.some(
+                              (other, i) =>
+                                i !== index && other.itemId === option.value,
+                            )}
+                          >
+                            {option.label}
+                          </ComboboxItem>
+                        )}
                       </ComboboxList>
                     </ComboboxContent>
                   </Combobox>
-
                   <Input
                     type="number"
                     min={1}
