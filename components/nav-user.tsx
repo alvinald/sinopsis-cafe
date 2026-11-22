@@ -5,6 +5,7 @@ import {
   BadgeCheckIcon,
   BellIcon,
   ChevronsUpDownIcon,
+  KeyRoundIcon,
   LogOutIcon,
 } from "lucide-react";
 
@@ -44,7 +45,7 @@ export function NavUser({
     avatar?: string | null;
   };
 }) {
-  const { isMobile } = useSidebar();
+  const { isMobile, setOpenMobile } = useSidebar();
   const router = useRouter();
   const initials = getInitials(user.name);
 
@@ -56,6 +57,11 @@ export function NavUser({
         },
       },
     });
+  };
+
+  const handleChangePassword = () => {
+    setOpenMobile(false);
+    router.push("/admin/change-password");
   };
 
   return (
@@ -114,6 +120,10 @@ export function NavUser({
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
+              <DropdownMenuItem onClick={handleChangePassword}>
+                <KeyRoundIcon />
+                Ubah Password
+              </DropdownMenuItem>
               <DropdownMenuItem>
                 <BadgeCheckIcon />
                 Akun

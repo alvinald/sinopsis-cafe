@@ -201,6 +201,7 @@ export default function MovingRequestPage() {
 
     const columns = [
       { header: "No", key: "no", width: 6 },
+      { header: "Tanggal", key: "tanggalDibuat", width: 20 },
       { header: "Nomor", key: "nomor", width: 22 },
       { header: "Item", key: "item", width: 28 },
       { header: "Qty", key: "qty", width: 8 },
