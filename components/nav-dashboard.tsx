@@ -9,6 +9,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  useSidebar,
 } from "@/components/ui/sidebar";
 
 export function NavDashboard({
@@ -21,6 +22,7 @@ export function NavDashboard({
   }[];
 }) {
   const pathname = usePathname();
+  const { setOpenMobile } = useSidebar();
 
   return (
     <SidebarGroup>
@@ -38,7 +40,12 @@ export function NavDashboard({
               <SidebarMenuButton
                 isActive={isActive}
                 tooltip={item.name}
-                render={<Link href={item.url} />}
+                render={
+                  <Link
+                    href={item.url}
+                    onClick={() => setOpenMobile(false)}
+                  />
+                }
                 className="h-9 gap-2.5 rounded-lg px-2.5 font-medium text-sidebar-foreground/80 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground data-active:bg-sidebar-primary/10 data-active:font-semibold data-active:text-sidebar-primary data-active:shadow-[inset_2px_0_0_0_var(--sidebar-primary)]"
               >
                 {item.icon}
