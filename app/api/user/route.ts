@@ -8,6 +8,7 @@ import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 import { hashPassword } from "better-auth/crypto";
+import { DEFAULT_USER_PASSWORD } from "@/lib/constants/password";
 import { Prisma } from "@/lib/generated/prisma/client";
 
 export async function GET(request: NextRequest) {
@@ -97,7 +98,7 @@ export async function POST(request: NextRequest) {
   const values = parsed.data;
 
   try {
-    const hashedPassword = await hashPassword("Password");
+    const hashedPassword = await hashPassword(DEFAULT_USER_PASSWORD);
     const userId = crypto.randomUUID();
     const now = new Date();
 

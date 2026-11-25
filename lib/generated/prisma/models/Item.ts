@@ -233,6 +233,7 @@ export type ItemWhereInput = {
   status?: Prisma.EnumstatusFilter<"Item"> | $Enums.status
   isDeleted?: Prisma.BoolFilter<"Item"> | boolean
   movingItems?: Prisma.MovingItemListRelationFilter
+  stockInItems?: Prisma.StockInItemListRelationFilter
 }
 
 export type ItemOrderByWithRelationInput = {
@@ -244,6 +245,7 @@ export type ItemOrderByWithRelationInput = {
   status?: Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
   movingItems?: Prisma.MovingItemOrderByRelationAggregateInput
+  stockInItems?: Prisma.StockInItemOrderByRelationAggregateInput
 }
 
 export type ItemWhereUniqueInput = Prisma.AtLeast<{
@@ -258,6 +260,7 @@ export type ItemWhereUniqueInput = Prisma.AtLeast<{
   status?: Prisma.EnumstatusFilter<"Item"> | $Enums.status
   isDeleted?: Prisma.BoolFilter<"Item"> | boolean
   movingItems?: Prisma.MovingItemListRelationFilter
+  stockInItems?: Prisma.StockInItemListRelationFilter
 }, "id" | "sku">
 
 export type ItemOrderByWithAggregationInput = {
@@ -297,6 +300,7 @@ export type ItemCreateInput = {
   status?: $Enums.status
   isDeleted?: boolean
   movingItems?: Prisma.MovingItemCreateNestedManyWithoutItemInput
+  stockInItems?: Prisma.StockInItemCreateNestedManyWithoutItemInput
 }
 
 export type ItemUncheckedCreateInput = {
@@ -308,6 +312,7 @@ export type ItemUncheckedCreateInput = {
   status?: $Enums.status
   isDeleted?: boolean
   movingItems?: Prisma.MovingItemUncheckedCreateNestedManyWithoutItemInput
+  stockInItems?: Prisma.StockInItemUncheckedCreateNestedManyWithoutItemInput
 }
 
 export type ItemUpdateInput = {
@@ -319,6 +324,7 @@ export type ItemUpdateInput = {
   status?: Prisma.EnumstatusFieldUpdateOperationsInput | $Enums.status
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   movingItems?: Prisma.MovingItemUpdateManyWithoutItemNestedInput
+  stockInItems?: Prisma.StockInItemUpdateManyWithoutItemNestedInput
 }
 
 export type ItemUncheckedUpdateInput = {
@@ -330,6 +336,7 @@ export type ItemUncheckedUpdateInput = {
   status?: Prisma.EnumstatusFieldUpdateOperationsInput | $Enums.status
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   movingItems?: Prisma.MovingItemUncheckedUpdateManyWithoutItemNestedInput
+  stockInItems?: Prisma.StockInItemUncheckedUpdateManyWithoutItemNestedInput
 }
 
 export type ItemCreateManyInput = {
@@ -419,6 +426,20 @@ export type ItemUpdateOneRequiredWithoutMovingItemsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ItemUpdateToOneWithWhereWithoutMovingItemsInput, Prisma.ItemUpdateWithoutMovingItemsInput>, Prisma.ItemUncheckedUpdateWithoutMovingItemsInput>
 }
 
+export type ItemCreateNestedOneWithoutStockInItemsInput = {
+  create?: Prisma.XOR<Prisma.ItemCreateWithoutStockInItemsInput, Prisma.ItemUncheckedCreateWithoutStockInItemsInput>
+  connectOrCreate?: Prisma.ItemCreateOrConnectWithoutStockInItemsInput
+  connect?: Prisma.ItemWhereUniqueInput
+}
+
+export type ItemUpdateOneRequiredWithoutStockInItemsNestedInput = {
+  create?: Prisma.XOR<Prisma.ItemCreateWithoutStockInItemsInput, Prisma.ItemUncheckedCreateWithoutStockInItemsInput>
+  connectOrCreate?: Prisma.ItemCreateOrConnectWithoutStockInItemsInput
+  upsert?: Prisma.ItemUpsertWithoutStockInItemsInput
+  connect?: Prisma.ItemWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ItemUpdateToOneWithWhereWithoutStockInItemsInput, Prisma.ItemUpdateWithoutStockInItemsInput>, Prisma.ItemUncheckedUpdateWithoutStockInItemsInput>
+}
+
 export type ItemCreateWithoutMovingItemsInput = {
   id?: string
   sku: string
@@ -427,6 +448,7 @@ export type ItemCreateWithoutMovingItemsInput = {
   stock?: number
   status?: $Enums.status
   isDeleted?: boolean
+  stockInItems?: Prisma.StockInItemCreateNestedManyWithoutItemInput
 }
 
 export type ItemUncheckedCreateWithoutMovingItemsInput = {
@@ -437,6 +459,7 @@ export type ItemUncheckedCreateWithoutMovingItemsInput = {
   stock?: number
   status?: $Enums.status
   isDeleted?: boolean
+  stockInItems?: Prisma.StockInItemUncheckedCreateNestedManyWithoutItemInput
 }
 
 export type ItemCreateOrConnectWithoutMovingItemsInput = {
@@ -463,6 +486,7 @@ export type ItemUpdateWithoutMovingItemsInput = {
   stock?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumstatusFieldUpdateOperationsInput | $Enums.status
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  stockInItems?: Prisma.StockInItemUpdateManyWithoutItemNestedInput
 }
 
 export type ItemUncheckedUpdateWithoutMovingItemsInput = {
@@ -473,6 +497,67 @@ export type ItemUncheckedUpdateWithoutMovingItemsInput = {
   stock?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumstatusFieldUpdateOperationsInput | $Enums.status
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  stockInItems?: Prisma.StockInItemUncheckedUpdateManyWithoutItemNestedInput
+}
+
+export type ItemCreateWithoutStockInItemsInput = {
+  id?: string
+  sku: string
+  name: string
+  unit: string
+  stock?: number
+  status?: $Enums.status
+  isDeleted?: boolean
+  movingItems?: Prisma.MovingItemCreateNestedManyWithoutItemInput
+}
+
+export type ItemUncheckedCreateWithoutStockInItemsInput = {
+  id?: string
+  sku: string
+  name: string
+  unit: string
+  stock?: number
+  status?: $Enums.status
+  isDeleted?: boolean
+  movingItems?: Prisma.MovingItemUncheckedCreateNestedManyWithoutItemInput
+}
+
+export type ItemCreateOrConnectWithoutStockInItemsInput = {
+  where: Prisma.ItemWhereUniqueInput
+  create: Prisma.XOR<Prisma.ItemCreateWithoutStockInItemsInput, Prisma.ItemUncheckedCreateWithoutStockInItemsInput>
+}
+
+export type ItemUpsertWithoutStockInItemsInput = {
+  update: Prisma.XOR<Prisma.ItemUpdateWithoutStockInItemsInput, Prisma.ItemUncheckedUpdateWithoutStockInItemsInput>
+  create: Prisma.XOR<Prisma.ItemCreateWithoutStockInItemsInput, Prisma.ItemUncheckedCreateWithoutStockInItemsInput>
+  where?: Prisma.ItemWhereInput
+}
+
+export type ItemUpdateToOneWithWhereWithoutStockInItemsInput = {
+  where?: Prisma.ItemWhereInput
+  data: Prisma.XOR<Prisma.ItemUpdateWithoutStockInItemsInput, Prisma.ItemUncheckedUpdateWithoutStockInItemsInput>
+}
+
+export type ItemUpdateWithoutStockInItemsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  sku?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  unit?: Prisma.StringFieldUpdateOperationsInput | string
+  stock?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumstatusFieldUpdateOperationsInput | $Enums.status
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  movingItems?: Prisma.MovingItemUpdateManyWithoutItemNestedInput
+}
+
+export type ItemUncheckedUpdateWithoutStockInItemsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  sku?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  unit?: Prisma.StringFieldUpdateOperationsInput | string
+  stock?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumstatusFieldUpdateOperationsInput | $Enums.status
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  movingItems?: Prisma.MovingItemUncheckedUpdateManyWithoutItemNestedInput
 }
 
 
@@ -482,10 +567,12 @@ export type ItemUncheckedUpdateWithoutMovingItemsInput = {
 
 export type ItemCountOutputType = {
   movingItems: number
+  stockInItems: number
 }
 
 export type ItemCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   movingItems?: boolean | ItemCountOutputTypeCountMovingItemsArgs
+  stockInItems?: boolean | ItemCountOutputTypeCountStockInItemsArgs
 }
 
 /**
@@ -505,6 +592,13 @@ export type ItemCountOutputTypeCountMovingItemsArgs<ExtArgs extends runtime.Type
   where?: Prisma.MovingItemWhereInput
 }
 
+/**
+ * ItemCountOutputType without action
+ */
+export type ItemCountOutputTypeCountStockInItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.StockInItemWhereInput
+}
+
 
 export type ItemSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -515,6 +609,7 @@ export type ItemSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   status?: boolean
   isDeleted?: boolean
   movingItems?: boolean | Prisma.Item$movingItemsArgs<ExtArgs>
+  stockInItems?: boolean | Prisma.Item$stockInItemsArgs<ExtArgs>
   _count?: boolean | Prisma.ItemCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["item"]>
 
@@ -551,6 +646,7 @@ export type ItemSelectScalar = {
 export type ItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "sku" | "name" | "unit" | "stock" | "status" | "isDeleted", ExtArgs["result"]["item"]>
 export type ItemInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   movingItems?: boolean | Prisma.Item$movingItemsArgs<ExtArgs>
+  stockInItems?: boolean | Prisma.Item$stockInItemsArgs<ExtArgs>
   _count?: boolean | Prisma.ItemCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ItemIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -560,6 +656,7 @@ export type $ItemPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   name: "Item"
   objects: {
     movingItems: Prisma.$MovingItemPayload<ExtArgs>[]
+    stockInItems: Prisma.$StockInItemPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -964,6 +1061,7 @@ readonly fields: ItemFieldRefs;
 export interface Prisma__ItemClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   movingItems<T extends Prisma.Item$movingItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Item$movingItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MovingItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  stockInItems<T extends Prisma.Item$stockInItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Item$stockInItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StockInItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1414,6 +1512,30 @@ export type Item$movingItemsArgs<ExtArgs extends runtime.Types.Extensions.Intern
   take?: number
   skip?: number
   distinct?: Prisma.MovingItemScalarFieldEnum | Prisma.MovingItemScalarFieldEnum[]
+}
+
+/**
+ * Item.stockInItems
+ */
+export type Item$stockInItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the StockInItem
+   */
+  select?: Prisma.StockInItemSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the StockInItem
+   */
+  omit?: Prisma.StockInItemOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.StockInItemInclude<ExtArgs> | null
+  where?: Prisma.StockInItemWhereInput
+  orderBy?: Prisma.StockInItemOrderByWithRelationInput | Prisma.StockInItemOrderByWithRelationInput[]
+  cursor?: Prisma.StockInItemWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.StockInItemScalarFieldEnum | Prisma.StockInItemScalarFieldEnum[]
 }
 
 /**

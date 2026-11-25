@@ -36,6 +36,10 @@ const data = {
           url: "/admin/item",
         },
         {
+          title: "Barang Masuk",
+          url: "/admin/stock-in",
+        },
+        {
           title: "Moving Item",
           url: "/admin/moving-request",
         },

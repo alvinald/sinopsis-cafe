@@ -1,3 +1,4 @@
+import { can } from "@/lib/rbac";
 import { Permission, PermissionByGroup } from "@/lib/types/permission-types";
 import { Dispatch, SetStateAction } from "react";
 
@@ -6,12 +7,16 @@ export function PermissionList({
   permissions,
   draftRolePermissionId,
   setDraftRolePermissionId,
+  userPermissions,
 }: {
   activeRoleId: string | null;
   permissions: Permission[];
   draftRolePermissionId: string[] | null;
   setDraftRolePermissionId: Dispatch<SetStateAction<string[] | null>>;
+  userPermissions: string[] | undefined;
 }) {
+  const canUpdate = can(userPermissions, "ROLE:UPDATE");
+
   const handlePermissionChange = (id: string, checked: boolean) => {
     setDraftRolePermissionId((prev) => {
       // Jika prev null, anggap sebagai array kosong []
@@ -109,12 +114,14 @@ export function PermissionList({
                 </span>
               </div>
 
-              <button
-                onClick={() => handleToggleSelectAllModule(group.resource)}
-                className="text-[11px] font-medium text-blue-600 hover:underline"
-              >
-                {allSelected ? "Hapus Semua" : "Pilih Semua"}
-              </button>
+              {canUpdate && (
+                <button
+                  onClick={() => handleToggleSelectAllModule(group.resource)}
+                  className="text-[11px] font-medium text-blue-600 hover:underline"
+                >
+                  {allSelected ? "Hapus Semua" : "Pilih Semua"}
+                </button>
+              )}
             </div>
 
             {/* Module Items Grid */}
@@ -133,6 +140,7 @@ export function PermissionList({
                     <input
                       type="checkbox"
                       checked={!!isChecked}
+                      disabled={!canUpdate}
                       onChange={(e) =>
                         handlePermissionChange(item.id, e.target.checked)
                       }

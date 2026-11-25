@@ -1,15 +1,19 @@
 "use client";
 
+import { LoadingScreen } from "@/components/loading";
 import { PageHeader } from "@/components/page/page-header";
 import { RoleFormDialog } from "@/components/page/role/role-form-dialog";
 import { PermissionList } from "@/components/page/role/permission-list";
 import { RoleHeader } from "@/components/page/role/role-header";
 import { RoleList } from "@/components/page/role/role-list";
+import { authClient } from "@/lib/auth-client";
+import { can } from "@/lib/rbac";
 import { Permission } from "@/lib/types/permission-types";
 import {
   RoleWithPermissions,
   updateRolePermission,
 } from "@/lib/types/role-types";
+import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 
@@ -25,6 +29,22 @@ export default function RolePermissionPage() {
   const [draftRolePermissionId, setDraftRolePermissionId] = useState<
     string[] | null
   >(null);
+
+  const router = useRouter();
+  const { data: session, isPending } = authClient.useSession();
+
+  useEffect(() => {
+    if (isPending) return;
+
+    if (!session) {
+      router.replace("/login");
+      return;
+    }
+
+    if (!can(session.permissions, "ROLE:VIEW")) {
+      router.replace("/forbidden");
+    }
+  }, [isPending, session, router]);
 
   const toggleModal = () => setIsModalOpen((v) => !v);
 
@@ -137,6 +157,10 @@ export default function RolePermissionPage() {
     [roles, activeRoleId],
   );
 
+  if (isPending) {
+    return <LoadingScreen />;
+  }
+
   return (
     <div className="py-4 md:py-6">
       <div className="w-full px-4 lg:px-6">
@@ -154,6 +178,7 @@ export default function RolePermissionPage() {
               activeRoleId={activeRoleId}
               onSelectRole={selectRole}
               onCreate={() => setIsModalOpen(true)}
+              permissions={session?.permissions}
             />
 
             <div className="lg:col-span-3 space-y-2">
@@ -165,6 +190,7 @@ export default function RolePermissionPage() {
                 setLoading={setLoading}
                 successDelete={successDelete}
                 onSaveRolePermissions={onSaveRolePermissions}
+                permissions={session?.permissions}
               />
 
               <PermissionList
@@ -172,6 +198,7 @@ export default function RolePermissionPage() {
                 permissions={permissions}
                 draftRolePermissionId={draftRolePermissionId}
                 setDraftRolePermissionId={setDraftRolePermissionId}
+                userPermissions={session?.permissions}
               />
             </div>
           </div>

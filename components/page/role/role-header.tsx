@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { can } from "@/lib/rbac";
 import { DeleteRoleRequest, RoleWithPermissions } from "@/lib/types/role-types";
 import { Check, Trash } from "lucide-react";
 import { useState } from "react";
@@ -11,14 +12,18 @@ export function RoleHeader({
   loading,
   successDelete,
   onSaveRolePermissions,
+  permissions,
 }: {
   activeRole: RoleWithPermissions | null;
   loading: boolean;
   setLoading: (loading: boolean) => void;
   successDelete: () => void;
   onSaveRolePermissions: () => void;
+  permissions: string[] | undefined;
 }) {
   const [confirmCancel, setConfirmCancel] = useState(false);
+  const canDelete = can(permissions, "ROLE:DELETE");
+  const canUpdate = can(permissions, "ROLE:UPDATE");
 
   async function handleDeleteRole() {
     if (!activeRole) return;
@@ -65,35 +70,36 @@ export function RoleHeader({
       </div>
 
       <div className="flex items-center gap-2 self-end sm:self-auto">
-        {confirmCancel ? (
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="text-xs text-muted-foreground">
-              Batalkan transaksi ini?
-            </span>
-            <Button
-              type="button"
-              size="sm"
-              className="bg-destructive text-white hover:bg-destructive/90"
-              onClick={() => {
-                handleDeleteRole();
-              }}
-              disabled={loading}
-            >
-              Ya, Hapus
-            </Button>
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => {
-                setConfirmCancel(false);
-              }}
-              disabled={loading}
-            >
-              Batal
-            </Button>
-          </div>
-        ) : (
-          <div className="flex flex-wrap items-center gap-2">
+        {canDelete &&
+          activeRole &&
+          (confirmCancel ? (
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="text-xs text-muted-foreground">
+                Batalkan transaksi ini?
+              </span>
+              <Button
+                type="button"
+                size="sm"
+                className="bg-destructive text-white hover:bg-destructive/90"
+                onClick={() => {
+                  handleDeleteRole();
+                }}
+                disabled={loading}
+              >
+                Ya, Hapus
+              </Button>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => {
+                  setConfirmCancel(false);
+                }}
+                disabled={loading}
+              >
+                Batal
+              </Button>
+            </div>
+          ) : (
             <Button
               type="button"
               variant="outline"
@@ -105,14 +111,16 @@ export function RoleHeader({
               <Trash className="size-4" />
               Hapus Role
             </Button>
-            <Button
-              onClick={onSaveRolePermissions}
-              className="px-4 py-2 sm:py-1.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-white text-xs font-semibold shadow-sm transition flex items-center gap-1.5"
-              disabled={loading}
-            >
-              <Check className="w-3.5 h-3.5" /> Simpan
-            </Button>
-          </div>
+          ))}
+
+        {canUpdate && activeRole && !confirmCancel && (
+          <Button
+            onClick={onSaveRolePermissions}
+            className="px-4 py-2 sm:py-1.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-white text-xs font-semibold shadow-sm transition flex items-center gap-1.5"
+            disabled={loading}
+          >
+            <Check className="w-3.5 h-3.5" /> Simpan
+          </Button>
         )}
       </div>
     </div>

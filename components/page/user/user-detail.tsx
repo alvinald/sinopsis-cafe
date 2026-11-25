@@ -1,19 +1,29 @@
 import { Button } from "@/components/ui/button";
+import { can } from "@/lib/rbac";
 import { UsersList } from "@/lib/types/user-types";
-import { Edit, Mail, X } from "lucide-react";
-import { ReactNode } from "react";
+import { Edit, KeyRound, Loader2, Mail, X } from "lucide-react";
+import { ReactNode, useState } from "react";
 
 const UserDetail = ({
   selectedUser,
   setSelectedUser,
   setUserForm,
   renderRoleBadge,
+  permissions,
+  resetting,
+  onResetPassword,
 }: {
   selectedUser: UsersList;
   setSelectedUser: (user: UsersList | null) => void;
   setUserForm: (params: { mode: "create" | "edit"; user: UsersList }) => void;
   renderRoleBadge: (role: string) => ReactNode;
+  permissions: string[] | undefined;
+  resetting: boolean;
+  onResetPassword: (user: UsersList) => void | Promise<void>;
 }) => {
+  const [confirmReset, setConfirmReset] = useState(false);
+  const canUpdate = can(permissions, "USER:UPDATE");
+
   return (
     <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/50 backdrop-blur-sm p-0 sm:p-4 animate-in fade-in duration-200">
       <div className="bg-background w-full sm:max-w-md rounded-t-3xl sm:rounded-2xl border border-border p-6 space-y-6 shadow-xl animate-in slide-in-from-bottom duration-300">
@@ -71,23 +81,64 @@ const UserDetail = ({
 
         {/* Action Buttons */}
         <div className="grid grid-cols-2 gap-3 pt-2">
-          <Button
-            variant="outline"
-            className="w-full gap-2 rounded-xl"
-            onClick={() => {
-              setUserForm({ mode: "edit", user: selectedUser });
-              setSelectedUser(null);
-            }}
-          >
-            <Edit className="w-4 h-4" />
-            Edit User
-          </Button>
-          <Button
-            className="w-full rounded-xl"
-            onClick={() => setSelectedUser(null)}
-          >
-            Tutup
-          </Button>
+          {canUpdate && !confirmReset && (
+            <Button
+              variant="outline"
+              className="w-full gap-2 rounded-xl"
+              disabled={resetting}
+              onClick={() => {
+                setUserForm({ mode: "edit", user: selectedUser });
+                setSelectedUser(null);
+              }}
+            >
+              <Edit className="w-4 h-4" />
+              Edit User
+            </Button>
+          )}
+
+          {canUpdate &&
+            (confirmReset ? (
+              <div className="col-span-2 space-y-2 rounded-xl border border-destructive/20 bg-destructive/5 p-3">
+                <p className="text-xs text-muted-foreground">
+                  Password {selectedUser.name} akan dikembalikan ke password
+                  default seperti user baru.
+                </p>
+                <div className="flex gap-2">
+                  <Button
+                    className="flex-1 bg-destructive text-white hover:bg-destructive/90"
+                    disabled={resetting}
+                    onClick={() => void onResetPassword(selectedUser)}
+                  >
+                    {resetting ? (
+                      <>
+                        <Loader2 className="size-4 animate-spin" />
+                        Memproses...
+                      </>
+                    ) : (
+                      "Ya, reset"
+                    )}
+                  </Button>
+                  <Button
+                    variant="outline"
+                    className="flex-1"
+                    disabled={resetting}
+                    onClick={() => setConfirmReset(false)}
+                  >
+                    Batal
+                  </Button>
+                </div>
+              </div>
+            ) : (
+              <Button
+                variant="outline"
+                className="w-full gap-2 rounded-xl"
+                disabled={resetting}
+                onClick={() => setConfirmReset(true)}
+              >
+                <KeyRound className="w-4 h-4" />
+                Reset Password
+              </Button>
+            ))}
         </div>
       </div>
     </div>

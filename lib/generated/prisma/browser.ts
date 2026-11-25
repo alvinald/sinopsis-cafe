@@ -87,3 +87,13 @@ export type Moving = Prisma.MovingModel
  * 
  */
 export type MovingItem = Prisma.MovingItemModel
+/**
+ * Model StockIn
+ * 
+ */
+export type StockIn = Prisma.StockInModel
+/**
+ * Model StockInItem
+ * 
+ */
+export type StockInItem = Prisma.StockInItemModel

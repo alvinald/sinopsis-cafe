@@ -22,11 +22,15 @@ import { JobTitleWithDept } from "@/lib/types/job-title-types";
 import { Role } from "@/lib/types/role-types";
 import { Department } from "@/lib/types/department-types";
 import { UserFormDialog } from "@/components/page/user/user-form-dialog";
+import { authClient } from "@/lib/auth-client";
+import { can } from "@/lib/rbac";
+import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 export default function UserListPage() {
   const [fetchLoading, setFetchLoading] = useState<boolean>(true);
   const [saving, setSaving] = useState<boolean>(false);
+  const [resetting, setResetting] = useState<boolean>(false);
 
   const [users, setUsers] = useState<UsersList[] | null>(null);
   const [jobTitles, setJobTitles] = useState<JobTitleWithDept[] | null>(null);
@@ -39,6 +43,22 @@ export default function UserListPage() {
   const [userForm, setUserForm] = useState<
     { mode: "create" } | { mode: "edit"; user: UsersList } | null
   >(null);
+
+  const router = useRouter();
+  const { data: session, isPending } = authClient.useSession();
+
+  useEffect(() => {
+    if (isPending) return;
+
+    if (!session) {
+      router.replace("/login");
+      return;
+    }
+
+    if (!can(session.permissions, "USER:VIEW")) {
+      router.replace("/forbidden");
+    }
+  }, [isPending, session, router]);
 
   const fetchUsers = useCallback(async () => {
     try {
@@ -188,7 +208,32 @@ export default function UserListPage() {
     }
   };
 
-  if (fetchLoading) {
+  const onResetPassword = async (user: UsersList) => {
+    setResetting(true);
+
+    try {
+      const response = await fetch("/api/user/reset-password", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: user.id }),
+      });
+      const result = await response.json().catch(() => null);
+
+      if (!response.ok) {
+        toast.error(result?.message || "Gagal mereset password user");
+        return;
+      }
+
+      toast.success(result?.message || "Password berhasil direset");
+      setSelectedUser(null);
+    } catch {
+      toast.error("Tidak dapat terhubung ke server");
+    } finally {
+      setResetting(false);
+    }
+  };
+
+  if (fetchLoading || isPending) {
     return <LoadingScreen text="Memuat data pengguna..." />;
   }
 
@@ -199,13 +244,15 @@ export default function UserListPage() {
           title="Daftar Pengguna"
           description="Kelola profil pengguna, departemen, jabatan, dan hak akses."
           actions={
-            <Button
-              className="w-full gap-2 rounded-xl sm:w-auto"
-              onClick={() => setUserForm({ mode: "create" })}
-            >
-              <Plus className="w-4 h-4" />
-              Tambah Pengguna
-            </Button>
+            can(session?.permissions, "USER:CREATE") && (
+              <Button
+                className="w-full gap-2 rounded-xl sm:w-auto"
+                onClick={() => setUserForm({ mode: "create" })}
+              >
+                <Plus className="w-4 h-4" />
+                Tambah Pengguna
+              </Button>
+            )
           }
         />
 
@@ -246,6 +293,9 @@ export default function UserListPage() {
             setSelectedUser={setSelectedUser}
             setUserForm={setUserForm}
             renderRoleBadge={renderRoleBadge}
+            permissions={session?.permissions}
+            resetting={resetting}
+            onResetPassword={onResetPassword}
           />
         )}
 

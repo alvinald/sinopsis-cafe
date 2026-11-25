@@ -37,7 +37,14 @@ export const UpdateUserRequestSchema = CreateUserRequestSchema.extend({
   id: z.string(),
 });
 
+export const ResetUserPasswordRequestSchema = z.object({
+  id: z.string().min(1, "ID user wajib diisi"),
+});
+
 export type User = z.infer<typeof UserSchema>;
 export type UsersList = z.infer<typeof UsersListSchema>;
 export type CreateUserRequest = z.infer<typeof CreateUserRequestSchema>;
 export type UpdateUserRequest = z.infer<typeof UpdateUserRequestSchema>;
+export type ResetUserPasswordRequest = z.infer<
+  typeof ResetUserPasswordRequestSchema
+>;

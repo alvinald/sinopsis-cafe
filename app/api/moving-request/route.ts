@@ -102,7 +102,10 @@ export async function POST(request: NextRequest) {
         },
       },
     });
-    const movingNumber = `MOV-${year}${month}-${count}`;
+
+    const number = `0000${count}`.slice(-4);
+    console.log(number);
+    const movingNumber = `MOV-${year}${month}-${number}`;
     const updatedSchedule = await prisma.moving.create({
       data: {
         number: movingNumber,

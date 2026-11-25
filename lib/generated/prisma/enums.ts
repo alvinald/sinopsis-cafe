@@ -36,3 +36,12 @@ export const MovingStatus = {
 } as const
 
 export type MovingStatus = (typeof MovingStatus)[keyof typeof MovingStatus]
+
+
+export const StockInStatus = {
+  PENDING: 'PENDING',
+  RECEIVED: 'RECEIVED',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type StockInStatus = (typeof StockInStatus)[keyof typeof StockInStatus]

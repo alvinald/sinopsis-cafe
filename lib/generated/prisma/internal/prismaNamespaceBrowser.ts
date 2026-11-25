@@ -64,7 +64,9 @@ export const ModelName = {
   ShiftType: 'ShiftType',
   Item: 'Item',
   Moving: 'Moving',
-  MovingItem: 'MovingItem'
+  MovingItem: 'MovingItem',
+  StockIn: 'StockIn',
+  StockInItem: 'StockInItem'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -254,6 +256,32 @@ export const MovingItemScalarFieldEnum = {
 } as const
 
 export type MovingItemScalarFieldEnum = (typeof MovingItemScalarFieldEnum)[keyof typeof MovingItemScalarFieldEnum]
+
+
+export const StockInScalarFieldEnum = {
+  id: 'id',
+  number: 'number',
+  status: 'status',
+  note: 'note',
+  receivedAt: 'receivedAt',
+  createdById: 'createdById',
+  cancelledById: 'cancelledById',
+  cancelledAt: 'cancelledAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type StockInScalarFieldEnum = (typeof StockInScalarFieldEnum)[keyof typeof StockInScalarFieldEnum]
+
+
+export const StockInItemScalarFieldEnum = {
+  id: 'id',
+  stockInId: 'stockInId',
+  itemId: 'itemId',
+  qty: 'qty'
+} as const
+
+export type StockInItemScalarFieldEnum = (typeof StockInItemScalarFieldEnum)[keyof typeof StockInItemScalarFieldEnum]
 
 
 export const SortOrder = {

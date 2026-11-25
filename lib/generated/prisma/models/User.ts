@@ -263,6 +263,8 @@ export type UserWhereInput = {
   sentMovings?: Prisma.MovingListRelationFilter
   receivedMovings?: Prisma.MovingListRelationFilter
   cancelledMovings?: Prisma.MovingListRelationFilter
+  stockIns?: Prisma.StockInListRelationFilter
+  cancelledStockIns?: Prisma.StockInListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -289,6 +291,8 @@ export type UserOrderByWithRelationInput = {
   sentMovings?: Prisma.MovingOrderByRelationAggregateInput
   receivedMovings?: Prisma.MovingOrderByRelationAggregateInput
   cancelledMovings?: Prisma.MovingOrderByRelationAggregateInput
+  stockIns?: Prisma.StockInOrderByRelationAggregateInput
+  cancelledStockIns?: Prisma.StockInOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -318,6 +322,8 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   sentMovings?: Prisma.MovingListRelationFilter
   receivedMovings?: Prisma.MovingListRelationFilter
   cancelledMovings?: Prisma.MovingListRelationFilter
+  stockIns?: Prisma.StockInListRelationFilter
+  cancelledStockIns?: Prisma.StockInListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -382,6 +388,8 @@ export type UserCreateInput = {
   sentMovings?: Prisma.MovingCreateNestedManyWithoutSentByInput
   receivedMovings?: Prisma.MovingCreateNestedManyWithoutReceivedByInput
   cancelledMovings?: Prisma.MovingCreateNestedManyWithoutCancelledByInput
+  stockIns?: Prisma.StockInCreateNestedManyWithoutCreatedByInput
+  cancelledStockIns?: Prisma.StockInCreateNestedManyWithoutCancelledByInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -406,6 +414,8 @@ export type UserUncheckedCreateInput = {
   sentMovings?: Prisma.MovingUncheckedCreateNestedManyWithoutSentByInput
   receivedMovings?: Prisma.MovingUncheckedCreateNestedManyWithoutReceivedByInput
   cancelledMovings?: Prisma.MovingUncheckedCreateNestedManyWithoutCancelledByInput
+  stockIns?: Prisma.StockInUncheckedCreateNestedManyWithoutCreatedByInput
+  cancelledStockIns?: Prisma.StockInUncheckedCreateNestedManyWithoutCancelledByInput
 }
 
 export type UserUpdateInput = {
@@ -430,6 +440,8 @@ export type UserUpdateInput = {
   sentMovings?: Prisma.MovingUpdateManyWithoutSentByNestedInput
   receivedMovings?: Prisma.MovingUpdateManyWithoutReceivedByNestedInput
   cancelledMovings?: Prisma.MovingUpdateManyWithoutCancelledByNestedInput
+  stockIns?: Prisma.StockInUpdateManyWithoutCreatedByNestedInput
+  cancelledStockIns?: Prisma.StockInUpdateManyWithoutCancelledByNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -454,6 +466,8 @@ export type UserUncheckedUpdateInput = {
   sentMovings?: Prisma.MovingUncheckedUpdateManyWithoutSentByNestedInput
   receivedMovings?: Prisma.MovingUncheckedUpdateManyWithoutReceivedByNestedInput
   cancelledMovings?: Prisma.MovingUncheckedUpdateManyWithoutCancelledByNestedInput
+  stockIns?: Prisma.StockInUncheckedUpdateManyWithoutCreatedByNestedInput
+  cancelledStockIns?: Prisma.StockInUncheckedUpdateManyWithoutCancelledByNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -776,6 +790,36 @@ export type UserUpdateOneWithoutCancelledMovingsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutCancelledMovingsInput, Prisma.UserUpdateWithoutCancelledMovingsInput>, Prisma.UserUncheckedUpdateWithoutCancelledMovingsInput>
 }
 
+export type UserCreateNestedOneWithoutStockInsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutStockInsInput, Prisma.UserUncheckedCreateWithoutStockInsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutStockInsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserCreateNestedOneWithoutCancelledStockInsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCancelledStockInsInput, Prisma.UserUncheckedCreateWithoutCancelledStockInsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCancelledStockInsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutStockInsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutStockInsInput, Prisma.UserUncheckedCreateWithoutStockInsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutStockInsInput
+  upsert?: Prisma.UserUpsertWithoutStockInsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutStockInsInput, Prisma.UserUpdateWithoutStockInsInput>, Prisma.UserUncheckedUpdateWithoutStockInsInput>
+}
+
+export type UserUpdateOneWithoutCancelledStockInsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCancelledStockInsInput, Prisma.UserUncheckedCreateWithoutCancelledStockInsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCancelledStockInsInput
+  upsert?: Prisma.UserUpsertWithoutCancelledStockInsInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutCancelledStockInsInput, Prisma.UserUpdateWithoutCancelledStockInsInput>, Prisma.UserUncheckedUpdateWithoutCancelledStockInsInput>
+}
+
 export type UserCreateWithoutRoleInput = {
   id: string
   name: string
@@ -797,6 +841,8 @@ export type UserCreateWithoutRoleInput = {
   sentMovings?: Prisma.MovingCreateNestedManyWithoutSentByInput
   receivedMovings?: Prisma.MovingCreateNestedManyWithoutReceivedByInput
   cancelledMovings?: Prisma.MovingCreateNestedManyWithoutCancelledByInput
+  stockIns?: Prisma.StockInCreateNestedManyWithoutCreatedByInput
+  cancelledStockIns?: Prisma.StockInCreateNestedManyWithoutCancelledByInput
 }
 
 export type UserUncheckedCreateWithoutRoleInput = {
@@ -820,6 +866,8 @@ export type UserUncheckedCreateWithoutRoleInput = {
   sentMovings?: Prisma.MovingUncheckedCreateNestedManyWithoutSentByInput
   receivedMovings?: Prisma.MovingUncheckedCreateNestedManyWithoutReceivedByInput
   cancelledMovings?: Prisma.MovingUncheckedCreateNestedManyWithoutCancelledByInput
+  stockIns?: Prisma.StockInUncheckedCreateNestedManyWithoutCreatedByInput
+  cancelledStockIns?: Prisma.StockInUncheckedCreateNestedManyWithoutCancelledByInput
 }
 
 export type UserCreateOrConnectWithoutRoleInput = {
@@ -889,6 +937,8 @@ export type UserCreateWithoutSessionsInput = {
   sentMovings?: Prisma.MovingCreateNestedManyWithoutSentByInput
   receivedMovings?: Prisma.MovingCreateNestedManyWithoutReceivedByInput
   cancelledMovings?: Prisma.MovingCreateNestedManyWithoutCancelledByInput
+  stockIns?: Prisma.StockInCreateNestedManyWithoutCreatedByInput
+  cancelledStockIns?: Prisma.StockInCreateNestedManyWithoutCancelledByInput
 }
 
 export type UserUncheckedCreateWithoutSessionsInput = {
@@ -912,6 +962,8 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   sentMovings?: Prisma.MovingUncheckedCreateNestedManyWithoutSentByInput
   receivedMovings?: Prisma.MovingUncheckedCreateNestedManyWithoutReceivedByInput
   cancelledMovings?: Prisma.MovingUncheckedCreateNestedManyWithoutCancelledByInput
+  stockIns?: Prisma.StockInUncheckedCreateNestedManyWithoutCreatedByInput
+  cancelledStockIns?: Prisma.StockInUncheckedCreateNestedManyWithoutCancelledByInput
 }
 
 export type UserCreateOrConnectWithoutSessionsInput = {
@@ -951,6 +1003,8 @@ export type UserUpdateWithoutSessionsInput = {
   sentMovings?: Prisma.MovingUpdateManyWithoutSentByNestedInput
   receivedMovings?: Prisma.MovingUpdateManyWithoutReceivedByNestedInput
   cancelledMovings?: Prisma.MovingUpdateManyWithoutCancelledByNestedInput
+  stockIns?: Prisma.StockInUpdateManyWithoutCreatedByNestedInput
+  cancelledStockIns?: Prisma.StockInUpdateManyWithoutCancelledByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -974,6 +1028,8 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   sentMovings?: Prisma.MovingUncheckedUpdateManyWithoutSentByNestedInput
   receivedMovings?: Prisma.MovingUncheckedUpdateManyWithoutReceivedByNestedInput
   cancelledMovings?: Prisma.MovingUncheckedUpdateManyWithoutCancelledByNestedInput
+  stockIns?: Prisma.StockInUncheckedUpdateManyWithoutCreatedByNestedInput
+  cancelledStockIns?: Prisma.StockInUncheckedUpdateManyWithoutCancelledByNestedInput
 }
 
 export type UserCreateWithoutAccountsInput = {
@@ -997,6 +1053,8 @@ export type UserCreateWithoutAccountsInput = {
   sentMovings?: Prisma.MovingCreateNestedManyWithoutSentByInput
   receivedMovings?: Prisma.MovingCreateNestedManyWithoutReceivedByInput
   cancelledMovings?: Prisma.MovingCreateNestedManyWithoutCancelledByInput
+  stockIns?: Prisma.StockInCreateNestedManyWithoutCreatedByInput
+  cancelledStockIns?: Prisma.StockInCreateNestedManyWithoutCancelledByInput
 }
 
 export type UserUncheckedCreateWithoutAccountsInput = {
@@ -1020,6 +1078,8 @@ export type UserUncheckedCreateWithoutAccountsInput = {
   sentMovings?: Prisma.MovingUncheckedCreateNestedManyWithoutSentByInput
   receivedMovings?: Prisma.MovingUncheckedCreateNestedManyWithoutReceivedByInput
   cancelledMovings?: Prisma.MovingUncheckedCreateNestedManyWithoutCancelledByInput
+  stockIns?: Prisma.StockInUncheckedCreateNestedManyWithoutCreatedByInput
+  cancelledStockIns?: Prisma.StockInUncheckedCreateNestedManyWithoutCancelledByInput
 }
 
 export type UserCreateOrConnectWithoutAccountsInput = {
@@ -1059,6 +1119,8 @@ export type UserUpdateWithoutAccountsInput = {
   sentMovings?: Prisma.MovingUpdateManyWithoutSentByNestedInput
   receivedMovings?: Prisma.MovingUpdateManyWithoutReceivedByNestedInput
   cancelledMovings?: Prisma.MovingUpdateManyWithoutCancelledByNestedInput
+  stockIns?: Prisma.StockInUpdateManyWithoutCreatedByNestedInput
+  cancelledStockIns?: Prisma.StockInUpdateManyWithoutCancelledByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAccountsInput = {
@@ -1082,6 +1144,8 @@ export type UserUncheckedUpdateWithoutAccountsInput = {
   sentMovings?: Prisma.MovingUncheckedUpdateManyWithoutSentByNestedInput
   receivedMovings?: Prisma.MovingUncheckedUpdateManyWithoutReceivedByNestedInput
   cancelledMovings?: Prisma.MovingUncheckedUpdateManyWithoutCancelledByNestedInput
+  stockIns?: Prisma.StockInUncheckedUpdateManyWithoutCreatedByNestedInput
+  cancelledStockIns?: Prisma.StockInUncheckedUpdateManyWithoutCancelledByNestedInput
 }
 
 export type UserCreateWithoutJobTitleInput = {
@@ -1105,6 +1169,8 @@ export type UserCreateWithoutJobTitleInput = {
   sentMovings?: Prisma.MovingCreateNestedManyWithoutSentByInput
   receivedMovings?: Prisma.MovingCreateNestedManyWithoutReceivedByInput
   cancelledMovings?: Prisma.MovingCreateNestedManyWithoutCancelledByInput
+  stockIns?: Prisma.StockInCreateNestedManyWithoutCreatedByInput
+  cancelledStockIns?: Prisma.StockInCreateNestedManyWithoutCancelledByInput
 }
 
 export type UserUncheckedCreateWithoutJobTitleInput = {
@@ -1128,6 +1194,8 @@ export type UserUncheckedCreateWithoutJobTitleInput = {
   sentMovings?: Prisma.MovingUncheckedCreateNestedManyWithoutSentByInput
   receivedMovings?: Prisma.MovingUncheckedCreateNestedManyWithoutReceivedByInput
   cancelledMovings?: Prisma.MovingUncheckedCreateNestedManyWithoutCancelledByInput
+  stockIns?: Prisma.StockInUncheckedCreateNestedManyWithoutCreatedByInput
+  cancelledStockIns?: Prisma.StockInUncheckedCreateNestedManyWithoutCancelledByInput
 }
 
 export type UserCreateOrConnectWithoutJobTitleInput = {
@@ -1177,6 +1245,8 @@ export type UserCreateWithoutShiftSchedulesInput = {
   sentMovings?: Prisma.MovingCreateNestedManyWithoutSentByInput
   receivedMovings?: Prisma.MovingCreateNestedManyWithoutReceivedByInput
   cancelledMovings?: Prisma.MovingCreateNestedManyWithoutCancelledByInput
+  stockIns?: Prisma.StockInCreateNestedManyWithoutCreatedByInput
+  cancelledStockIns?: Prisma.StockInCreateNestedManyWithoutCancelledByInput
 }
 
 export type UserUncheckedCreateWithoutShiftSchedulesInput = {
@@ -1200,6 +1270,8 @@ export type UserUncheckedCreateWithoutShiftSchedulesInput = {
   sentMovings?: Prisma.MovingUncheckedCreateNestedManyWithoutSentByInput
   receivedMovings?: Prisma.MovingUncheckedCreateNestedManyWithoutReceivedByInput
   cancelledMovings?: Prisma.MovingUncheckedCreateNestedManyWithoutCancelledByInput
+  stockIns?: Prisma.StockInUncheckedCreateNestedManyWithoutCreatedByInput
+  cancelledStockIns?: Prisma.StockInUncheckedCreateNestedManyWithoutCancelledByInput
 }
 
 export type UserCreateOrConnectWithoutShiftSchedulesInput = {
@@ -1239,6 +1311,8 @@ export type UserUpdateWithoutShiftSchedulesInput = {
   sentMovings?: Prisma.MovingUpdateManyWithoutSentByNestedInput
   receivedMovings?: Prisma.MovingUpdateManyWithoutReceivedByNestedInput
   cancelledMovings?: Prisma.MovingUpdateManyWithoutCancelledByNestedInput
+  stockIns?: Prisma.StockInUpdateManyWithoutCreatedByNestedInput
+  cancelledStockIns?: Prisma.StockInUpdateManyWithoutCancelledByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutShiftSchedulesInput = {
@@ -1262,6 +1336,8 @@ export type UserUncheckedUpdateWithoutShiftSchedulesInput = {
   sentMovings?: Prisma.MovingUncheckedUpdateManyWithoutSentByNestedInput
   receivedMovings?: Prisma.MovingUncheckedUpdateManyWithoutReceivedByNestedInput
   cancelledMovings?: Prisma.MovingUncheckedUpdateManyWithoutCancelledByNestedInput
+  stockIns?: Prisma.StockInUncheckedUpdateManyWithoutCreatedByNestedInput
+  cancelledStockIns?: Prisma.StockInUncheckedUpdateManyWithoutCancelledByNestedInput
 }
 
 export type UserCreateWithoutCreatedMovingsInput = {
@@ -1285,6 +1361,8 @@ export type UserCreateWithoutCreatedMovingsInput = {
   sentMovings?: Prisma.MovingCreateNestedManyWithoutSentByInput
   receivedMovings?: Prisma.MovingCreateNestedManyWithoutReceivedByInput
   cancelledMovings?: Prisma.MovingCreateNestedManyWithoutCancelledByInput
+  stockIns?: Prisma.StockInCreateNestedManyWithoutCreatedByInput
+  cancelledStockIns?: Prisma.StockInCreateNestedManyWithoutCancelledByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedMovingsInput = {
@@ -1308,6 +1386,8 @@ export type UserUncheckedCreateWithoutCreatedMovingsInput = {
   sentMovings?: Prisma.MovingUncheckedCreateNestedManyWithoutSentByInput
   receivedMovings?: Prisma.MovingUncheckedCreateNestedManyWithoutReceivedByInput
   cancelledMovings?: Prisma.MovingUncheckedCreateNestedManyWithoutCancelledByInput
+  stockIns?: Prisma.StockInUncheckedCreateNestedManyWithoutCreatedByInput
+  cancelledStockIns?: Prisma.StockInUncheckedCreateNestedManyWithoutCancelledByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedMovingsInput = {
@@ -1336,6 +1416,8 @@ export type UserCreateWithoutSentMovingsInput = {
   createdMovings?: Prisma.MovingCreateNestedManyWithoutCreatedByInput
   receivedMovings?: Prisma.MovingCreateNestedManyWithoutReceivedByInput
   cancelledMovings?: Prisma.MovingCreateNestedManyWithoutCancelledByInput
+  stockIns?: Prisma.StockInCreateNestedManyWithoutCreatedByInput
+  cancelledStockIns?: Prisma.StockInCreateNestedManyWithoutCancelledByInput
 }
 
 export type UserUncheckedCreateWithoutSentMovingsInput = {
@@ -1359,6 +1441,8 @@ export type UserUncheckedCreateWithoutSentMovingsInput = {
   createdMovings?: Prisma.MovingUncheckedCreateNestedManyWithoutCreatedByInput
   receivedMovings?: Prisma.MovingUncheckedCreateNestedManyWithoutReceivedByInput
   cancelledMovings?: Prisma.MovingUncheckedCreateNestedManyWithoutCancelledByInput
+  stockIns?: Prisma.StockInUncheckedCreateNestedManyWithoutCreatedByInput
+  cancelledStockIns?: Prisma.StockInUncheckedCreateNestedManyWithoutCancelledByInput
 }
 
 export type UserCreateOrConnectWithoutSentMovingsInput = {
@@ -1387,6 +1471,8 @@ export type UserCreateWithoutReceivedMovingsInput = {
   createdMovings?: Prisma.MovingCreateNestedManyWithoutCreatedByInput
   sentMovings?: Prisma.MovingCreateNestedManyWithoutSentByInput
   cancelledMovings?: Prisma.MovingCreateNestedManyWithoutCancelledByInput
+  stockIns?: Prisma.StockInCreateNestedManyWithoutCreatedByInput
+  cancelledStockIns?: Prisma.StockInCreateNestedManyWithoutCancelledByInput
 }
 
 export type UserUncheckedCreateWithoutReceivedMovingsInput = {
@@ -1410,6 +1496,8 @@ export type UserUncheckedCreateWithoutReceivedMovingsInput = {
   createdMovings?: Prisma.MovingUncheckedCreateNestedManyWithoutCreatedByInput
   sentMovings?: Prisma.MovingUncheckedCreateNestedManyWithoutSentByInput
   cancelledMovings?: Prisma.MovingUncheckedCreateNestedManyWithoutCancelledByInput
+  stockIns?: Prisma.StockInUncheckedCreateNestedManyWithoutCreatedByInput
+  cancelledStockIns?: Prisma.StockInUncheckedCreateNestedManyWithoutCancelledByInput
 }
 
 export type UserCreateOrConnectWithoutReceivedMovingsInput = {
@@ -1438,6 +1526,8 @@ export type UserCreateWithoutCancelledMovingsInput = {
   createdMovings?: Prisma.MovingCreateNestedManyWithoutCreatedByInput
   sentMovings?: Prisma.MovingCreateNestedManyWithoutSentByInput
   receivedMovings?: Prisma.MovingCreateNestedManyWithoutReceivedByInput
+  stockIns?: Prisma.StockInCreateNestedManyWithoutCreatedByInput
+  cancelledStockIns?: Prisma.StockInCreateNestedManyWithoutCancelledByInput
 }
 
 export type UserUncheckedCreateWithoutCancelledMovingsInput = {
@@ -1461,6 +1551,8 @@ export type UserUncheckedCreateWithoutCancelledMovingsInput = {
   createdMovings?: Prisma.MovingUncheckedCreateNestedManyWithoutCreatedByInput
   sentMovings?: Prisma.MovingUncheckedCreateNestedManyWithoutSentByInput
   receivedMovings?: Prisma.MovingUncheckedCreateNestedManyWithoutReceivedByInput
+  stockIns?: Prisma.StockInUncheckedCreateNestedManyWithoutCreatedByInput
+  cancelledStockIns?: Prisma.StockInUncheckedCreateNestedManyWithoutCancelledByInput
 }
 
 export type UserCreateOrConnectWithoutCancelledMovingsInput = {
@@ -1500,6 +1592,8 @@ export type UserUpdateWithoutCreatedMovingsInput = {
   sentMovings?: Prisma.MovingUpdateManyWithoutSentByNestedInput
   receivedMovings?: Prisma.MovingUpdateManyWithoutReceivedByNestedInput
   cancelledMovings?: Prisma.MovingUpdateManyWithoutCancelledByNestedInput
+  stockIns?: Prisma.StockInUpdateManyWithoutCreatedByNestedInput
+  cancelledStockIns?: Prisma.StockInUpdateManyWithoutCancelledByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedMovingsInput = {
@@ -1523,6 +1617,8 @@ export type UserUncheckedUpdateWithoutCreatedMovingsInput = {
   sentMovings?: Prisma.MovingUncheckedUpdateManyWithoutSentByNestedInput
   receivedMovings?: Prisma.MovingUncheckedUpdateManyWithoutReceivedByNestedInput
   cancelledMovings?: Prisma.MovingUncheckedUpdateManyWithoutCancelledByNestedInput
+  stockIns?: Prisma.StockInUncheckedUpdateManyWithoutCreatedByNestedInput
+  cancelledStockIns?: Prisma.StockInUncheckedUpdateManyWithoutCancelledByNestedInput
 }
 
 export type UserUpsertWithoutSentMovingsInput = {
@@ -1557,6 +1653,8 @@ export type UserUpdateWithoutSentMovingsInput = {
   createdMovings?: Prisma.MovingUpdateManyWithoutCreatedByNestedInput
   receivedMovings?: Prisma.MovingUpdateManyWithoutReceivedByNestedInput
   cancelledMovings?: Prisma.MovingUpdateManyWithoutCancelledByNestedInput
+  stockIns?: Prisma.StockInUpdateManyWithoutCreatedByNestedInput
+  cancelledStockIns?: Prisma.StockInUpdateManyWithoutCancelledByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSentMovingsInput = {
@@ -1580,6 +1678,8 @@ export type UserUncheckedUpdateWithoutSentMovingsInput = {
   createdMovings?: Prisma.MovingUncheckedUpdateManyWithoutCreatedByNestedInput
   receivedMovings?: Prisma.MovingUncheckedUpdateManyWithoutReceivedByNestedInput
   cancelledMovings?: Prisma.MovingUncheckedUpdateManyWithoutCancelledByNestedInput
+  stockIns?: Prisma.StockInUncheckedUpdateManyWithoutCreatedByNestedInput
+  cancelledStockIns?: Prisma.StockInUncheckedUpdateManyWithoutCancelledByNestedInput
 }
 
 export type UserUpsertWithoutReceivedMovingsInput = {
@@ -1614,6 +1714,8 @@ export type UserUpdateWithoutReceivedMovingsInput = {
   createdMovings?: Prisma.MovingUpdateManyWithoutCreatedByNestedInput
   sentMovings?: Prisma.MovingUpdateManyWithoutSentByNestedInput
   cancelledMovings?: Prisma.MovingUpdateManyWithoutCancelledByNestedInput
+  stockIns?: Prisma.StockInUpdateManyWithoutCreatedByNestedInput
+  cancelledStockIns?: Prisma.StockInUpdateManyWithoutCancelledByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutReceivedMovingsInput = {
@@ -1637,6 +1739,8 @@ export type UserUncheckedUpdateWithoutReceivedMovingsInput = {
   createdMovings?: Prisma.MovingUncheckedUpdateManyWithoutCreatedByNestedInput
   sentMovings?: Prisma.MovingUncheckedUpdateManyWithoutSentByNestedInput
   cancelledMovings?: Prisma.MovingUncheckedUpdateManyWithoutCancelledByNestedInput
+  stockIns?: Prisma.StockInUncheckedUpdateManyWithoutCreatedByNestedInput
+  cancelledStockIns?: Prisma.StockInUncheckedUpdateManyWithoutCancelledByNestedInput
 }
 
 export type UserUpsertWithoutCancelledMovingsInput = {
@@ -1671,6 +1775,8 @@ export type UserUpdateWithoutCancelledMovingsInput = {
   createdMovings?: Prisma.MovingUpdateManyWithoutCreatedByNestedInput
   sentMovings?: Prisma.MovingUpdateManyWithoutSentByNestedInput
   receivedMovings?: Prisma.MovingUpdateManyWithoutReceivedByNestedInput
+  stockIns?: Prisma.StockInUpdateManyWithoutCreatedByNestedInput
+  cancelledStockIns?: Prisma.StockInUpdateManyWithoutCancelledByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCancelledMovingsInput = {
@@ -1694,6 +1800,240 @@ export type UserUncheckedUpdateWithoutCancelledMovingsInput = {
   createdMovings?: Prisma.MovingUncheckedUpdateManyWithoutCreatedByNestedInput
   sentMovings?: Prisma.MovingUncheckedUpdateManyWithoutSentByNestedInput
   receivedMovings?: Prisma.MovingUncheckedUpdateManyWithoutReceivedByNestedInput
+  stockIns?: Prisma.StockInUncheckedUpdateManyWithoutCreatedByNestedInput
+  cancelledStockIns?: Prisma.StockInUncheckedUpdateManyWithoutCancelledByNestedInput
+}
+
+export type UserCreateWithoutStockInsInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  status?: $Enums.status
+  isScheduled?: boolean
+  resignedDate?: Date | string | null
+  resignReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  isDeleted?: boolean
+  jobTitle?: Prisma.JobTitleCreateNestedOneWithoutUsersInput
+  role?: Prisma.RoleCreateNestedOneWithoutUsersInput
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  shiftSchedules?: Prisma.ShiftScheduleCreateNestedManyWithoutUserInput
+  createdMovings?: Prisma.MovingCreateNestedManyWithoutCreatedByInput
+  sentMovings?: Prisma.MovingCreateNestedManyWithoutSentByInput
+  receivedMovings?: Prisma.MovingCreateNestedManyWithoutReceivedByInput
+  cancelledMovings?: Prisma.MovingCreateNestedManyWithoutCancelledByInput
+  cancelledStockIns?: Prisma.StockInCreateNestedManyWithoutCancelledByInput
+}
+
+export type UserUncheckedCreateWithoutStockInsInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  status?: $Enums.status
+  isScheduled?: boolean
+  resignedDate?: Date | string | null
+  resignReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  isDeleted?: boolean
+  jobTitleId?: string | null
+  roleId?: string | null
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  shiftSchedules?: Prisma.ShiftScheduleUncheckedCreateNestedManyWithoutUserInput
+  createdMovings?: Prisma.MovingUncheckedCreateNestedManyWithoutCreatedByInput
+  sentMovings?: Prisma.MovingUncheckedCreateNestedManyWithoutSentByInput
+  receivedMovings?: Prisma.MovingUncheckedCreateNestedManyWithoutReceivedByInput
+  cancelledMovings?: Prisma.MovingUncheckedCreateNestedManyWithoutCancelledByInput
+  cancelledStockIns?: Prisma.StockInUncheckedCreateNestedManyWithoutCancelledByInput
+}
+
+export type UserCreateOrConnectWithoutStockInsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutStockInsInput, Prisma.UserUncheckedCreateWithoutStockInsInput>
+}
+
+export type UserCreateWithoutCancelledStockInsInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  status?: $Enums.status
+  isScheduled?: boolean
+  resignedDate?: Date | string | null
+  resignReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  isDeleted?: boolean
+  jobTitle?: Prisma.JobTitleCreateNestedOneWithoutUsersInput
+  role?: Prisma.RoleCreateNestedOneWithoutUsersInput
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  shiftSchedules?: Prisma.ShiftScheduleCreateNestedManyWithoutUserInput
+  createdMovings?: Prisma.MovingCreateNestedManyWithoutCreatedByInput
+  sentMovings?: Prisma.MovingCreateNestedManyWithoutSentByInput
+  receivedMovings?: Prisma.MovingCreateNestedManyWithoutReceivedByInput
+  cancelledMovings?: Prisma.MovingCreateNestedManyWithoutCancelledByInput
+  stockIns?: Prisma.StockInCreateNestedManyWithoutCreatedByInput
+}
+
+export type UserUncheckedCreateWithoutCancelledStockInsInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  status?: $Enums.status
+  isScheduled?: boolean
+  resignedDate?: Date | string | null
+  resignReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  isDeleted?: boolean
+  jobTitleId?: string | null
+  roleId?: string | null
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  shiftSchedules?: Prisma.ShiftScheduleUncheckedCreateNestedManyWithoutUserInput
+  createdMovings?: Prisma.MovingUncheckedCreateNestedManyWithoutCreatedByInput
+  sentMovings?: Prisma.MovingUncheckedCreateNestedManyWithoutSentByInput
+  receivedMovings?: Prisma.MovingUncheckedCreateNestedManyWithoutReceivedByInput
+  cancelledMovings?: Prisma.MovingUncheckedCreateNestedManyWithoutCancelledByInput
+  stockIns?: Prisma.StockInUncheckedCreateNestedManyWithoutCreatedByInput
+}
+
+export type UserCreateOrConnectWithoutCancelledStockInsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutCancelledStockInsInput, Prisma.UserUncheckedCreateWithoutCancelledStockInsInput>
+}
+
+export type UserUpsertWithoutStockInsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutStockInsInput, Prisma.UserUncheckedUpdateWithoutStockInsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutStockInsInput, Prisma.UserUncheckedCreateWithoutStockInsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutStockInsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutStockInsInput, Prisma.UserUncheckedUpdateWithoutStockInsInput>
+}
+
+export type UserUpdateWithoutStockInsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumstatusFieldUpdateOperationsInput | $Enums.status
+  isScheduled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  resignedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  resignReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  jobTitle?: Prisma.JobTitleUpdateOneWithoutUsersNestedInput
+  role?: Prisma.RoleUpdateOneWithoutUsersNestedInput
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  shiftSchedules?: Prisma.ShiftScheduleUpdateManyWithoutUserNestedInput
+  createdMovings?: Prisma.MovingUpdateManyWithoutCreatedByNestedInput
+  sentMovings?: Prisma.MovingUpdateManyWithoutSentByNestedInput
+  receivedMovings?: Prisma.MovingUpdateManyWithoutReceivedByNestedInput
+  cancelledMovings?: Prisma.MovingUpdateManyWithoutCancelledByNestedInput
+  cancelledStockIns?: Prisma.StockInUpdateManyWithoutCancelledByNestedInput
+}
+
+export type UserUncheckedUpdateWithoutStockInsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumstatusFieldUpdateOperationsInput | $Enums.status
+  isScheduled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  resignedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  resignReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  jobTitleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  shiftSchedules?: Prisma.ShiftScheduleUncheckedUpdateManyWithoutUserNestedInput
+  createdMovings?: Prisma.MovingUncheckedUpdateManyWithoutCreatedByNestedInput
+  sentMovings?: Prisma.MovingUncheckedUpdateManyWithoutSentByNestedInput
+  receivedMovings?: Prisma.MovingUncheckedUpdateManyWithoutReceivedByNestedInput
+  cancelledMovings?: Prisma.MovingUncheckedUpdateManyWithoutCancelledByNestedInput
+  cancelledStockIns?: Prisma.StockInUncheckedUpdateManyWithoutCancelledByNestedInput
+}
+
+export type UserUpsertWithoutCancelledStockInsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutCancelledStockInsInput, Prisma.UserUncheckedUpdateWithoutCancelledStockInsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutCancelledStockInsInput, Prisma.UserUncheckedCreateWithoutCancelledStockInsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutCancelledStockInsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutCancelledStockInsInput, Prisma.UserUncheckedUpdateWithoutCancelledStockInsInput>
+}
+
+export type UserUpdateWithoutCancelledStockInsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumstatusFieldUpdateOperationsInput | $Enums.status
+  isScheduled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  resignedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  resignReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  jobTitle?: Prisma.JobTitleUpdateOneWithoutUsersNestedInput
+  role?: Prisma.RoleUpdateOneWithoutUsersNestedInput
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  shiftSchedules?: Prisma.ShiftScheduleUpdateManyWithoutUserNestedInput
+  createdMovings?: Prisma.MovingUpdateManyWithoutCreatedByNestedInput
+  sentMovings?: Prisma.MovingUpdateManyWithoutSentByNestedInput
+  receivedMovings?: Prisma.MovingUpdateManyWithoutReceivedByNestedInput
+  cancelledMovings?: Prisma.MovingUpdateManyWithoutCancelledByNestedInput
+  stockIns?: Prisma.StockInUpdateManyWithoutCreatedByNestedInput
+}
+
+export type UserUncheckedUpdateWithoutCancelledStockInsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumstatusFieldUpdateOperationsInput | $Enums.status
+  isScheduled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  resignedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  resignReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  jobTitleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  shiftSchedules?: Prisma.ShiftScheduleUncheckedUpdateManyWithoutUserNestedInput
+  createdMovings?: Prisma.MovingUncheckedUpdateManyWithoutCreatedByNestedInput
+  sentMovings?: Prisma.MovingUncheckedUpdateManyWithoutSentByNestedInput
+  receivedMovings?: Prisma.MovingUncheckedUpdateManyWithoutReceivedByNestedInput
+  cancelledMovings?: Prisma.MovingUncheckedUpdateManyWithoutCancelledByNestedInput
+  stockIns?: Prisma.StockInUncheckedUpdateManyWithoutCreatedByNestedInput
 }
 
 export type UserCreateManyRoleInput = {
@@ -1733,6 +2073,8 @@ export type UserUpdateWithoutRoleInput = {
   sentMovings?: Prisma.MovingUpdateManyWithoutSentByNestedInput
   receivedMovings?: Prisma.MovingUpdateManyWithoutReceivedByNestedInput
   cancelledMovings?: Prisma.MovingUpdateManyWithoutCancelledByNestedInput
+  stockIns?: Prisma.StockInUpdateManyWithoutCreatedByNestedInput
+  cancelledStockIns?: Prisma.StockInUpdateManyWithoutCancelledByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutRoleInput = {
@@ -1756,6 +2098,8 @@ export type UserUncheckedUpdateWithoutRoleInput = {
   sentMovings?: Prisma.MovingUncheckedUpdateManyWithoutSentByNestedInput
   receivedMovings?: Prisma.MovingUncheckedUpdateManyWithoutReceivedByNestedInput
   cancelledMovings?: Prisma.MovingUncheckedUpdateManyWithoutCancelledByNestedInput
+  stockIns?: Prisma.StockInUncheckedUpdateManyWithoutCreatedByNestedInput
+  cancelledStockIns?: Prisma.StockInUncheckedUpdateManyWithoutCancelledByNestedInput
 }
 
 export type UserUncheckedUpdateManyWithoutRoleInput = {
@@ -1811,6 +2155,8 @@ export type UserUpdateWithoutJobTitleInput = {
   sentMovings?: Prisma.MovingUpdateManyWithoutSentByNestedInput
   receivedMovings?: Prisma.MovingUpdateManyWithoutReceivedByNestedInput
   cancelledMovings?: Prisma.MovingUpdateManyWithoutCancelledByNestedInput
+  stockIns?: Prisma.StockInUpdateManyWithoutCreatedByNestedInput
+  cancelledStockIns?: Prisma.StockInUpdateManyWithoutCancelledByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutJobTitleInput = {
@@ -1834,6 +2180,8 @@ export type UserUncheckedUpdateWithoutJobTitleInput = {
   sentMovings?: Prisma.MovingUncheckedUpdateManyWithoutSentByNestedInput
   receivedMovings?: Prisma.MovingUncheckedUpdateManyWithoutReceivedByNestedInput
   cancelledMovings?: Prisma.MovingUncheckedUpdateManyWithoutCancelledByNestedInput
+  stockIns?: Prisma.StockInUncheckedUpdateManyWithoutCreatedByNestedInput
+  cancelledStockIns?: Prisma.StockInUncheckedUpdateManyWithoutCancelledByNestedInput
 }
 
 export type UserUncheckedUpdateManyWithoutJobTitleInput = {
@@ -1865,6 +2213,8 @@ export type UserCountOutputType = {
   sentMovings: number
   receivedMovings: number
   cancelledMovings: number
+  stockIns: number
+  cancelledStockIns: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1875,6 +2225,8 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   sentMovings?: boolean | UserCountOutputTypeCountSentMovingsArgs
   receivedMovings?: boolean | UserCountOutputTypeCountReceivedMovingsArgs
   cancelledMovings?: boolean | UserCountOutputTypeCountCancelledMovingsArgs
+  stockIns?: boolean | UserCountOutputTypeCountStockInsArgs
+  cancelledStockIns?: boolean | UserCountOutputTypeCountCancelledStockInsArgs
 }
 
 /**
@@ -1936,6 +2288,20 @@ export type UserCountOutputTypeCountCancelledMovingsArgs<ExtArgs extends runtime
   where?: Prisma.MovingWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountStockInsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.StockInWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountCancelledStockInsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.StockInWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1961,6 +2327,8 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   sentMovings?: boolean | Prisma.User$sentMovingsArgs<ExtArgs>
   receivedMovings?: boolean | Prisma.User$receivedMovingsArgs<ExtArgs>
   cancelledMovings?: boolean | Prisma.User$cancelledMovingsArgs<ExtArgs>
+  stockIns?: boolean | Prisma.User$stockInsArgs<ExtArgs>
+  cancelledStockIns?: boolean | Prisma.User$cancelledStockInsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -2030,6 +2398,8 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   sentMovings?: boolean | Prisma.User$sentMovingsArgs<ExtArgs>
   receivedMovings?: boolean | Prisma.User$receivedMovingsArgs<ExtArgs>
   cancelledMovings?: boolean | Prisma.User$cancelledMovingsArgs<ExtArgs>
+  stockIns?: boolean | Prisma.User$stockInsArgs<ExtArgs>
+  cancelledStockIns?: boolean | Prisma.User$cancelledStockInsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2053,6 +2423,8 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     sentMovings: Prisma.$MovingPayload<ExtArgs>[]
     receivedMovings: Prisma.$MovingPayload<ExtArgs>[]
     cancelledMovings: Prisma.$MovingPayload<ExtArgs>[]
+    stockIns: Prisma.$StockInPayload<ExtArgs>[]
+    cancelledStockIns: Prisma.$StockInPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -2472,6 +2844,8 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   sentMovings<T extends Prisma.User$sentMovingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$sentMovingsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MovingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   receivedMovings<T extends Prisma.User$receivedMovingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$receivedMovingsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MovingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   cancelledMovings<T extends Prisma.User$cancelledMovingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$cancelledMovingsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MovingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  stockIns<T extends Prisma.User$stockInsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$stockInsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StockInPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  cancelledStockIns<T extends Prisma.User$cancelledStockInsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$cancelledStockInsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StockInPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3119,6 +3493,54 @@ export type User$cancelledMovingsArgs<ExtArgs extends runtime.Types.Extensions.I
   take?: number
   skip?: number
   distinct?: Prisma.MovingScalarFieldEnum | Prisma.MovingScalarFieldEnum[]
+}
+
+/**
+ * User.stockIns
+ */
+export type User$stockInsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the StockIn
+   */
+  select?: Prisma.StockInSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the StockIn
+   */
+  omit?: Prisma.StockInOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.StockInInclude<ExtArgs> | null
+  where?: Prisma.StockInWhereInput
+  orderBy?: Prisma.StockInOrderByWithRelationInput | Prisma.StockInOrderByWithRelationInput[]
+  cursor?: Prisma.StockInWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.StockInScalarFieldEnum | Prisma.StockInScalarFieldEnum[]
+}
+
+/**
+ * User.cancelledStockIns
+ */
+export type User$cancelledStockInsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the StockIn
+   */
+  select?: Prisma.StockInSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the StockIn
+   */
+  omit?: Prisma.StockInOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.StockInInclude<ExtArgs> | null
+  where?: Prisma.StockInWhereInput
+  orderBy?: Prisma.StockInOrderByWithRelationInput | Prisma.StockInOrderByWithRelationInput[]
+  cursor?: Prisma.StockInWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.StockInScalarFieldEnum | Prisma.StockInScalarFieldEnum[]
 }
 
 /**

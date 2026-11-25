@@ -73,13 +73,15 @@ model User {
   role   Role?   @relation(fields: [roleId], references: [id])
   roleId String?
 
-  sessions         Session[]
-  accounts         Account[]
-  shiftSchedules   ShiftSchedule[]
-  createdMovings   Moving[]
-  sentMovings      Moving[]        @relation("SentMovings")
-  receivedMovings  Moving[]        @relation("ReceivedMovings")
-  cancelledMovings Moving[]        @relation("CancelledMovings")
+  sessions          Session[]
+  accounts          Account[]
+  shiftSchedules    ShiftSchedule[]
+  createdMovings    Moving[]
+  sentMovings       Moving[]        @relation("SentMovings")
+  receivedMovings   Moving[]        @relation("ReceivedMovings")
+  cancelledMovings  Moving[]        @relation("CancelledMovings")
+  stockIns          StockIn[]
+  cancelledStockIns StockIn[]       @relation("CancelledStockIns")
 
   @@unique([email])
   @@map("user")
@@ -195,6 +197,12 @@ enum MovingStatus {
   CANCELLED // dibatalkan
 }
 
+enum StockInStatus {
+  PENDING // dibuat, stok belum berubah
+  RECEIVED // diterima, stok bertambah
+  CANCELLED // dibatalkan sebelum diterima
+}
+
 model Item {
   id     String @id @default(dbgenerated("gen_random_uuid()::text"))
   sku    String @unique
@@ -205,7 +213,8 @@ model Item {
 
   isDeleted Boolean @default(false) @map("is_deleted")
 
-  movingItems MovingItem[]
+  movingItems  MovingItem[]
+  stockInItems StockInItem[]
 
   @@map("items")
 }
@@ -250,4 +259,39 @@ model MovingItem {
 
   @@unique([movingId, itemId])
   @@map("moving_items")
+}
+
+model StockIn {
+  id         String        @id @default(dbgenerated("gen_random_uuid()::text"))
+  number     String        @unique
+  status     StockInStatus @default(PENDING)
+  note       String?
+  receivedAt DateTime?     @map("received_at")
+
+  createdBy   User   @relation(fields: [createdById], references: [id])
+  createdById String @map("created_by_id")
+
+  cancelledBy   User?     @relation("CancelledStockIns", fields: [cancelledById], references: [id])
+  cancelledById String?   @map("cancelled_by_id")
+  cancelledAt   DateTime? @map("cancelled_at")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  items StockInItem[]
+
+  @@map("stock_ins")
+}
+
+model StockInItem {
+  id        String @id @default(dbgenerated("gen_random_uuid()::text"))
+  stockInId String @map("stock_in_id")
+  itemId    String @map("item_id")
+  qty       Int
+
+  stockIn StockIn @relation(fields: [stockInId], references: [id], onDelete: Cascade)
+  item    Item    @relation(fields: [itemId], references: [id])
+
+  @@unique([stockInId, itemId])
+  @@map("stock_in_items")
 }

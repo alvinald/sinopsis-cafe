@@ -1,3 +1,4 @@
+import { can } from "@/lib/rbac";
 import { RoleWithPermissions } from "@/lib/types/role-types";
 import { Plus } from "lucide-react";
 
@@ -6,12 +7,16 @@ export function RoleList({
   activeRoleId,
   onSelectRole,
   onCreate,
+  permissions,
 }: {
   roles: RoleWithPermissions[];
   activeRoleId: string | null;
   onSelectRole: (roleId: string) => void;
   onCreate: () => void;
+  permissions: string[] | undefined;
 }) {
+  const canCreate = can(permissions, "ROLE:CREATE");
+
   return (
     <div className="lg:col-span-1 lg:sticky lg:top-6 space-y-2">
       <div className="bg-white border border-zinc-200 rounded-2xl p-3 shadow-sm space-y-2.5">
@@ -19,12 +24,14 @@ export function RoleList({
           <span className="text-xs font-semibold uppercase tracking-wider text-zinc-500">
             Daftar Role
           </span>
-          <button
-            onClick={onCreate}
-            className="text-xs font-semibold text-blue-600 hover:underline flex items-center gap-1"
-          >
-            <Plus className="w-3.5 h-3.5" /> Role Baru
-          </button>
+          {canCreate && (
+            <button
+              onClick={onCreate}
+              className="text-xs font-semibold text-blue-600 hover:underline flex items-center gap-1"
+            >
+              <Plus className="w-3.5 h-3.5" /> Role Baru
+            </button>
+          )}
         </div>
 
         <div className="flex lg:flex-col overflow-x-auto lg:overflow-visible gap-2 pb-2 lg:pb-0 scrollbar-none">
