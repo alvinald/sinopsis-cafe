@@ -11,25 +11,25 @@ import { Field, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import {
-  UpdateMovingSchema,
+  UpdateStockOutSchema,
   Item,
-  Moving,
-  RequestMovingSchema,
-} from "@/lib/types/moving-types";
+  StockOut,
+  RequestStockOutSchema,
+} from "@/lib/types/stock-out-types";
 import { Loader2, Plus, Trash2, X } from "lucide-react";
 import { useMemo, useState } from "react";
 import { toast } from "sonner";
 
-export default function MovingFormDialog({
-  moving,
+export default function StockOutFormDialog({
+  stockOut,
   items,
   closeForm,
 }: {
-  moving: Moving | null;
+  stockOut: StockOut | null;
   items: Item[];
   closeForm: (refresh?: boolean) => void | Promise<void>;
 }) {
-  const [prevMoving, setPrevMoving] = useState<Moving | null>(null);
+  const [prevStockOut, setPrevStockOut] = useState<StockOut | null>(null);
   const [note, setNote] = useState("");
   const [lines, setLines] = useState<{ itemId: string; qty: string }[]>([
     { itemId: "", qty: "1" },
@@ -46,14 +46,14 @@ export default function MovingFormDialog({
     [items],
   );
 
-  // Sync state saat prop moving berubah tanpa memicu cascading renders dari effect
-  if (moving !== prevMoving) {
-    setPrevMoving(moving);
-    setNote(moving?.note ?? "");
+  // Sync state saat prop stockOut berubah tanpa memicu cascading renders dari effect
+  if (stockOut !== prevStockOut) {
+    setPrevStockOut(stockOut);
+    setNote(stockOut?.note ?? "");
 
     setLines(
-      moving
-        ? moving.items.map((item) => ({
+      stockOut
+        ? stockOut.items.map((item) => ({
             itemId: item.itemId,
             qty: String(item.qty),
           }))
@@ -118,10 +118,10 @@ export default function MovingFormDialog({
 
     setLoading(true);
     try {
-      const result = moving ? await updateRequest() : await createRequest();
+      const result = stockOut ? await updateRequest() : await createRequest();
 
       toast.success("Success", {
-        description: moving
+        description: stockOut
           ? "Data berhasil diperbarui!"
           : "Data berhasil dibuat!",
       });
@@ -138,7 +138,7 @@ export default function MovingFormDialog({
   }
 
   async function createRequest() {
-    const body: RequestMovingSchema = {
+    const body: RequestStockOutSchema = {
       note: note,
       items: filledLines.map((item) => ({
         itemId: item.itemId,
@@ -146,7 +146,7 @@ export default function MovingFormDialog({
       })),
     };
 
-    const response = await fetch("/api/moving-request", {
+    const response = await fetch("/api/stock-out", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -157,17 +157,17 @@ export default function MovingFormDialog({
     const result = await response.json();
 
     if (!response.ok) {
-      throw new Error(result.message || "Gagal menyimpan data moving");
+      throw new Error(result.message || "Gagal menyimpan data stock-out");
     }
 
     return result.data;
   }
 
   async function updateRequest() {
-    if (!moving) return null;
+    if (!stockOut) return null;
 
-    const body: UpdateMovingSchema = {
-      id: moving.id,
+    const body: UpdateStockOutSchema = {
+      id: stockOut.id,
       note: note,
       items: filledLines.map((item) => ({
         itemId: item.itemId,
@@ -175,7 +175,7 @@ export default function MovingFormDialog({
       })),
     };
 
-    const response = await fetch("/api/moving-request", {
+    const response = await fetch("/api/stock-out", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -186,7 +186,7 @@ export default function MovingFormDialog({
     const result = await response.json();
 
     if (!response.ok) {
-      throw new Error(result.message || "Gagal menyimpan data moving");
+      throw new Error(result.message || "Gagal menyimpan data stock-out");
     }
 
     return result.data;
@@ -196,7 +196,7 @@ export default function MovingFormDialog({
     <div
       role="dialog"
       aria-modal="true"
-      aria-labelledby="create-moving-title"
+      aria-labelledby="create-stockOut-title"
       onClick={() => {
         if (!loading) void handleClose();
       }}
@@ -208,13 +208,13 @@ export default function MovingFormDialog({
       >
         <div className="mb-4 flex items-start justify-between gap-3">
           <div>
-            <h2 id="create-moving-title" className="text-lg font-semibold">
-              {moving ? "Edit Request" : "Buat Request"}
+            <h2 id="create-stockOut-title" className="text-lg font-semibold">
+              {stockOut ? "Edit Stock-out" : "Buat Stock-out"}
             </h2>
             <p className="text-xs text-muted-foreground">
-              {moving
-                ? "Ubah item pada request ini. Hanya bisa saat status Menunggu."
-                : "Satu request dapat berisi beberapa item."}
+              {stockOut
+                ? "Ubah item pada stock-out ini. Hanya bisa saat status Menunggu."
+                : "Satu stock-out dapat berisi beberapa item."}
             </p>
           </div>
           <Button
@@ -230,9 +230,9 @@ export default function MovingFormDialog({
         </div>
 
         <Field>
-          <FieldLabel htmlFor="moving-note">Catatan (opsional)</FieldLabel>
+          <FieldLabel htmlFor="stockOut-note">Catatan (opsional)</FieldLabel>
           <Input
-            id="moving-note"
+            id="stockOut-note"
             value={note}
             onChange={(event) => setNote(event.target.value)}
             placeholder="mis. Restock bar mingguan"
@@ -368,7 +368,7 @@ export default function MovingFormDialog({
                   <Loader2 className="size-4 animate-spin" />
                   Menyimpan...
                 </>
-              ) : moving ? (
+              ) : stockOut ? (
                 "Simpan Perubahan"
               ) : (
                 "Buat Permintaan"

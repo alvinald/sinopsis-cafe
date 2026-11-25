@@ -46,27 +46,27 @@ export async function seedPermissions(prisma: PrismaClient) {
   });
 
   permissionCreate.push({
-    resource: "MOVING",
+    resource: "STOCKOUT",
     action: "VIEW",
   });
 
   permissionCreate.push({
-    resource: "MOVING",
+    resource: "STOCKOUT",
     action: "CREATE",
   });
 
   permissionCreate.push({
-    resource: "MOVING",
+    resource: "STOCKOUT",
     action: "UPDATE",
   });
 
   permissionCreate.push({
-    resource: "MOVING",
+    resource: "STOCKOUT",
     action: "DELETE",
   });
 
   permissionCreate.push({
-    resource: "MOVING",
+    resource: "STOCKOUT",
     action: "SENT",
   });
 

@@ -1,3 +1,4 @@
+import { requireChangedPassword } from "@/lib/api-password-guard";
 import { hashPassword } from "better-auth/crypto";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -9,6 +10,8 @@ import { prisma } from "@/lib/prisma";
 import { ResetUserPasswordRequestSchema } from "@/lib/types/user-types";
 
 export async function POST(request: NextRequest) {
+  const guard = await requireChangedPassword(request);
+  if (guard) return guard;
   const session = await auth.api.getSession({ headers: request.headers });
 
   if (!session) {

@@ -1,7 +1,7 @@
 "use client";
 
 import { LoadingScreen } from "@/components/loading";
-import { ConfirmDialog } from "@/components/page/moving-request/confirm-dialog";
+import { ConfirmDialog } from "@/components/page/stock-out/confirm-dialog";
 import { PageHeader } from "@/components/page/page-header";
 import { DateRangeFilter } from "@/components/page/stock-in/date-range-filter";
 import { StockInCard } from "@/components/page/stock-in/stock-in-card";

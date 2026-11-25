@@ -78,15 +78,15 @@ export type ShiftType = Prisma.ShiftTypeModel
  */
 export type Item = Prisma.ItemModel
 /**
- * Model Moving
+ * Model StockOut
  * 
  */
-export type Moving = Prisma.MovingModel
+export type StockOut = Prisma.StockOutModel
 /**
- * Model MovingItem
+ * Model StockOutItem
  * 
  */
-export type MovingItem = Prisma.MovingItemModel
+export type StockOutItem = Prisma.StockOutItemModel
 /**
  * Model StockIn
  * 

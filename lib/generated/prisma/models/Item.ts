@@ -232,7 +232,7 @@ export type ItemWhereInput = {
   stock?: Prisma.IntFilter<"Item"> | number
   status?: Prisma.EnumstatusFilter<"Item"> | $Enums.status
   isDeleted?: Prisma.BoolFilter<"Item"> | boolean
-  movingItems?: Prisma.MovingItemListRelationFilter
+  stockOutItems?: Prisma.StockOutItemListRelationFilter
   stockInItems?: Prisma.StockInItemListRelationFilter
 }
 
@@ -244,7 +244,7 @@ export type ItemOrderByWithRelationInput = {
   stock?: Prisma.SortOrder
   status?: Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
-  movingItems?: Prisma.MovingItemOrderByRelationAggregateInput
+  stockOutItems?: Prisma.StockOutItemOrderByRelationAggregateInput
   stockInItems?: Prisma.StockInItemOrderByRelationAggregateInput
 }
 
@@ -259,7 +259,7 @@ export type ItemWhereUniqueInput = Prisma.AtLeast<{
   stock?: Prisma.IntFilter<"Item"> | number
   status?: Prisma.EnumstatusFilter<"Item"> | $Enums.status
   isDeleted?: Prisma.BoolFilter<"Item"> | boolean
-  movingItems?: Prisma.MovingItemListRelationFilter
+  stockOutItems?: Prisma.StockOutItemListRelationFilter
   stockInItems?: Prisma.StockInItemListRelationFilter
 }, "id" | "sku">
 
@@ -299,7 +299,7 @@ export type ItemCreateInput = {
   stock?: number
   status?: $Enums.status
   isDeleted?: boolean
-  movingItems?: Prisma.MovingItemCreateNestedManyWithoutItemInput
+  stockOutItems?: Prisma.StockOutItemCreateNestedManyWithoutItemInput
   stockInItems?: Prisma.StockInItemCreateNestedManyWithoutItemInput
 }
 
@@ -311,7 +311,7 @@ export type ItemUncheckedCreateInput = {
   stock?: number
   status?: $Enums.status
   isDeleted?: boolean
-  movingItems?: Prisma.MovingItemUncheckedCreateNestedManyWithoutItemInput
+  stockOutItems?: Prisma.StockOutItemUncheckedCreateNestedManyWithoutItemInput
   stockInItems?: Prisma.StockInItemUncheckedCreateNestedManyWithoutItemInput
 }
 
@@ -323,7 +323,7 @@ export type ItemUpdateInput = {
   stock?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumstatusFieldUpdateOperationsInput | $Enums.status
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  movingItems?: Prisma.MovingItemUpdateManyWithoutItemNestedInput
+  stockOutItems?: Prisma.StockOutItemUpdateManyWithoutItemNestedInput
   stockInItems?: Prisma.StockInItemUpdateManyWithoutItemNestedInput
 }
 
@@ -335,7 +335,7 @@ export type ItemUncheckedUpdateInput = {
   stock?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumstatusFieldUpdateOperationsInput | $Enums.status
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  movingItems?: Prisma.MovingItemUncheckedUpdateManyWithoutItemNestedInput
+  stockOutItems?: Prisma.StockOutItemUncheckedUpdateManyWithoutItemNestedInput
   stockInItems?: Prisma.StockInItemUncheckedUpdateManyWithoutItemNestedInput
 }
 
@@ -412,18 +412,18 @@ export type ItemScalarRelationFilter = {
   isNot?: Prisma.ItemWhereInput
 }
 
-export type ItemCreateNestedOneWithoutMovingItemsInput = {
-  create?: Prisma.XOR<Prisma.ItemCreateWithoutMovingItemsInput, Prisma.ItemUncheckedCreateWithoutMovingItemsInput>
-  connectOrCreate?: Prisma.ItemCreateOrConnectWithoutMovingItemsInput
+export type ItemCreateNestedOneWithoutStockOutItemsInput = {
+  create?: Prisma.XOR<Prisma.ItemCreateWithoutStockOutItemsInput, Prisma.ItemUncheckedCreateWithoutStockOutItemsInput>
+  connectOrCreate?: Prisma.ItemCreateOrConnectWithoutStockOutItemsInput
   connect?: Prisma.ItemWhereUniqueInput
 }
 
-export type ItemUpdateOneRequiredWithoutMovingItemsNestedInput = {
-  create?: Prisma.XOR<Prisma.ItemCreateWithoutMovingItemsInput, Prisma.ItemUncheckedCreateWithoutMovingItemsInput>
-  connectOrCreate?: Prisma.ItemCreateOrConnectWithoutMovingItemsInput
-  upsert?: Prisma.ItemUpsertWithoutMovingItemsInput
+export type ItemUpdateOneRequiredWithoutStockOutItemsNestedInput = {
+  create?: Prisma.XOR<Prisma.ItemCreateWithoutStockOutItemsInput, Prisma.ItemUncheckedCreateWithoutStockOutItemsInput>
+  connectOrCreate?: Prisma.ItemCreateOrConnectWithoutStockOutItemsInput
+  upsert?: Prisma.ItemUpsertWithoutStockOutItemsInput
   connect?: Prisma.ItemWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.ItemUpdateToOneWithWhereWithoutMovingItemsInput, Prisma.ItemUpdateWithoutMovingItemsInput>, Prisma.ItemUncheckedUpdateWithoutMovingItemsInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ItemUpdateToOneWithWhereWithoutStockOutItemsInput, Prisma.ItemUpdateWithoutStockOutItemsInput>, Prisma.ItemUncheckedUpdateWithoutStockOutItemsInput>
 }
 
 export type ItemCreateNestedOneWithoutStockInItemsInput = {
@@ -440,7 +440,7 @@ export type ItemUpdateOneRequiredWithoutStockInItemsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ItemUpdateToOneWithWhereWithoutStockInItemsInput, Prisma.ItemUpdateWithoutStockInItemsInput>, Prisma.ItemUncheckedUpdateWithoutStockInItemsInput>
 }
 
-export type ItemCreateWithoutMovingItemsInput = {
+export type ItemCreateWithoutStockOutItemsInput = {
   id?: string
   sku: string
   name: string
@@ -451,7 +451,7 @@ export type ItemCreateWithoutMovingItemsInput = {
   stockInItems?: Prisma.StockInItemCreateNestedManyWithoutItemInput
 }
 
-export type ItemUncheckedCreateWithoutMovingItemsInput = {
+export type ItemUncheckedCreateWithoutStockOutItemsInput = {
   id?: string
   sku: string
   name: string
@@ -462,23 +462,23 @@ export type ItemUncheckedCreateWithoutMovingItemsInput = {
   stockInItems?: Prisma.StockInItemUncheckedCreateNestedManyWithoutItemInput
 }
 
-export type ItemCreateOrConnectWithoutMovingItemsInput = {
+export type ItemCreateOrConnectWithoutStockOutItemsInput = {
   where: Prisma.ItemWhereUniqueInput
-  create: Prisma.XOR<Prisma.ItemCreateWithoutMovingItemsInput, Prisma.ItemUncheckedCreateWithoutMovingItemsInput>
+  create: Prisma.XOR<Prisma.ItemCreateWithoutStockOutItemsInput, Prisma.ItemUncheckedCreateWithoutStockOutItemsInput>
 }
 
-export type ItemUpsertWithoutMovingItemsInput = {
-  update: Prisma.XOR<Prisma.ItemUpdateWithoutMovingItemsInput, Prisma.ItemUncheckedUpdateWithoutMovingItemsInput>
-  create: Prisma.XOR<Prisma.ItemCreateWithoutMovingItemsInput, Prisma.ItemUncheckedCreateWithoutMovingItemsInput>
+export type ItemUpsertWithoutStockOutItemsInput = {
+  update: Prisma.XOR<Prisma.ItemUpdateWithoutStockOutItemsInput, Prisma.ItemUncheckedUpdateWithoutStockOutItemsInput>
+  create: Prisma.XOR<Prisma.ItemCreateWithoutStockOutItemsInput, Prisma.ItemUncheckedCreateWithoutStockOutItemsInput>
   where?: Prisma.ItemWhereInput
 }
 
-export type ItemUpdateToOneWithWhereWithoutMovingItemsInput = {
+export type ItemUpdateToOneWithWhereWithoutStockOutItemsInput = {
   where?: Prisma.ItemWhereInput
-  data: Prisma.XOR<Prisma.ItemUpdateWithoutMovingItemsInput, Prisma.ItemUncheckedUpdateWithoutMovingItemsInput>
+  data: Prisma.XOR<Prisma.ItemUpdateWithoutStockOutItemsInput, Prisma.ItemUncheckedUpdateWithoutStockOutItemsInput>
 }
 
-export type ItemUpdateWithoutMovingItemsInput = {
+export type ItemUpdateWithoutStockOutItemsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   sku?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -489,7 +489,7 @@ export type ItemUpdateWithoutMovingItemsInput = {
   stockInItems?: Prisma.StockInItemUpdateManyWithoutItemNestedInput
 }
 
-export type ItemUncheckedUpdateWithoutMovingItemsInput = {
+export type ItemUncheckedUpdateWithoutStockOutItemsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   sku?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -508,7 +508,7 @@ export type ItemCreateWithoutStockInItemsInput = {
   stock?: number
   status?: $Enums.status
   isDeleted?: boolean
-  movingItems?: Prisma.MovingItemCreateNestedManyWithoutItemInput
+  stockOutItems?: Prisma.StockOutItemCreateNestedManyWithoutItemInput
 }
 
 export type ItemUncheckedCreateWithoutStockInItemsInput = {
@@ -519,7 +519,7 @@ export type ItemUncheckedCreateWithoutStockInItemsInput = {
   stock?: number
   status?: $Enums.status
   isDeleted?: boolean
-  movingItems?: Prisma.MovingItemUncheckedCreateNestedManyWithoutItemInput
+  stockOutItems?: Prisma.StockOutItemUncheckedCreateNestedManyWithoutItemInput
 }
 
 export type ItemCreateOrConnectWithoutStockInItemsInput = {
@@ -546,7 +546,7 @@ export type ItemUpdateWithoutStockInItemsInput = {
   stock?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumstatusFieldUpdateOperationsInput | $Enums.status
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  movingItems?: Prisma.MovingItemUpdateManyWithoutItemNestedInput
+  stockOutItems?: Prisma.StockOutItemUpdateManyWithoutItemNestedInput
 }
 
 export type ItemUncheckedUpdateWithoutStockInItemsInput = {
@@ -557,7 +557,7 @@ export type ItemUncheckedUpdateWithoutStockInItemsInput = {
   stock?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumstatusFieldUpdateOperationsInput | $Enums.status
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  movingItems?: Prisma.MovingItemUncheckedUpdateManyWithoutItemNestedInput
+  stockOutItems?: Prisma.StockOutItemUncheckedUpdateManyWithoutItemNestedInput
 }
 
 
@@ -566,12 +566,12 @@ export type ItemUncheckedUpdateWithoutStockInItemsInput = {
  */
 
 export type ItemCountOutputType = {
-  movingItems: number
+  stockOutItems: number
   stockInItems: number
 }
 
 export type ItemCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  movingItems?: boolean | ItemCountOutputTypeCountMovingItemsArgs
+  stockOutItems?: boolean | ItemCountOutputTypeCountStockOutItemsArgs
   stockInItems?: boolean | ItemCountOutputTypeCountStockInItemsArgs
 }
 
@@ -588,8 +588,8 @@ export type ItemCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensi
 /**
  * ItemCountOutputType without action
  */
-export type ItemCountOutputTypeCountMovingItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.MovingItemWhereInput
+export type ItemCountOutputTypeCountStockOutItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.StockOutItemWhereInput
 }
 
 /**
@@ -608,7 +608,7 @@ export type ItemSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   stock?: boolean
   status?: boolean
   isDeleted?: boolean
-  movingItems?: boolean | Prisma.Item$movingItemsArgs<ExtArgs>
+  stockOutItems?: boolean | Prisma.Item$stockOutItemsArgs<ExtArgs>
   stockInItems?: boolean | Prisma.Item$stockInItemsArgs<ExtArgs>
   _count?: boolean | Prisma.ItemCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["item"]>
@@ -645,7 +645,7 @@ export type ItemSelectScalar = {
 
 export type ItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "sku" | "name" | "unit" | "stock" | "status" | "isDeleted", ExtArgs["result"]["item"]>
 export type ItemInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  movingItems?: boolean | Prisma.Item$movingItemsArgs<ExtArgs>
+  stockOutItems?: boolean | Prisma.Item$stockOutItemsArgs<ExtArgs>
   stockInItems?: boolean | Prisma.Item$stockInItemsArgs<ExtArgs>
   _count?: boolean | Prisma.ItemCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -655,7 +655,7 @@ export type ItemIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
 export type $ItemPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Item"
   objects: {
-    movingItems: Prisma.$MovingItemPayload<ExtArgs>[]
+    stockOutItems: Prisma.$StockOutItemPayload<ExtArgs>[]
     stockInItems: Prisma.$StockInItemPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1060,7 +1060,7 @@ readonly fields: ItemFieldRefs;
  */
 export interface Prisma__ItemClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  movingItems<T extends Prisma.Item$movingItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Item$movingItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MovingItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  stockOutItems<T extends Prisma.Item$stockOutItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Item$stockOutItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StockOutItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   stockInItems<T extends Prisma.Item$stockInItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Item$stockInItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StockInItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1491,27 +1491,27 @@ export type ItemDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
 }
 
 /**
- * Item.movingItems
+ * Item.stockOutItems
  */
-export type Item$movingItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Item$stockOutItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the MovingItem
+   * Select specific fields to fetch from the StockOutItem
    */
-  select?: Prisma.MovingItemSelect<ExtArgs> | null
+  select?: Prisma.StockOutItemSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the MovingItem
+   * Omit specific fields from the StockOutItem
    */
-  omit?: Prisma.MovingItemOmit<ExtArgs> | null
+  omit?: Prisma.StockOutItemOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.MovingItemInclude<ExtArgs> | null
-  where?: Prisma.MovingItemWhereInput
-  orderBy?: Prisma.MovingItemOrderByWithRelationInput | Prisma.MovingItemOrderByWithRelationInput[]
-  cursor?: Prisma.MovingItemWhereUniqueInput
+  include?: Prisma.StockOutItemInclude<ExtArgs> | null
+  where?: Prisma.StockOutItemWhereInput
+  orderBy?: Prisma.StockOutItemOrderByWithRelationInput | Prisma.StockOutItemOrderByWithRelationInput[]
+  cursor?: Prisma.StockOutItemWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.MovingItemScalarFieldEnum | Prisma.MovingItemScalarFieldEnum[]
+  distinct?: Prisma.StockOutItemScalarFieldEnum | Prisma.StockOutItemScalarFieldEnum[]
 }
 
 /**

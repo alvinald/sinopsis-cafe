@@ -3,6 +3,7 @@ import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { prisma } from "@/lib/prisma"; // your prisma client instance
 import { customSession } from "better-auth/plugins";
+import { isUsingDefaultPassword } from "@/lib/password-guard";
 
 export const auth = betterAuth({
   baseURL: process.env.BETTER_AUTH_URL || undefined,
@@ -39,6 +40,7 @@ export const auth = betterAuth({
       const jobTitle = dataUser?.jobTitle?.name ?? undefined;
       const departmentId = dataUser?.jobTitle?.department?.id ?? undefined;
       const department = dataUser?.jobTitle?.department?.name ?? undefined;
+      const mustChangePassword = await isUsingDefaultPassword(user.id);
 
       return {
         user: {
@@ -49,6 +51,7 @@ export const auth = betterAuth({
         },
         session,
         permissions,
+        mustChangePassword,
       };
     }),
   ],

@@ -42,7 +42,12 @@ export function LoginForm({
     if (res.error) {
       setError(res.error.message || "Terjadi kesalahan.");
     } else {
-      router.push("/admin/dashboard");
+      const session = await authClient.getSession();
+      router.replace(
+        session.data?.mustChangePassword
+          ? "/admin/change-password"
+          : "/admin/dashboard",
+      );
     }
   }
 

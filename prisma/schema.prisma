@@ -73,15 +73,15 @@ model User {
   role   Role?   @relation(fields: [roleId], references: [id])
   roleId String?
 
-  sessions          Session[]
-  accounts          Account[]
-  shiftSchedules    ShiftSchedule[]
-  createdMovings    Moving[]
-  sentMovings       Moving[]        @relation("SentMovings")
-  receivedMovings   Moving[]        @relation("ReceivedMovings")
-  cancelledMovings  Moving[]        @relation("CancelledMovings")
-  stockIns          StockIn[]
-  cancelledStockIns StockIn[]       @relation("CancelledStockIns")
+  sessions           Session[]
+  accounts           Account[]
+  shiftSchedules     ShiftSchedule[]
+  createdStockOuts   StockOut[]
+  sentStockOuts      StockOut[]      @relation("SentStockOuts")
+  receivedStockOuts  StockOut[]      @relation("ReceivedStockOuts")
+  cancelledStockOuts StockOut[]      @relation("CancelledStockOuts")
+  stockIns           StockIn[]
+  cancelledStockIns  StockIn[]       @relation("CancelledStockIns")
 
   @@unique([email])
   @@map("user")
@@ -190,10 +190,10 @@ model ShiftType {
   @@map("shift_types")
 }
 
-enum MovingStatus {
+enum StockOutStatus {
   PENDING // dibuat, barang belum dikirim
-  SENT // dikirim (stok gudang asal berkurang)
-  RECEIVED // diterima (stok gudang tujuan bertambah)
+  SENT // dikirim (stok belum berubah)
+  RECEIVED // diterima (stok berkurang)
   CANCELLED // dibatalkan
 }
 
@@ -213,52 +213,52 @@ model Item {
 
   isDeleted Boolean @default(false) @map("is_deleted")
 
-  movingItems  MovingItem[]
-  stockInItems StockInItem[]
+  stockOutItems StockOutItem[]
+  stockInItems  StockInItem[]
 
   @@map("items")
 }
 
-model Moving {
-  id         String       @id @default(dbgenerated("gen_random_uuid()::text"))
-  number     String       @unique
-  status     MovingStatus @default(PENDING)
+model StockOut {
+  id         String         @id @default(dbgenerated("gen_random_uuid()::text"))
+  number     String         @unique
+  status     StockOutStatus @default(PENDING)
   note       String?
-  createdAt  DateTime     @default(now()) @map("created_at")
-  sentAt     DateTime?    @map("sent_at")
-  receivedAt DateTime?    @map("received_at")
+  createdAt  DateTime       @default(now()) @map("created_at")
+  sentAt     DateTime?      @map("sent_at")
+  receivedAt DateTime?      @map("received_at")
 
   createdBy   User   @relation(fields: [createdById], references: [id])
   createdById String @map("created_by_id")
 
   // 2. Pengirim (Sent By) - Opsional / Nullable
-  sentBy   User?   @relation("SentMovings", fields: [sentById], references: [id])
+  sentBy   User?   @relation("SentStockOuts", fields: [sentById], references: [id])
   sentById String? @map("sent_by_id")
 
   // 3. Penerima (Received By) - Opsional / Nullable
-  receivedBy   User?   @relation("ReceivedMovings", fields: [receivedById], references: [id])
+  receivedBy   User?   @relation("ReceivedStockOuts", fields: [receivedById], references: [id])
   receivedById String? @map("received_by_id")
 
   // 4. Pembatal (Cancelled By) - Opsional / Nullable
-  cancelledBy   User?   @relation("CancelledMovings", fields: [cancelledById], references: [id])
+  cancelledBy   User?   @relation("CancelledStockOuts", fields: [cancelledById], references: [id])
   cancelledById String? @map("cancelled_by_id")
 
-  items MovingItem[]
+  items StockOutItem[]
 
-  @@map("movings")
+  @@map("stock_outs")
 }
 
-model MovingItem {
-  id       String @id @default(dbgenerated("gen_random_uuid()::text"))
-  movingId String @map("moving_id")
-  itemId   String @map("item_id")
-  qty      Int
+model StockOutItem {
+  id         String @id @default(dbgenerated("gen_random_uuid()::text"))
+  stockOutId String @map("stock_out_id")
+  itemId     String @map("item_id")
+  qty        Int
 
-  moving Moving @relation(fields: [movingId], references: [id], onDelete: Cascade)
-  item   Item   @relation(fields: [itemId], references: [id])
+  stockOut StockOut @relation(fields: [stockOutId], references: [id], onDelete: Cascade)
+  item     Item     @relation(fields: [itemId], references: [id])
 
-  @@unique([movingId, itemId])
-  @@map("moving_items")
+  @@unique([stockOutId, itemId])
+  @@map("stock_out_items")
 }
 
 model StockIn {

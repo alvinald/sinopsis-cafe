@@ -1,9 +1,9 @@
-import { MovingStatus, MovingStatusSchema } from "@/lib/types/moving-types";
+import { StockOutStatus, StockOutStatusSchema } from "@/lib/types/stock-out-types";
 import { cn } from "@/lib/utils";
 import { Clock, Truck, CheckCircle2, XCircle } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
-const STATUS_ICON: Record<MovingStatus, { icon: LucideIcon; color: string }> = {
+const STATUS_ICON: Record<StockOutStatus, { icon: LucideIcon; color: string }> = {
   PENDING: {
     icon: Clock,
     color: "text-amber-500",
@@ -28,21 +28,21 @@ export default function StatusTabs({
   onChange,
   statusMeta,
 }: {
-  active: MovingStatus;
-  counts: Record<MovingStatus, number>;
-  onChange: (status: MovingStatus) => void;
+  active: StockOutStatus;
+  counts: Record<StockOutStatus, number>;
+  onChange: (status: StockOutStatus) => void;
   statusMeta: Record<
-    MovingStatus,
+    StockOutStatus,
     { label: string; hint: string; dot: string; badge: string }
   >;
 }) {
   return (
     <div
       role="tablist"
-      aria-label="Status moving"
+      aria-label="Status stock-out"
       className="sticky top-0.5 z-10 mb-3 flex gap-1 overflow-x-auto rounded-xl border border-border bg-muted/40 p-1.5 shadow-sm backdrop-blur-sm"
     >
-      {MovingStatusSchema.options.map((status) => {
+      {StockOutStatusSchema.options.map((status) => {
         const meta = statusMeta[status];
         const isActive = status === active;
         const Icon = STATUS_ICON[status];

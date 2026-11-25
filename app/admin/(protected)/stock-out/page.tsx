@@ -1,18 +1,18 @@
 "use client";
-import { CardRequest } from "@/components/page/moving-request/card-request";
-import { ConfirmDialog } from "@/components/page/moving-request/confirm-dialog";
-import { DateRangeFilter } from "@/components/page/moving-request/date-range-filter";
+import { CardRequest } from "@/components/page/stock-out/card-request";
+import { ConfirmDialog } from "@/components/page/stock-out/confirm-dialog";
+import { DateRangeFilter } from "@/components/page/stock-out/date-range-filter";
 import { PageHeader } from "@/components/page/page-header";
-import { DetailPopup } from "@/components/page/moving-request/detail-popup";
-import MovingForm from "@/components/page/moving-request/moving-form-dialog";
-import StatusTabs from "@/components/page/moving-request/status-tabs";
+import { DetailPopup } from "@/components/page/stock-out/detail-popup";
+import StockOutForm from "@/components/page/stock-out/stock-out-form-dialog";
+import StatusTabs from "@/components/page/stock-out/status-tabs";
 import { Button } from "@/components/ui/button";
 import {
   Item,
-  Moving,
-  MovingStatus,
-  UpdateMovingStatusSchema,
-} from "@/lib/types/moving-types";
+  StockOut,
+  StockOutStatus,
+  UpdateStockOutStatusSchema,
+} from "@/lib/types/stock-out-types";
 import { endOfDay, format, parseISO, startOfDay, subMonths } from "date-fns";
 import { Plus } from "lucide-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -24,7 +24,7 @@ import { exportToExcel } from "@/lib/export-excel";
 import { useRouter } from "next/navigation";
 
 const STATUS_META: Record<
-  MovingStatus,
+  StockOutStatus,
   { label: string; hint: string; dot: string; badge: string }
 > = {
   PENDING: {
@@ -35,19 +35,19 @@ const STATUS_META: Record<
   },
   SENT: {
     label: "Dikirim",
-    hint: "Stok gudang asal berkurang",
+    hint: "Barang dikirim, stok belum berkurang",
     dot: "bg-blue-500",
     badge: "border-blue-200 bg-blue-50 text-blue-700",
   },
   RECEIVED: {
     label: "Diterima",
-    hint: "Stok gudang tujuan bertambah",
+    hint: "Diterima, stok berkurang",
     dot: "bg-emerald-500",
     badge: "border-emerald-200 bg-emerald-50 text-emerald-700",
   },
   CANCELLED: {
     label: "Dibatalkan",
-    hint: "Request dibatalkan, barang tidak diproses",
+    hint: "Stock out dibatalkan, barang tidak diproses",
     dot: "bg-red-500",
     badge: "border-red-200 bg-red-50 text-red-700",
   },
@@ -62,26 +62,20 @@ function getDefaultDateRange() {
   };
 }
 
-export default function MovingRequestPage() {
-  const [movings, setMovings] = useState<Moving[]>([]);
+export default function StockOutPage() {
+  const [stockOuts, setStockOuts] = useState<StockOut[]>([]);
   const [items, setItems] = useState<Item[]>([]);
   const [isFormOpen, setIsFormOpen] = useState<boolean>(false);
-  const [selectedMoving, setSelectedMoving] = useState<Moving | null>(null);
+  const [selectedStockOut, setSelectedStockOut] = useState<StockOut | null>(null);
 
-  const [loading, setLoading] = useState(false);
   const [actionLoading, setActionLoading] = useState(false);
 
-  const [activeStatus, setActiveStatus] = useState<MovingStatus>("PENDING");
+  const [activeStatus, setActiveStatus] = useState<StockOutStatus>("PENDING");
   const [dateRange, setDateRange] = useState(getDefaultDateRange);
-
-  const [note, setNote] = useState("");
-  const [lines, setLines] = useState<{ itemId: string; qty: number }[]>([
-    { itemId: "", qty: 1 },
-  ]);
 
   const [confirmMove, setConfirmMove] = useState<{
     id: string;
-    status: MovingStatus;
+    status: StockOutStatus;
     title: string;
     description: string;
     buttonText: string;
@@ -102,31 +96,31 @@ export default function MovingRequestPage() {
     }
 
     // Pastikan path properti permissions sesuai struktur session kamu
-    if (!can(session.permissions, "MOVING:VIEW")) {
+    if (!can(session.permissions, "STOCKOUT:VIEW")) {
       router.replace("/forbidden");
     }
   }, [isPending, session, router]);
 
   const fetchData = useCallback(async () => {
     try {
-      const [movingsResponse, itemsResponse] = await Promise.all([
-        fetch("/api/moving-request"),
+      const [stockOutsResponse, itemsResponse] = await Promise.all([
+        fetch("/api/stock-out"),
         fetch("/api/items"),
       ]);
 
-      if (!movingsResponse.ok) {
-        throw new Error("Gagal mengambil data moving request");
+      if (!stockOutsResponse.ok) {
+        throw new Error("Gagal mengambil data stock-out");
       }
       if (!itemsResponse.ok) {
         throw new Error("Gagal mengambil data item");
       }
 
-      const [movingsData, itemsData] = await Promise.all([
-        movingsResponse.json() as Promise<Moving[]>,
+      const [stockOutsData, itemsData] = await Promise.all([
+        stockOutsResponse.json() as Promise<StockOut[]>,
         itemsResponse.json() as Promise<Item[]>,
       ]);
 
-      setMovings(movingsData);
+      setStockOuts(stockOutsData);
       setItems(itemsData);
     } catch (err) {
       console.error("Error fetching data:", err);
@@ -134,46 +128,40 @@ export default function MovingRequestPage() {
   }, []);
 
   useEffect(() => {
-    let active = true;
-    setLoading(true);
-    fetchData().finally(() => {
-      if (active) setLoading(false);
+    queueMicrotask(() => {
+      void fetchData();
     });
-
-    return () => {
-      active = false;
-    };
   }, [fetchData]);
 
-  const filteredMovings = useMemo(() => {
+  const filteredStockOuts = useMemo(() => {
     const fromDate = dateRange.from
       ? startOfDay(parseISO(dateRange.from))
       : null;
     const toDate = dateRange.to ? endOfDay(parseISO(dateRange.to)) : null;
 
-    return movings.filter((moving) => {
-      const createdAt = new Date(moving.createdAt);
+    return stockOuts.filter((stockOut) => {
+      const createdAt = new Date(stockOut.createdAt);
 
       if (fromDate && createdAt < fromDate) return false;
       if (toDate && createdAt > toDate) return false;
 
       return true;
     });
-  }, [movings, dateRange]);
+  }, [stockOuts, dateRange]);
 
-  const groupedMovings: Record<MovingStatus, Moving[]> = useMemo(() => {
-    const result: Record<MovingStatus, Moving[]> = {
+  const groupedStockOuts: Record<StockOutStatus, StockOut[]> = useMemo(() => {
+    const result: Record<StockOutStatus, StockOut[]> = {
       PENDING: [],
       SENT: [],
       RECEIVED: [],
       CANCELLED: [],
     };
-    for (const moving of filteredMovings) result[moving.status].push(moving);
+    for (const stockOut of filteredStockOuts) result[stockOut.status].push(stockOut);
     return result;
-  }, [filteredMovings]);
+  }, [filteredStockOuts]);
 
   function handleExport() {
-    if (filteredMovings.length === 0) {
+    if (filteredStockOuts.length === 0) {
       toast.error("Tidak ada data untuk diekspor");
       return;
     }
@@ -217,32 +205,32 @@ export default function MovingRequestPage() {
       { header: "Tanggal Dibatalkan", key: "tanggalDibatalkan", width: 20 },
     ] as const;
 
-    const rowsByStatus: Record<MovingStatus, ExportRow[]> = {
+    const rowsByStatus: Record<StockOutStatus, ExportRow[]> = {
       PENDING: [],
       SENT: [],
       RECEIVED: [],
       CANCELLED: [],
     };
 
-    for (const moving of filteredMovings) {
-      const no = rowsByStatus[moving.status].length + 1;
+    for (const stockOut of filteredStockOuts) {
+      const no = rowsByStatus[stockOut.status].length + 1;
       const base = {
         no,
-        nomor: moving.number,
-        tanggalDibuat: formatDate(moving.createdAt),
-        tanggalDikirim: formatDate(moving.sentAt),
-        tanggalDiterima: formatDate(moving.receivedAt),
-        tanggalDibatalkan: formatDate(moving.cancelledAt),
-        status: STATUS_META[moving.status].label,
-        dibuatOleh: moving.createdBy.name,
-        dikirimOleh: moving.sentBy?.name ?? "",
-        diterimaOleh: moving.receivedBy?.name ?? "",
-        dibatalkanOleh: moving.cancelledBy?.name ?? "",
-        catatan: moving.note ?? "",
+        nomor: stockOut.number,
+        tanggalDibuat: formatDate(stockOut.createdAt),
+        tanggalDikirim: formatDate(stockOut.sentAt),
+        tanggalDiterima: formatDate(stockOut.receivedAt),
+        tanggalDibatalkan: formatDate(stockOut.cancelledAt),
+        status: STATUS_META[stockOut.status].label,
+        dibuatOleh: stockOut.createdBy.name,
+        dikirimOleh: stockOut.sentBy?.name ?? "",
+        diterimaOleh: stockOut.receivedBy?.name ?? "",
+        dibatalkanOleh: stockOut.cancelledBy?.name ?? "",
+        catatan: stockOut.note ?? "",
       };
 
-      if (moving.items.length === 0) {
-        rowsByStatus[moving.status].push({
+      if (stockOut.items.length === 0) {
+        rowsByStatus[stockOut.status].push({
           ...base,
           item: "",
           qty: "",
@@ -251,8 +239,8 @@ export default function MovingRequestPage() {
         continue;
       }
 
-      moving.items.forEach((line, itemIndex) => {
-        rowsByStatus[moving.status].push({
+      stockOut.items.forEach((line, itemIndex) => {
+        rowsByStatus[stockOut.status].push({
           ...base,
           no: itemIndex === 0 ? no : "",
           item: line.item.name,
@@ -262,7 +250,7 @@ export default function MovingRequestPage() {
       });
     }
 
-    const statusOrder: MovingStatus[] = [
+    const statusOrder: StockOutStatus[] = [
       "PENDING",
       "SENT",
       "RECEIVED",
@@ -270,7 +258,7 @@ export default function MovingRequestPage() {
     ];
 
     exportToExcel({
-      fileName: `moving-request_${dateRange.from || "all"}_${dateRange.to || "all"}`,
+      fileName: `stock-out_${dateRange.from || "all"}_${dateRange.to || "all"}`,
       sheets: statusOrder.map((status) => ({
         sheetName: STATUS_META[status].label,
         data: rowsByStatus[status],
@@ -283,31 +271,31 @@ export default function MovingRequestPage() {
     });
 
     toast.success("Export berhasil", {
-      description: `${filteredMovings.length} transaksi diekspor ke 4 sheet.`,
+      description: `${filteredStockOuts.length} transaksi diekspor ke 4 sheet.`,
     });
   }
 
   function requestMove(
     id: string,
-    status: MovingStatus,
-    requestMove: string,
+    status: StockOutStatus,
+    title: string,
     description: string,
     buttonText: string,
   ) {
     setConfirmMove({
       id,
       status,
-      title: requestMove,
-      description: description,
-      buttonText: buttonText,
+      title,
+      description,
+      buttonText,
     });
     setIsConfirmOpen(true);
   }
 
-  function openDetail(moving: Moving) {
+  function openDetail(stockOut: StockOut) {
     setIsConfirmOpen(false);
     setIsFormOpen(false);
-    setSelectedMoving(moving);
+    setSelectedStockOut(stockOut);
     setIsDetailOpen(true);
   }
 
@@ -315,15 +303,11 @@ export default function MovingRequestPage() {
     if (refresh) await fetchData();
 
     setIsFormOpen(false);
-    setSelectedMoving(null);
-    setNote("");
-    setLines([{ itemId: "", qty: 1 }]);
+    setSelectedStockOut(null);
   }
 
-  function openForm(moving: Moving | null) {
-    setSelectedMoving(moving);
-    setNote("");
-    setLines([{ itemId: "", qty: 1 }]);
+  function openForm(stockOut: StockOut | null) {
+    setSelectedStockOut(stockOut);
     setIsDetailOpen(false);
     setIsFormOpen(true);
   }
@@ -338,11 +322,11 @@ export default function MovingRequestPage() {
 
     setActionLoading(true);
     try {
-      const nextStatus: MovingStatus =
+      const nextStatus: StockOutStatus =
         confirmMove.status === "PENDING" ? "SENT" : "RECEIVED";
-      const body: UpdateMovingStatusSchema = { status: nextStatus };
+      const body: UpdateStockOutStatusSchema = { status: nextStatus };
 
-      const response = await fetch(`/api/moving-request/${confirmMove.id}`, {
+      const response = await fetch(`/api/stock-out/${confirmMove.id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -353,7 +337,7 @@ export default function MovingRequestPage() {
       const result = await response.json();
 
       if (!response.ok) {
-        throw new Error(result.message || "Gagal menyimpan data moving");
+        throw new Error(result.message || "Gagal menyimpan data stock-out");
       }
 
       await fetchData();
@@ -372,13 +356,13 @@ export default function MovingRequestPage() {
   }
 
   async function onCancelTransaction() {
-    if (!selectedMoving || actionLoading) return;
+    if (!selectedStockOut || actionLoading) return;
 
     setActionLoading(true);
     try {
-      const body: UpdateMovingStatusSchema = { status: "CANCELLED" };
+      const body: UpdateStockOutStatusSchema = { status: "CANCELLED" };
 
-      const response = await fetch(`/api/moving-request/${selectedMoving.id}`, {
+      const response = await fetch(`/api/stock-out/${selectedStockOut.id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -389,14 +373,14 @@ export default function MovingRequestPage() {
       const result = await response.json();
 
       if (!response.ok) {
-        throw new Error(result.message || "Gagal menyimpan data moving");
+        throw new Error(result.message || "Gagal menyimpan data stock-out");
       }
 
       await fetchData();
 
       toast.success("Success", { description: "Status berhasil diperbarui." });
       setIsDetailOpen(false);
-      setSelectedMoving(null);
+      setSelectedStockOut(null);
       return result.data;
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : "Terjadi kesalahan";
@@ -407,7 +391,7 @@ export default function MovingRequestPage() {
       setActionLoading(false);
     }
   }
-  if (loading || isPending) {
+  if (isPending) {
     return <LoadingScreen />; // atau return null / skeleton
   }
   return (
@@ -415,8 +399,8 @@ export default function MovingRequestPage() {
       <div className="w-full px-4 lg:px-6">
         <PageHeader
           className="mb-4"
-          title="Moving Item"
-          description="Kelola request pindah item dari gudang ke lokasi cafe."
+          title="Stock-out"
+          description="Kelola stock-out dari gudang ke lokasi cafe."
           actions={
             <Button
               onClick={() => openForm(null)}
@@ -424,7 +408,7 @@ export default function MovingRequestPage() {
               className="w-full sm:w-auto"
             >
               <Plus className="size-4" />
-              Buat Request
+              Buat Stock-out
             </Button>
           }
         />
@@ -437,45 +421,39 @@ export default function MovingRequestPage() {
           onToChange={(to) => setDateRange((prev) => ({ ...prev, to }))}
           onReset={() => setDateRange(getDefaultDateRange())}
           onExport={handleExport}
-          exportDisabled={loading || filteredMovings.length === 0}
+          exportDisabled={isPending || filteredStockOuts.length === 0}
         />
 
         {/* Papan status */}
         <StatusTabs
           active={activeStatus}
           counts={{
-            PENDING: groupedMovings.PENDING.length,
-            SENT: groupedMovings.SENT.length,
-            RECEIVED: groupedMovings.RECEIVED.length,
-            CANCELLED: groupedMovings.CANCELLED.length,
+            PENDING: groupedStockOuts.PENDING.length,
+            SENT: groupedStockOuts.SENT.length,
+            RECEIVED: groupedStockOuts.RECEIVED.length,
+            CANCELLED: groupedStockOuts.CANCELLED.length,
           }}
           onChange={setActiveStatus}
           statusMeta={STATUS_META}
         />
 
         <div className="mt-3 grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-3">
-          {groupedMovings[activeStatus].map((moving) => (
+          {groupedStockOuts[activeStatus].map((stockOut) => (
             <CardRequest
-              key={moving.id}
-              canSent={can(session?.permissions, "MOVING:SENT")}
-              moving={moving}
-              onOpen={() => openDetail(moving)}
+              key={stockOut.id}
+              canSent={can(session?.permissions, "STOCKOUT:SENT")}
+              stockOut={stockOut}
+              onOpen={() => openDetail(stockOut)}
               onEdit={
-                moving.status === "PENDING" ? () => openForm(moving) : undefined
+                stockOut.status === "PENDING" ? () => openForm(stockOut) : undefined
               }
-              onMove={() =>
-                requestMove(
-                  moving.id,
-                  moving.status,
-                  "Konfirmasi Perubahan Status",
-                  "Apakah Anda yakin ingin mengubah status?",
-                  "Ya, ubah status",
-                )
+              onMove={(id, status, title, description, buttonText) =>
+                requestMove(id, status, title, description, buttonText)
               }
             />
           ))}
 
-          {groupedMovings[activeStatus].length === 0 && (
+          {groupedStockOuts[activeStatus].length === 0 && (
             <div className="flex min-h-[180px] items-center justify-center rounded-2xl border border-dashed border-border bg-muted/20 text-center text-sm text-muted-foreground md:col-span-2 xl:col-span-3">
               Tidak ada dokumen pada status ini untuk rentang tanggal yang
               dipilih.
@@ -484,17 +462,17 @@ export default function MovingRequestPage() {
         </div>
       </div>
       {isFormOpen && (
-        <MovingForm
+        <StockOutForm
           closeForm={closeForm}
           items={items}
-          moving={selectedMoving}
+          stockOut={selectedStockOut}
         />
       )}
 
       {isDetailOpen && (
         <DetailPopup
           statusMeta={STATUS_META}
-          moving={selectedMoving as Moving}
+          stockOut={selectedStockOut as StockOut}
           loading={actionLoading}
           onClose={closeForm}
           onCancelTransaction={onCancelTransaction}

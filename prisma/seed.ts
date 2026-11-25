@@ -4,7 +4,7 @@ import { PrismaClient } from "@/lib/generated/prisma/client";
 import { seedUsers } from "./seeders/seedUsers";
 import { seedShiftTypes } from "./seeders/seedShiftTypes";
 import { seedSchedules } from "./seeders/seedSchedule";
-import { seedMoving } from "./seeders/seedMovingRequest";
+import { seedStockOut } from "./seeders/seedStockOut";
 import { seedItems } from "./seeders/seedItems";
 import { seedPermissions } from "./seeders/seedPermissions";
 import { seedJobTitle } from "./seeders/seedJobTitle";
@@ -24,7 +24,7 @@ async function main() {
   // await seedShiftTypes(prisma);
   // await seedSchedules(prisma);
   // await seedItems(prisma);
-  // await seedMoving(prisma);
+  // await seedStockOut(prisma);
   // await seedPermissions(prisma);
   // await seedJobTitle(prisma);
 

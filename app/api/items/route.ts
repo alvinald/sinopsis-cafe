@@ -1,3 +1,4 @@
+import { requireChangedPassword } from "@/lib/api-password-guard";
 import { NextRequest, NextResponse } from "next/server";
 
 import { auth } from "@/lib/auth";
@@ -12,6 +13,8 @@ import {
 import { validationError } from "@/lib/validation";
 
 export async function GET(request: NextRequest) {
+  const guard = await requireChangedPassword(request);
+  if (guard) return guard;
   const session = await auth.api.getSession({ headers: request.headers });
 
   if (!session) {
@@ -35,6 +38,8 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
+  const guard = await requireChangedPassword(request);
+  if (guard) return guard;
   const session = await auth.api.getSession({ headers: request.headers });
 
   if (!session) {
@@ -86,6 +91,8 @@ export async function POST(request: NextRequest) {
 }
 
 export async function PUT(request: NextRequest) {
+  const guard = await requireChangedPassword(request);
+  if (guard) return guard;
   const session = await auth.api.getSession({ headers: request.headers });
 
   if (!session) {
@@ -150,6 +157,8 @@ export async function PUT(request: NextRequest) {
 }
 
 export async function DELETE(request: NextRequest) {
+  const guard = await requireChangedPassword(request);
+  if (guard) return guard;
   const session = await auth.api.getSession({ headers: request.headers });
 
   if (!session) {

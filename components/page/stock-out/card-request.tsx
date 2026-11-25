@@ -1,23 +1,22 @@
 import { Button } from "@/components/ui/button";
-import { Moving } from "@/lib/types/moving-types";
-import { cn } from "@/lib/utils";
+import { StockOut } from "@/lib/types/stock-out-types";
 import { Eye, Pencil } from "lucide-react";
 import CardAction from "./card-action";
-import { MovingStatus } from "@/lib/generated/prisma/enums";
+import { StockOutStatus } from "@/lib/generated/prisma/enums";
 import { formatDate } from "date-fns";
 
 export function CardRequest({
-  moving,
+  stockOut,
   canSent,
   onMove,
   onOpen,
   onEdit,
 }: {
-  moving: Moving;
+  stockOut: StockOut;
   canSent: boolean;
   onMove: (
     id: string,
-    status: MovingStatus,
+    status: StockOutStatus,
     title: string,
     description: string,
     buttonText: string,
@@ -25,24 +24,24 @@ export function CardRequest({
   onOpen?: () => void;
   onEdit?: () => void;
 }) {
-  const totalQty = moving.items.reduce((sum, line) => sum + line.qty, 0);
+  const totalQty = stockOut.items.reduce((sum, line) => sum + line.qty, 0);
 
   return (
     <article className="flex h-full flex-col rounded-xl border border-border bg-card p-3 transition-shadow shadow-xs hover:shadow-sm">
       <div className="flex items-start gap-2">
         <div className="min-w-0 flex-1">
           <p className="font-mono text-[11px] font-medium tracking-tight text-muted-foreground">
-            {moving.number}
+            {stockOut.number}
           </p>
           <p className="mt-0.5 truncate text-sm font-semibold">
-            {moving.note ?? "Tanpa catatan"}
+            {stockOut.note ?? "Tanpa catatan"}
           </p>
         </div>
       </div>
 
       {/* Semua item dalam request ini */}
       <ul className="mt-2 flex-1 space-y-1">
-        {moving.items.map((line) => (
+        {stockOut.items.map((line) => (
           <li
             key={line.id}
             className="flex items-center justify-between gap-2 text-xs"
@@ -60,10 +59,10 @@ export function CardRequest({
       {/* Meta + aksi */}
       <div className="mt-3 flex flex-wrap items-center justify-between gap-2 border-t border-border pt-2">
         <div className="min-w-0 text-[11px] text-muted-foreground">
-          <p className="truncate">{moving.createdBy.name}</p>
+          <p className="truncate">{stockOut.createdBy.name}</p>
           <p className="tabular-nums">
-            {formatDate(moving.createdAt, "dd MMM yyyy")} ·{" "}
-            {moving.items.length} item · {totalQty} unit
+            {formatDate(stockOut.createdAt, "dd MMM yyyy")} ·{" "}
+            {stockOut.items.length} item · {totalQty} unit
           </p>
         </div>
         <div className="flex shrink-0 items-center gap-1.5">
@@ -72,7 +71,7 @@ export function CardRequest({
               type="button"
               variant="outline"
               size="icon-xs"
-              aria-label={`Lihat detail ${moving.number}`}
+              aria-label={`Lihat detail ${stockOut.number}`}
               onClick={onOpen}
             >
               <Eye className="size-3.5" />
@@ -83,23 +82,25 @@ export function CardRequest({
               type="button"
               variant="outline"
               size="icon-xs"
-              aria-label={`Edit ${moving.number}`}
+              aria-label={`Edit ${stockOut.number}`}
               onClick={onEdit}
             >
               <Pencil className="size-3.5" />
             </Button>
           )}
           <CardAction
-            key={moving.id}
-            moving={moving}
+            key={stockOut.id}
+            stockOut={stockOut}
             canSent={canSent}
             onMove={(id, status) =>
               onMove(
                 id,
                 status,
-                "Konfirmasi Perubahan Status",
-                "Apakah Anda yakin ingin mengubah status?",
-                "Ya, ubah status",
+                "Konfirmasi Stock-out",
+                status === "SENT"
+                  ? "Apakah Anda yakin ingin menerima stock-out ini? Stok item akan berkurang."
+                  : "Apakah Anda yakin ingin mengirim stock-out ini?",
+                status === "SENT" ? "Ya, terima" : "Ya, kirim",
               )
             }
           ></CardAction>

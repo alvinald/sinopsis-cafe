@@ -37,7 +37,7 @@ export function DateRangeFilter({
         <div className="grid grid-cols-2 gap-2 sm:flex sm:items-end sm:gap-3">
           <Field className="min-w-0">
             <Input
-              id="moving-date-from"
+              id="stockOut-date-from"
               type="date"
               value={from}
               onChange={(event) => onFromChange(event.target.value)}
@@ -47,7 +47,7 @@ export function DateRangeFilter({
 
           <Field className="min-w-0">
             <Input
-              id="moving-date-to"
+              id="stockOut-date-to"
               type="date"
               value={to}
               onChange={(event) => onToChange(event.target.value)}

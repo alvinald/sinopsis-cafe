@@ -10,7 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 
 import { PageHeader } from "@/components/page/page-header";
-import UserFilter from "../../../components/page/user/user-filter";
+import UserFilter from "../../../../components/page/user/user-filter";
 import {
   CreateUserRequest,
   UpdateUserRequest,

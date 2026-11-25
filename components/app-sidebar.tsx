@@ -36,12 +36,12 @@ const data = {
           url: "/admin/item",
         },
         {
-          title: "Barang Masuk",
+          title: "Stock In",
           url: "/admin/stock-in",
         },
         {
-          title: "Moving Item",
-          url: "/admin/moving-request",
+          title: "Stock Out",
+          url: "/admin/stock-out",
         },
       ],
     },

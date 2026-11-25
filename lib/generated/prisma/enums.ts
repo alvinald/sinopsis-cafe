@@ -28,14 +28,14 @@ export const LevelJob = {
 export type LevelJob = (typeof LevelJob)[keyof typeof LevelJob]
 
 
-export const MovingStatus = {
+export const StockOutStatus = {
   PENDING: 'PENDING',
   SENT: 'SENT',
   RECEIVED: 'RECEIVED',
   CANCELLED: 'CANCELLED'
 } as const
 
-export type MovingStatus = (typeof MovingStatus)[keyof typeof MovingStatus]
+export type StockOutStatus = (typeof StockOutStatus)[keyof typeof StockOutStatus]
 
 
 export const StockInStatus = {

@@ -1,3 +1,4 @@
+import { requireChangedPassword } from "@/lib/api-password-guard";
 import { UpdateRolePermissionSchema } from "./../../../../lib/types/role-types";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
@@ -5,6 +6,8 @@ import { headers } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function PUT(request: NextRequest) {
+  const guard = await requireChangedPassword(request);
+  if (guard) return guard;
   const session = await auth.api.getSession({ headers: request.headers });
 
   if (!session) {

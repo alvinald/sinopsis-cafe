@@ -1,15 +1,16 @@
+import { requireChangedPassword } from "@/lib/api-password-guard";
 import { auth } from "@/lib/auth";
-import { getUserPermissions } from "@/lib/permissions.server";
 import { prisma } from "@/lib/prisma";
-import { can } from "@/lib/rbac";
 import {
-  RequestMovingSchema,
-  UpdateMovingSchema,
-} from "@/lib/types/moving-types";
+  RequestStockOutSchema,
+  UpdateStockOutSchema,
+} from "@/lib/types/stock-out-types";
 import { endOfYear, format, startOfYear } from "date-fns";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
+  const guard = await requireChangedPassword(request);
+  if (guard) return guard;
   const session = await auth.api.getSession({ headers: request.headers });
 
   if (!session) {
@@ -19,7 +20,7 @@ export async function GET(request: NextRequest) {
   try {
     // 1 baris saja untuk ambil semua permission user
 
-    const moving = await prisma.moving.findMany({
+    const stockOut = await prisma.stockOut.findMany({
       include: {
         cancelledBy: {
           select: {
@@ -57,20 +58,22 @@ export async function GET(request: NextRequest) {
           },
         },
       },
-      orderBy: { id: "asc" },
+      orderBy: [{ createdAt: "desc" }, { id: "desc" }],
     });
 
-    return NextResponse.json(moving);
+    return NextResponse.json(stockOut);
   } catch (error) {
-    console.error("Error fetching shift schedules:", error);
+    console.error("Error processing stock-out:", error);
     return NextResponse.json(
-      { error: "Gagal mengambil data shift type" },
+      { error: "Gagal mengambil data stock-out" },
       { status: 500 },
     );
   }
 }
 
 export async function POST(request: NextRequest) {
+  const guard = await requireChangedPassword(request);
+  if (guard) return guard;
   const session = await auth.api.getSession({ headers: request.headers });
 
   if (!session) {
@@ -79,7 +82,7 @@ export async function POST(request: NextRequest) {
 
   const body = await request.json().catch(() => null);
 
-  const parsed = RequestMovingSchema.safeParse(body);
+  const parsed = RequestStockOutSchema.safeParse(body);
 
   if (!parsed.success) {
     return NextResponse.json(
@@ -94,7 +97,7 @@ export async function POST(request: NextRequest) {
   const month = format(now, "MM");
 
   try {
-    const count = await prisma.moving.count({
+    const count = await prisma.stockOut.count({
       where: {
         createdAt: {
           gte: startOfYear(now),
@@ -105,10 +108,10 @@ export async function POST(request: NextRequest) {
 
     const number = `0000${count}`.slice(-4);
     console.log(number);
-    const movingNumber = `MOV-${year}${month}-${number}`;
-    const updatedSchedule = await prisma.moving.create({
+    const stockOutNumber = `SOUT-${year}${month}-${number}`;
+    const updatedSchedule = await prisma.stockOut.create({
       data: {
-        number: movingNumber,
+        number: stockOutNumber,
         note: note,
         createdAt: now,
         createdById: session.user.id,
@@ -123,15 +126,17 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json(updatedSchedule);
   } catch (error) {
-    console.error("Error fetching moving request:", error);
+    console.error("Error fetching stockOut request:", error);
     return NextResponse.json(
-      { error: "Gagal mengambil data moving request" },
+      { error: "Gagal menyimpan data stock-out" },
       { status: 500 },
     );
   }
 }
 
 export async function PUT(request: NextRequest) {
+  const guard = await requireChangedPassword(request);
+  if (guard) return guard;
   const session = await auth.api.getSession({ headers: request.headers });
 
   if (!session) {
@@ -140,7 +145,7 @@ export async function PUT(request: NextRequest) {
 
   const body = await request.json().catch(() => null);
 
-  const parsed = UpdateMovingSchema.safeParse(body);
+  const parsed = UpdateStockOutSchema.safeParse(body);
 
   if (!parsed.success) {
     return NextResponse.json(
@@ -152,16 +157,16 @@ export async function PUT(request: NextRequest) {
   const { id, note, items } = parsed.data;
 
   try {
-    const updatedMovingRequest = await prisma.$transaction(async (tx) => {
+    const updatedStockOut = await prisma.$transaction(async (tx) => {
       // 1. Hapus item yang tidak ada
-      await tx.movingItem.deleteMany({
+      await tx.stockOutItem.deleteMany({
         where: {
-          movingId: id,
+          stockOutId: id,
         },
       });
 
-      // 2. Update moving dan upsert item
-      return await tx.moving.update({
+      // 2. Update stockOut dan upsert item
+      return await tx.stockOut.update({
         where: {
           id: id,
         },
@@ -177,9 +182,9 @@ export async function PUT(request: NextRequest) {
       });
     });
 
-    return NextResponse.json(updatedMovingRequest);
+    return NextResponse.json(updatedStockOut);
   } catch (error) {
-    console.error("Error fetching shift schedules:", error);
+    console.error("Error processing stock-out:", error);
     return NextResponse.json(
       { error: "Gagal mengambil data schedules" },
       { status: 500 },

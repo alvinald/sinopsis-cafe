@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
-import { MovingStatus } from "@/lib/generated/prisma/enums";
-import { Moving } from "@/lib/types/moving-types";
+import { StockOutStatus } from "@/lib/generated/prisma/enums";
+import { StockOut } from "@/lib/types/stock-out-types";
 import { cn } from "@/lib/utils";
 import { formatDate } from "date-fns";
 import { Ban, Loader2, X } from "lucide-react";
@@ -8,28 +8,28 @@ import { useState } from "react";
 
 export function DetailPopup({
   statusMeta,
-  moving,
+  stockOut,
   loading = false,
   onClose,
   onCancelTransaction,
 }: {
   statusMeta: Record<
-    MovingStatus,
+    StockOutStatus,
     { label: string; hint: string; dot: string; badge: string }
   >;
-  moving: Moving;
+  stockOut: StockOut;
   loading?: boolean;
   onClose: () => void;
   onCancelTransaction: () => void;
 }) {
   const [confirmCancel, setConfirmCancel] = useState(false);
 
-  if (!moving) return null;
+  if (!stockOut) return null;
   return (
     <div
       role="dialog"
       aria-modal="true"
-      aria-labelledby="detail-moving-title"
+      aria-labelledby="detail-stockOut-title"
       onClick={() => {
         if (!loading) onClose();
       }}
@@ -42,20 +42,20 @@ export function DetailPopup({
         <div className="mb-4 flex items-start justify-between gap-3">
           <div className="min-w-0">
             <p className="font-mono text-[11px] font-medium text-muted-foreground">
-              {moving.number}
+              {stockOut.number}
             </p>
-            <h2 id="detail-moving-title" className="text-lg font-semibold">
-              Detail Request
+            <h2 id="detail-stockOut-title" className="text-lg font-semibold">
+              Detail Stock-out
             </h2>
           </div>
           <div className="flex shrink-0 items-center gap-2">
             <span
               className={cn(
                 "rounded-full border px-2 py-0.5 text-[11px] font-semibold",
-                statusMeta[moving.status].badge,
+                statusMeta[stockOut.status].badge,
               )}
             >
-              {statusMeta[moving.status].label}
+              {statusMeta[stockOut.status].label}
             </span>
             <Button
               type="button"
@@ -73,9 +73,9 @@ export function DetailPopup({
           </div>
         </div>
 
-        {moving.note && (
+        {stockOut.note && (
           <p className="rounded-lg bg-muted/60 px-3 py-2 text-sm">
-            {moving.note}
+            {stockOut.note}
           </p>
         )}
 
@@ -83,32 +83,32 @@ export function DetailPopup({
           <div>
             <dt className="text-muted-foreground">Dibuat</dt>
             <dd className="font-medium tabular-nums">
-              {moving.createdAt && moving.createdBy?.name
-                ? `${moving.createdBy.name} - ${formatDate(moving.createdAt, "dd MMM yyyy HH:mm")}`
+              {stockOut.createdAt && stockOut.createdBy?.name
+                ? `${stockOut.createdBy.name} - ${formatDate(stockOut.createdAt, "dd MMM yyyy HH:mm")}`
                 : "—"}
             </dd>
           </div>
           <div>
             <dt className="text-muted-foreground">Dikirim</dt>
             <dd className="font-medium tabular-nums">
-              {moving.sentAt && moving.sentBy?.name
-                ? `${moving.sentBy.name} - ${formatDate(moving.sentAt, "dd MMM yyyy HH:mm")}`
+              {stockOut.sentAt && stockOut.sentBy?.name
+                ? `${stockOut.sentBy.name} - ${formatDate(stockOut.sentAt, "dd MMM yyyy HH:mm")}`
                 : "—"}
             </dd>
           </div>
           <div>
             <dt className="text-muted-foreground">Diterima</dt>
             <dd className="font-medium tabular-nums">
-              {moving.receivedAt && moving.receivedBy?.name
-                ? `${moving.receivedBy.name} - ${formatDate(moving.receivedAt, "dd MMM yyyy HH:mm")}`
+              {stockOut.receivedAt && stockOut.receivedBy?.name
+                ? `${stockOut.receivedBy.name} - ${formatDate(stockOut.receivedAt, "dd MMM yyyy HH:mm")}`
                 : "—"}
             </dd>
           </div>
           <div>
             <dt className="text-muted-foreground">Dibatalkan</dt>
             <dd className="font-medium tabular-nums">
-              {moving.cancelledAt && moving.cancelledBy?.name
-                ? `${moving.cancelledBy.name} - ${formatDate(moving.cancelledAt, "dd MMM yyyy HH:mm")}`
+              {stockOut.cancelledAt && stockOut.cancelledBy?.name
+                ? `${stockOut.cancelledBy.name} - ${formatDate(stockOut.cancelledAt, "dd MMM yyyy HH:mm")}`
                 : "—"}
             </dd>
           </div>
@@ -117,11 +117,11 @@ export function DetailPopup({
         <div className="mt-4">
           <div className="mb-1.5 flex items-center justify-between">
             <h3 className="text-xs font-medium text-muted-foreground">
-              Item dalam request
+              Item dalam stock-out
             </h3>
             <span className="text-[11px] text-muted-foreground tabular-nums">
-              {moving.items.length} item ·{" "}
-              {moving.items.reduce((sum, line) => sum + line.qty, 0)} unit
+              {stockOut.items.length} item ·{" "}
+              {stockOut.items.reduce((sum, line) => sum + line.qty, 0)} unit
             </span>
           </div>
 
@@ -136,7 +136,7 @@ export function DetailPopup({
                 </tr>
               </thead>
               <tbody>
-                {moving.items.map((line) => (
+                {stockOut.items.map((line) => (
                   <tr key={line.id} className="border-t border-border">
                     <td className="px-3 py-2 font-medium">{line.item.name}</td>
                     <td className="px-3 py-2 font-mono text-xs text-muted-foreground">
@@ -157,8 +157,8 @@ export function DetailPopup({
 
         <div className="mt-5 flex flex-wrap items-center justify-between gap-2 border-t border-border pt-4">
           {/* Batalkan transaksi */}
-          {moving.status !== "CANCELLED" &&
-            moving.status !== "RECEIVED" &&
+          {stockOut.status !== "CANCELLED" &&
+            stockOut.status !== "RECEIVED" &&
             (confirmCancel ? (
               <div className="flex flex-wrap items-center gap-2">
                 <span className="text-xs text-muted-foreground">

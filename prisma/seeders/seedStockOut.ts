@@ -1,8 +1,8 @@
-import { PrismaClient, MovingStatus } from "@/lib/generated/prisma/client";
+import { PrismaClient, StockOutStatus } from "@/lib/generated/prisma/client";
 import { faker } from "@faker-js/faker";
 
-export async function seedMoving(prisma: PrismaClient) {
-  console.log("🌱 Seeding movings & moving items...");
+export async function seedStockOut(prisma: PrismaClient) {
+  console.log("🌱 Seeding stockOuts & stockOut items...");
 
   // 1. Ambil semua user dan item yang sudah ada di database
   const users = await prisma.user.findMany();
@@ -10,25 +10,25 @@ export async function seedMoving(prisma: PrismaClient) {
 
   console.log(users);
   if (users.length === 0 || items.length === 0) {
-    console.log("⚠️ Data user atau item kosong. Skip seeding moving.");
+    console.log("⚠️ Data user atau item kosong. Skip seeding stockOut.");
     return;
   }
 
   // 2. Tentukan status mutasi beserta probabilitasnya
-  const statuses: MovingStatus[] = [
-    MovingStatus.PENDING,
-    MovingStatus.SENT,
-    MovingStatus.RECEIVED,
+  const statuses: StockOutStatus[] = [
+    StockOutStatus.PENDING,
+    StockOutStatus.SENT,
+    StockOutStatus.RECEIVED,
   ];
 
-  const movingsToCreate = [];
-  const movingItemsToCreate = [];
+  const stockOutsToCreate = [];
+  const stockOutItemsToCreate = [];
 
   // Tentukan jumlah transaksi mutasi dummy yang ingin dibuat
-  const totalMovings = 10;
+  const totalStockOuts = 10;
 
-  for (let i = 0; i < totalMovings; i++) {
-    const movingId = crypto.randomUUID();
+  for (let i = 0; i < totalStockOuts; i++) {
+    const stockOutId = crypto.randomUUID();
     const randomUser = faker.helpers.arrayElement(users);
     const randomStatus = faker.helpers.arrayElement(statuses);
 
@@ -36,17 +36,17 @@ export async function seedMoving(prisma: PrismaClient) {
     let sentAt: Date | null = null;
     let receivedAt: Date | null = null;
 
-    if (randomStatus === MovingStatus.SENT) {
+    if (randomStatus === StockOutStatus.SENT) {
       sentAt = faker.date.between({ from: createdAt, to: new Date() });
-    } else if (randomStatus === MovingStatus.RECEIVED) {
+    } else if (randomStatus === StockOutStatus.RECEIVED) {
       sentAt = faker.date.between({ from: createdAt, to: new Date() });
       receivedAt = faker.date.between({ from: sentAt, to: new Date() });
     }
 
-    // Buat data header Moving
-    movingsToCreate.push({
-      id: movingId,
-      number: `MOV-${faker.date.recent().getFullYear()}${(faker.date.recent().getMonth() + 1).toString().padStart(2, "0")}-${faker.string.numeric(4)}`,
+    // Buat data header StockOut
+    stockOutsToCreate.push({
+      id: stockOutId,
+      number: `SOUT-${faker.date.recent().getFullYear()}${(faker.date.recent().getMonth() + 1).toString().padStart(2, "0")}-${faker.string.numeric(4)}`,
       status: randomStatus,
       note:
         faker.helpers.maybe(() => faker.lorem.sentence(), {
@@ -65,33 +65,33 @@ export async function seedMoving(prisma: PrismaClient) {
     );
 
     for (const item of selectedItems) {
-      movingItemsToCreate.push({
+      stockOutItemsToCreate.push({
         id: crypto.randomUUID(),
-        movingId: movingId,
+        stockOutId: stockOutId,
         itemId: item.id,
         qty: faker.number.int({ min: 1, max: 50 }),
       });
     }
   }
 
-  // 4. Insert data header Moving
-  const movingResult = await prisma.moving.createMany({
-    data: movingsToCreate,
+  // 4. Insert data header StockOut
+  const stockOutResult = await prisma.stockOut.createMany({
+    data: stockOutsToCreate,
     skipDuplicates: true,
   });
 
-  // 5. Insert data detail MovingItem
-  const movingItemResult = await prisma.movingItem.createMany({
-    data: movingItemsToCreate,
+  // 5. Insert data detail StockOutItem
+  const stockOutItemResult = await prisma.stockOutItem.createMany({
+    data: stockOutItemsToCreate,
     skipDuplicates: true,
   });
 
   console.log(
-    `✅ Seeded: ${movingResult.count} movings & ${movingItemResult.count} moving items`,
+    `✅ Seeded: ${stockOutResult.count} stockOuts & ${stockOutItemResult.count} stockOut items`,
   );
 
   return {
-    movingsCount: movingResult.count,
-    movingItemsCount: movingItemResult.count,
+    stockOutsCount: stockOutResult.count,
+    stockOutItemsCount: stockOutItemResult.count,
   };
 }

@@ -1,7 +1,11 @@
 "use client";
 
+import { LogOutIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
+
+import { authClient } from "@/lib/auth-client";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -26,7 +30,25 @@ type ChangePasswordPayload = {
 };
 
 export function ChangePasswordForm() {
+  const router = useRouter();
+  const { data: session } = authClient.useSession();
   const [saving, setSaving] = useState(false);
+  const [loggingOut, setLoggingOut] = useState(false);
+
+  async function handleLogout() {
+    setLoggingOut(true);
+    try {
+      await authClient.signOut({
+        fetchOptions: {
+          onSuccess: () => {
+            router.replace("/login");
+          },
+        },
+      });
+    } finally {
+      setLoggingOut(false);
+    }
+  }
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -63,6 +85,8 @@ export function ChangePasswordForm() {
 
       toast.success(payload?.message || "Password berhasil diubah");
       form.reset();
+      router.refresh();
+      router.replace("/admin/dashboard");
     } catch (error) {
       console.error("Error changing password:", error);
       toast.error("Tidak dapat terhubung ke server");
@@ -81,6 +105,12 @@ export function ChangePasswordForm() {
           </CardDescription>
         </CardHeader>
         <CardContent>
+          {session?.mustChangePassword && (
+            <p className="mb-4 rounded-xl border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-800">
+              Password Anda masih default. Ubah password dulu sebelum
+              melanjutkan.
+            </p>
+          )}
           <FieldGroup className="gap-4">
             <Field>
               <FieldLabel htmlFor="currentPassword">
@@ -123,10 +153,22 @@ export function ChangePasswordForm() {
           </FieldGroup>
         </CardContent>
         <CardFooter className="flex flex-col gap-2 sm:flex-row sm:justify-end">
+          {session?.mustChangePassword && (
+            <Button
+              type="button"
+              variant="outline"
+              className="w-full rounded-xl sm:mr-auto sm:w-auto"
+              onClick={handleLogout}
+              disabled={saving || loggingOut}
+            >
+              <LogOutIcon />
+              {loggingOut ? "Keluar..." : "Keluar"}
+            </Button>
+          )}
           <Button
             type="submit"
             className="w-full rounded-xl sm:w-auto"
-            disabled={saving}
+            disabled={saving || loggingOut}
           >
             {saving ? "Menyimpan..." : "Simpan Password"}
           </Button>
